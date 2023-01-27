@@ -23,4 +23,51 @@ map.on("style.load", () => {
 map.on("load", () => {
   const loader = document.querySelector("#map__loader");
   loader.style.opacity = 0;
+  console.log(map.style._order);
 });
+
+function showResults(data) {
+  const resultsList = data.features.map((feature) => {
+    const div = document.createElement("div");
+    div.className = "search__result";
+    div.innerHTML = `
+      <h3>${feature.text}</h3>
+      <p>${feature.properties.category}</p>
+      <p>${feature.place_name.replace(feature.text + ", ", "")}</p>
+    `;
+    div.addEventListener("click", () => {
+      map.flyTo({
+        center: feature.center,
+        essential: true,
+        zoom: 12,
+      });
+    });
+    return div;
+  });
+
+  const resultsDiv = document.createElement("div");
+  resultsDiv.id = "search__results";
+  resultsDiv.append(...resultsList);
+  const searchContainer = document.querySelector("#search__container");
+  searchContainer.parentNode.insertBefore(
+    resultsDiv,
+    searchContainer.nextSibling
+  );
+}
+
+function searchLocation() {
+  const resultsDiv = document.querySelector("#search__results");
+  if (resultsDiv) {
+    resultsDiv.parentNode.removeChild(resultsDiv);
+  }
+
+  const input = document.querySelector("#search__input").value;
+  const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${input}.json?access_token=${mapboxgl.accessToken}&limit=10`;
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      showResults(data);
+      return data;
+    });
+}

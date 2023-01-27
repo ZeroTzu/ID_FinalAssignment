@@ -23,9 +23,50 @@
   color: white;
   transition: opacity 0.5s;
   pointer-events: none;
+  z-index: 150;
 }
 
 #map__loader__text > * {
   margin: 0;
   text-align: center;
+}
+
+aside {
+  z-index: 149;
+  position: absolute;
+  top: 2.5em;
+  left: 2.5em;
+  padding: 2.5em;
+  width: 25vw;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-dark-gray);
+  color: var(--primary-color);
+  transition: opacity 0.5s;
+  border-radius: var(--radius);
+  gap: 1.5em;
+}
+
+#search__container {
+  display: flex;
+  gap: 1em;
+  flex-direction: column;
+}
+
+#search__results {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  overflow-y: scroll;
+  max-height: 50vh;
+}
+
+.search__result {
+  padding: 1em;
+  border-radius: var(--radius);
+  border: 1px solid var(--accent-dark-gray);
+}
+
+.search__result > * {
+  margin: 0.25rem 0;
 }
