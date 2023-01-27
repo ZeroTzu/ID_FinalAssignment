@@ -6,6 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Working title, changeable in future -->
     <title>Travel Buddy</title>
+
+    <!-- Mapbox GL JS -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js"></script>
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css"
+      rel="stylesheet"
+    />
+
+    <!-- LottieFiles -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+    <link rel="stylesheet" href="styles/index.css" />
   </head>
-  <body></body>
+  <body>
+    <section id="map__container">
+      <div id="map__canvas"></div>
+      <div id="map__loader">
+        <lottie-player
+          src="https://assets8.lottiefiles.com/packages/lf20_bdclkupb.json"
+          background="transparent"
+          speed="1"
+          style="width: 300px; height: 300px"
+          loop
+          autoplay
+        ></lottie-player>
+
+        <div id="map__loader__text">
+          <h2>One sec!</h2>
+          <p>Hang on tight. We're loading the map...</p>
+        </div>
+      </div>
+    </section>
+    <script src="scripts/index.js"></script>
+  </body>
 </html>
