@@ -23,24 +23,34 @@ map.on("style.load", () => {
 map.on("load", () => {
   const loader = document.querySelector("#map__loader");
   loader.style.opacity = 0;
-  console.log(map.style._order);
 });
 
+// Calls the Mapbox Geocoding API to search for a location then displays the results
+const markers = [];
 function showResults(data) {
   const resultsList = data.features.map((feature) => {
     const div = document.createElement("div");
     div.className = "search__result";
     div.innerHTML = `
       <h3>${feature.text}</h3>
-      <p>${feature.properties.category}</p>
+      ${
+        feature.properties.category !== undefined
+          ? "<p>" + feature.properties.category + "</p>"
+          : ""
+      }
       <p>${feature.place_name.replace(feature.text + ", ", "")}</p>
     `;
     div.addEventListener("click", () => {
+      markers.forEach((marker) => {
+        marker.remove();
+      });
       map.flyTo({
         center: feature.center,
         essential: true,
-        zoom: 12,
+        zoom: 15,
       });
+      const marker = new mapboxgl.Marker().setLngLat(feature.center).addTo(map);
+      markers.push(marker);
     });
     return div;
   });
@@ -66,8 +76,16 @@ function searchLocation() {
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       showResults(data);
       return data;
     });
 }
+
+// Listens for an enter key press on the search input
+const searchInput = document.querySelector("#search__input");
+searchInput.addEventListener("keyup", (event) => {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    searchLocation();
+  }
+});
