@@ -16,10 +16,11 @@
 
 aside {
   z-index: 149;
-  width: 30vw;
   background-color: var(--bg-dark-gray);
   height: fit-content;
   border-radius: var(--radius);
+  font-size: 15px;
+
 }
 
 #search__results {
@@ -81,9 +82,11 @@ aside {
 
   aside {
     z-index: 149;
-    width: 30vw;
     background-color: var(--bg-dark-gray);
     height: fit-content;
     border-radius: var(--radius);
+    font-size: 12px;
+
   }
+
 }
