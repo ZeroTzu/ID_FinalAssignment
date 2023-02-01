@@ -3,6 +3,7 @@
   --accent-dark-gray: rgb(56, 56, 128);
   --primary-color: rgb(255, 255, 255);
   --radius: 1em 0 0 0;
+  --accent-dark-green: rgb(79, 128, 56);
 }
 
 body {
@@ -34,6 +35,7 @@ button {
   transition: background-color 0.15s;
   font-weight: bold;
 }
+
 
 button:hover {
   background-color: var(--bg-dark-gray);

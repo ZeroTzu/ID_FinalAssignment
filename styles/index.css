@@ -50,6 +50,18 @@ aside {
 }
 
 
+#add__Button {
+  background-color: var(--accent-dark-green);
+  color: var(--primary-color);
+  padding: 0.5em 1em;
+  border: 1px solid var(--accent-dark-gray);
+  border-radius: 25% !important;
+  width: fit-content;
+  cursor: pointer;
+  transition: background-color 0.15s;
+  font-weight: bold;
+}
+
 @media screen and (max-width: 400px) {
   #map__container {
     height: 100vh;
