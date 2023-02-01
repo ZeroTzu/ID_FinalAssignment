@@ -80,6 +80,7 @@ function searchLocation() {
       return data;
     });
 }
+function
 
 // Listens for an enter key press on the search input
 const searchInput = document.querySelector("#search__input");
