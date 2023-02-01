@@ -5,6 +5,7 @@
 }
 
 #map__loader {
+  background-color: var(--bg-dark-gray);
   transition: opacity 0.5s !important;
   z-index: 1000 !important;
 }
@@ -20,7 +21,6 @@ aside {
   height: fit-content;
   border-radius: var(--radius);
   font-size: 15px;
-
 }
 
 #search__results {
@@ -49,9 +49,8 @@ aside {
   margin: 0.25rem 0;
 }
 
-
-#side__menu__button{
-  background-color: var(--bg-dark-gray);
+#add__Button {
+  background-color: var(--accent-dark-green);
   color: var(--primary-color);
   padding: 0.5em 1em;
   border: 1px solid var(--accent-dark-gray);
@@ -62,23 +61,20 @@ aside {
   font-weight: bold;
   margin-right: 5px;
 }
-#side__menu_button:hover{
-  background-color: var(--pale-black);
-}
 
-.cancelbutton{
+.cancelbutton {
   background: none;
   max-width: 50%;
   max-height: 50%;
 }
-#side__menu{
+#side__menu {
   position: relative;
-  display:none;
+  display: none;
   background-color: var(--bg-dark-gray);
   flex-direction: column;
-  width: 2  00px !important;
+  width: 2 00px !important;
   padding: 5px;
-  margin:0;
+  margin: 0;
 }
 #side__menu__content button {
   appearance: none;
@@ -95,13 +91,13 @@ aside {
   color: rgb(106, 105, 105);
   background-color: rgb(54, 54, 54);
 }
-#side__menu__content button *{
+#side__menu__content button * {
   color: white;
 
-  position:relative;
+  position: relative;
 }
 
-#side__menu__button:hover{
+#side__menu__button:hover {
   background-color: var(--pale-black);
 }
 @media screen and (max-width: 400px) {
@@ -137,15 +133,12 @@ aside {
     text-align: center;
   }
 
-
-
   aside {
     z-index: 149;
     background-color: var(--bg-dark-gray);
     height: fit-content;
     border-radius: var(--radius);
     font-size: 12px;
-
   }
   .search__result > * {
     font-size: 10px;
