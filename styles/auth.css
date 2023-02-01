@@ -1,0 +1,11 @@
+@import "./global.css";
+
+aside,
+main {
+  width: 50vw;
+}
+
+aside,
+.carousel-item {
+  background-color: var(--accent-dark-gray);
+}

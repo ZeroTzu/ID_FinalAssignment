@@ -8,9 +8,11 @@
 
 body {
   margin: 0;
+  background-color: var(--bg-dark-gray);
 }
 
-input[type="text"] {
+input,
+textarea {
   appearance: none;
   background-color: var(--bg-dark-gray);
   padding: 0.5em 0.75em;
@@ -19,7 +21,8 @@ input[type="text"] {
   color: var(--primary-color);
 }
 
-input[type="text"]::placeholder {
+input::placeholder,
+textarea::placeholder {
   color: var(--primary-color) !important;
   opacity: 1;
 }
@@ -32,11 +35,24 @@ button {
   border-radius: var(--radius) !important;
   width: fit-content;
   cursor: pointer;
-  transition: background-color 0.15s;
+  transition: background-color 0.15s, opacity 0.15;
   font-weight: bold;
 }
 
+button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 
-button:hover {
+button:not([disabled]):hover {
   background-color: var(--bg-dark-gray);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: bold;
 }
