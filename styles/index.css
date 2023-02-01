@@ -24,11 +24,12 @@ aside {
 }
 
 #search__results {
+  margin-top: 1em;
   display: flex;
   flex-direction: column;
   gap: 1em;
   overflow-y: scroll;
-  max-height: 50vh;
+  max-height: 30vh;
 }
 
 .search__result {
@@ -37,7 +38,6 @@ aside {
   border: 1px solid var(--accent-dark-gray);
   cursor: pointer;
   transition: background-color 0.15s;
-  font-size: 15px;
 }
 
 .search__result:hover {
@@ -45,8 +45,10 @@ aside {
 }
 
 .search__result > * {
+  font-size: 12px;
   margin: 0.25rem 0;
 }
+
 
 @media screen and (max-width: 400px) {
   #map__container {
@@ -89,12 +91,8 @@ aside {
     font-size: 12px;
 
   }
-  .search__result {
-    padding: 1em;
-    border-radius: var(--radius);
-    border: 1px solid var(--accent-dark-gray);
-    cursor: pointer;
-    transition: background-color 0.15s;
-    font-size: 12px;
+  .search__result > * {
+    font-size: 10px;
+    margin: 0.25rem 0;
   }
 }
