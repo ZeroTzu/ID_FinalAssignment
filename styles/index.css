@@ -37,6 +37,7 @@ aside {
   border: 1px solid var(--accent-dark-gray);
   cursor: pointer;
   transition: background-color 0.15s;
+  font-size: 15px;
 }
 
 .search__result:hover {
@@ -88,5 +89,12 @@ aside {
     font-size: 12px;
 
   }
-
+  .search__result {
+    padding: 1em;
+    border-radius: var(--radius);
+    border: 1px solid var(--accent-dark-gray);
+    cursor: pointer;
+    transition: background-color 0.15s;
+    font-size: 12px;
+  }
 }
