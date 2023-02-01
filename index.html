@@ -26,7 +26,7 @@
     />
     <!--Font Awesome-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
-
+    <script src="https://kit.fontawesome.com/1bb416726a.js" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="styles/index.css" />
   </head>
@@ -52,23 +52,40 @@
         </div>
       </div>
     </section>
+    <section id="right__interface">
+      <button id="add__place_button"><i class="fa-solid fa-plus"></i></button>
 
-    <aside
-      class="d-flex flex-row p-2 position-absolute top-0 start-0"
-    >
-      <button id="add__button"><i class="fa fa-bars"></i></button>
-      <div id="search__container" class="flex-column w-100">
-        <input style="margin-right: 5px"
-          id="search__input"
-          type="text"
-          placeholder="Search for a place..."
-        />
-        <button onclick="searchLocation()">Search</button>
-        <button id="add__Button">Test</button>
-      </div>
+    </section>
 
-    </aside>
 
+
+    </section>
+    <div class="position-absolute top-0 start-0">
+      <aside
+        class="d-flex flex-row p-2"
+      >
+        <button id="side__menu__button"><i class="fa fa-bars"></i></button>
+
+
+        <div id="search__container" class="flex-column w-100">
+          <input style="margin-right: 5px"
+            id="search__input"
+            type="text"
+            placeholder="Search for a place..."
+          />
+          <button class="button__primary"onclick="searchLocation()">Search</button>
+        </div>
+      </aside>
+      <menu id="side__menu">
+        <div id="side__menu__content" style="  position:relative;display:flex; flex-direction: column;">
+          <li style="list-style: none;"><button style="margin:0px; margin-top: 5px;"><i class="fa-solid fa-user"></i> &nbsp;Profile</button> </li>
+          <li style="list-style: none;"><button style="margin:0px; margin-top: 5px;"><i class="fas fa-cog"></i> &nbsp;Settings</button> </li>
+          <li style="list-style: none;"><button style="margin:0px; margin-top: 5px;"><i class="fas fa-trophy"></i> &nbsp;Leaderboard</button> </li>
+          <button id="side__menu__back"style="position:relative;margin-top:5px; border-bottom: none;width:fit-content"><i class="fa-solid fa-arrow-left-long"></i></button>
+
+        </div>
+      </menu>
+    </div>
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
       integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"

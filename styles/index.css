@@ -50,7 +50,7 @@ aside {
 }
 
 
-#add__button{
+#side__menu__button{
   background-color: var(--bg-dark-gray);
   color: var(--primary-color);
   padding: 0.5em 1em;
@@ -62,7 +62,7 @@ aside {
   font-weight: bold;
   margin-right: 5px;
 }
-#add__button:hover{
+#side__menu_button:hover{
   background-color: var(--pale-black);
 }
 
@@ -71,7 +71,39 @@ aside {
   max-width: 50%;
   max-height: 50%;
 }
+#side__menu{
+  position: relative;
+  display:none;
+  background-color: var(--bg-dark-gray);
+  flex-direction: column;
+  width: 2  00px !important;
+  padding: 5px;
+  margin:0;
+}
+#side__menu__content button {
+  appearance: none;
+  border: none;
+  background-color: transparent;
+  margin: 5px;
+  font-size: 15px;
+  width: 100% !important;
+  text-align: center;
+  border-bottom: rgb(38, 37, 37) solid 0.5px;
+  color: white;
+}
+#side__menu__content button:hover {
+  color: rgb(106, 105, 105);
+  background-color: rgb(54, 54, 54);
+}
+#side__menu__content button *{
+  color: white;
 
+  position:relative;
+}
+
+#side__menu__button:hover{
+  background-color: var(--pale-black);
+}
 @media screen and (max-width: 400px) {
   #map__container {
     height: 100vh;
@@ -104,6 +136,8 @@ aside {
     margin: 0;
     text-align: center;
   }
+
+
 
   aside {
     z-index: 149;

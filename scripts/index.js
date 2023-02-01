@@ -20,8 +20,9 @@ map.on("style.load", () => {
   });
 });
 
-map.on("load", () => {
+map.on("load", async() => {
   const loader = document.querySelector("#map__loader");
+  await setTimeout(10000);
   loader.style.opacity = 0;
 });
 
@@ -90,3 +91,15 @@ searchInput.addEventListener("keyup", (event) => {
     searchLocation();
   }
 });
+
+
+//for add_button to display the menu
+document.getElementById("side__menu__button").addEventListener("click",function(){
+  document.getElementById("side__menu").style.display="block";
+  document.getElementById("side__menu__button").style.display="none";
+});
+//for side__menu__back to hide the menu
+document.getElementById("side__menu__back").addEventListener("click",function(){
+  document.getElementById("side__menu__button").style.display="block";
+  document.getElementById("side__menu").style.display="none";
+})

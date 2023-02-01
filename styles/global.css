@@ -27,7 +27,7 @@ textarea::placeholder {
   opacity: 1;
 }
 
-button {
+.button__primary{
   background-color: var(--accent-dark-gray);
   color: var(--primary-color);
   padding: 0.5em 1em;
