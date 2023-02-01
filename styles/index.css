@@ -1,29 +1,12 @@
 @import "global.css";
 
 #map__container {
-  height: 100vh;
-  width: 100vw;
   background-color: var(--bg-dark-gray);
-}
-
-#map__container > * {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
 }
 
 #map__loader {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--bg-dark-gray);
-  color: white;
-  transition: opacity 0.5s;
-  pointer-events: none;
-  z-index: 150;
+  transition: opacity 0.5s !important;
+  z-index: 1000 !important;
 }
 
 #map__loader__text > * {
@@ -33,24 +16,10 @@
 
 aside {
   z-index: 149;
-  position: absolute;
-  top: 2em;
-  left: 2em;
-  padding: 2em;
   width: 30vw;
-  display: flex;
-  flex-direction: column;
   background-color: var(--bg-dark-gray);
-  color: var(--primary-color);
-  transition: opacity 0.5s;
+  height: fit-content;
   border-radius: var(--radius);
-  gap: 1.5em;
-}
-
-#search__container {
-  display: flex;
-  gap: 1em;
-  flex-direction: column;
 }
 
 #search__results {
@@ -111,19 +80,10 @@ aside {
   }
 
   aside {
-    font-size: 20px;
     z-index: 149;
-    position: absolute;
-    top: 0;
-    left: 0;
-    min-width: 80%;
-    padding: 1em;
-    display: flex;
-    flex-direction: column;
+    width: 30vw;
     background-color: var(--bg-dark-gray);
-    color: var(--primary-color);
-    transition: opacity 0.5s;
+    height: fit-content;
     border-radius: var(--radius);
-    gap: 1.5em;
   }
 }

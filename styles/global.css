@@ -12,7 +12,7 @@ body {
 input[type="text"] {
   appearance: none;
   background-color: var(--bg-dark-gray);
-  padding: 1em;
+  padding: 0.5em 0.75em;
   border: 1px solid var(--accent-dark-gray);
   border-radius: var(--radius);
   color: var(--primary-color);
@@ -26,12 +26,13 @@ input[type="text"]::placeholder {
 button {
   background-color: var(--accent-dark-gray);
   color: var(--primary-color);
-  padding: 0.75em 1em;
+  padding: 0.5em 1em;
   border: 1px solid var(--accent-dark-gray);
-  border-radius: var(--radius);
+  border-radius: var(--radius) !important;
   width: fit-content;
   cursor: pointer;
   transition: background-color 0.15s;
+  font-weight: bold;
 }
 
 button:hover {
