@@ -80,7 +80,8 @@ function searchLocation() {
       return data;
     });
 }
-function
+function revealMenu(){
+}
 
 // Listens for an enter key press on the search input
 const searchInput = document.querySelector("#search__input");
