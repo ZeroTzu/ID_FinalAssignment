@@ -24,6 +24,9 @@
       integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
       crossorigin="anonymous"
     />
+    <!--Font Awesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+
 
     <link rel="stylesheet" href="styles/index.css" />
   </head>
@@ -51,9 +54,9 @@
     </section>
 
     <aside
-      class="d-flex flex-column p-2 position-absolute top-0 start-0"
+      class="d-flex flex-row p-2 position-absolute top-0 start-0"
     >
-    
+      <button id="add__button"><i class="fa fa-bars"></i></button>
       <div id="search__container" class="flex-column w-100">
         <input style="margin-right: 5px"
           id="search__input"
@@ -61,7 +64,6 @@
           placeholder="Search for a place..."
         />
         <button onclick="searchLocation()">Search</button>
-        <button><img class="cancelbutton" src='cancel.png' alt="The image couldn't load."></button>
         <button id="add__Button">Test</button>
       </div>
 

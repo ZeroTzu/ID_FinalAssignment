@@ -50,16 +50,20 @@ aside {
 }
 
 
-#add__Button {
-  background-color: var(--accent-dark-green);
+#add__button{
+  background-color: var(--bg-dark-gray);
   color: var(--primary-color);
   padding: 0.5em 1em;
   border: 1px solid var(--accent-dark-gray);
-  border-radius: 25% !important;
+  border-radius: 0 !important;
   width: fit-content;
   cursor: pointer;
   transition: background-color 0.15s;
   font-weight: bold;
+  margin-right: 5px;
+}
+#add__button:hover{
+  background-color: var(--pale-black);
 }
 
 .cancelbutton{
