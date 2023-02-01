@@ -29,7 +29,7 @@ aside {
   flex-direction: column;
   gap: 1em;
   overflow-y: scroll;
-  max-height: 30vh;
+  max-height: 20vh;
 }
 
 .search__result {
