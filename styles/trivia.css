@@ -1,0 +1,30 @@
+@import "./global.css";
+
+#intro {
+  transition: opacity 0.5s;
+  background-color: var(--bg-dark-gray);
+  z-index: 100;
+}
+
+#game__container {
+  border-color: var(--accent-dark-gray) !important;
+  border-radius: var(--radius) !important;
+  overflow: hidden !important;
+  max-height: 640px;
+}
+
+.progress {
+  background-color: var(--bg-dark-gray);
+  border: 1px solid var(--accent-dark-gray);
+}
+
+.progress-bar {
+  background-color: var(--accent-dark-gray);
+}
+
+@media screen and (max-width: 640px) {
+  #guess__container {
+    flex-direction: column !important;
+    gap: 1em !important;
+  }
+}
