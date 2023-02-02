@@ -49,8 +49,9 @@ aside {
   margin: 0.25rem 0;
 }
 
-#add__Button {
-  background-color: var(--accent-dark-green);
+#side__menu__button,
+#add__place_button {
+  background-color: var(--bg-dark-gray);
   color: var(--primary-color);
   padding: 0.5em 1em;
   border: 1px solid var(--accent-dark-gray);
@@ -60,6 +61,9 @@ aside {
   transition: background-color 0.15s;
   font-weight: bold;
   margin-right: 5px;
+}
+#add__place_button {
+  background-color: var(--accent-dark-green);
 }
 
 .cancelbutton {

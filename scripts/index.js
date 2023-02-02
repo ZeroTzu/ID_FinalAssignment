@@ -20,7 +20,7 @@ map.on("style.load", () => {
   });
 });
 
-map.on("load", async() => {
+map.on("load", async () => {
   const loader = document.querySelector("#map__loader");
   await setTimeout(10000);
   loader.style.opacity = 0;
@@ -59,7 +59,7 @@ function showResults(data) {
   const resultsDiv = document.createElement("div");
   resultsDiv.id = "search__results";
   resultsDiv.append(...resultsList);
-  const searchContainer = document.querySelector("#search__container");
+  const searchContainer = document.querySelector("#aside__header");
   searchContainer.parentNode.insertBefore(
     resultsDiv,
     searchContainer.nextSibling
@@ -82,7 +82,6 @@ function searchLocation() {
     });
 }
 
-
 // Listens for an enter key press on the search input
 const searchInput = document.querySelector("#search__input");
 searchInput.addEventListener("keyup", (event) => {
@@ -92,14 +91,17 @@ searchInput.addEventListener("keyup", (event) => {
   }
 });
 
-
 //for add_button to display the menu
-document.getElementById("side__menu__button").addEventListener("click",function(){
-  document.getElementById("side__menu").style.display="block";
-  document.getElementById("side__menu__button").style.display="none";
-});
+document
+  .getElementById("side__menu__button")
+  .addEventListener("click", function () {
+    document.getElementById("side__menu").style.display = "block";
+    document.getElementById("side__menu__button").style.display = "none";
+  });
 //for side__menu__back to hide the menu
-document.getElementById("side__menu__back").addEventListener("click",function(){
-  document.getElementById("side__menu__button").style.display="block";
-  document.getElementById("side__menu").style.display="none";
-})
+document
+  .getElementById("side__menu__back")
+  .addEventListener("click", function () {
+    document.getElementById("side__menu__button").style.display = "block";
+    document.getElementById("side__menu").style.display = "none";
+  });
