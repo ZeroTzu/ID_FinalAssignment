@@ -125,7 +125,9 @@
         <button class="button__primary" onclick="setTimeout(function() {
           checkAnswer();
         }, 1500)" id="guess__attempt">Guess</button>
-        <button class="button__primary" onclick="startRound()" id="guess__skip">Skip</button>
+        <button class="button__primary" onclick="setTimeout(function() {
+          startRound();
+        }, 1500)" id="guess__skip">Skip</button>
       </section>
     </main>
 
