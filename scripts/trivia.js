@@ -1,6 +1,7 @@
 (function () {
-  if (!localStorage.getItem("userID")) {
-    window.location.href = "auth.html";
+  // Check if there is a valid idToken in the website's cookies
+  if (document.cookie === "") {
+    window.location.href = "/auth.html";
   }
 
   const gameImageElement = document.getElementById("game__image");

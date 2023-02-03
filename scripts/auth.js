@@ -1,157 +1,128 @@
-// WARNING: The methods in this file are not secure. Since this academic
-// module is oriented towards front-end development, it is not intended
-// to be comprehensive and secure.
-
-const usernameField = document.getElementById("username");
-const keyField = document.getElementById("key");
-const checkButton = document.getElementById("check");
+const emailField = document.getElementById("email");
+const passwordField = document.getElementById("password");
 const signInButton = document.getElementById("signIn");
+const signUpButton = document.getElementById("signUp");
+const FIREBASE_API_KEY = "AIzaSyDOTQFVNf8Uryge39sxBAhmVjhOkzjYiik";
 
-async function handleCheckSubmit() {
-  clearAlert();
-  const username = usernameField.value;
-  if (username === "") {
-    createAlert(
-      "danger",
-      `
-      <h2>:)</h2>
-      <p class="mb-0">Please provide a username.</p>
-      `
-    );
-    return;
-  }
-
-  checkButton.disabled = true;
-  signInButton.classList.add("d-none");
-  keyField.classList.add("d-none");
-  const result = await usernameExists(username);
-
-  if (result !== false) {
-    keyField.classList.remove("d-none");
-    signInButton.classList.remove("d-none");
-  } else {
-    let key = await window.crypto.subtle.generateKey(
-      {
-        name: "AES-GCM",
-        length: 256,
-      },
-      true,
-      ["encrypt", "decrypt"]
-    );
-    const exportedKeyArray = new Uint8Array(
-      await window.crypto.subtle.exportKey("raw", key)
-    );
-    const exportedKey = getStringedKey(exportedKeyArray);
-    await createUser(exportedKey, username);
-    return;
-  }
-
-  checkButton.disabled = false;
-}
-
-async function handleSignIn() {
-  clearAlert();
-  const username = usernameField.value;
-  const key = keyField.value;
-  if (username === "" || key === "") {
-    createAlert(
-      "danger",
-      `
-      <h2>:)</h2>
-      <p class="mb-0">Please provide your username and/or key.</p>
-      `
-    );
-    return;
-  }
-  signInButton.disabled = true;
-  const user = await usernameExists(username);
-
-  signInUser(user, key);
-  signInButton.disabled = false;
-}
-
-async function usernameExists(username) {
-  const users = await fetch(
-    "https://idfinalassignment-8af7.restdb.io/rest/db-user",
-    {
-      headers: {
-        "content-type": "application/json",
-        "x-apikey": "63da313e3bc6b255ed0c4536",
-        "cache-control": "no-cache",
-      },
-    }
-  ).then((response) => response.json());
-
-  const user = users.find((user) => user.username === username);
-  return user ? user : false;
-}
-
-async function createUser(key, username) {
-  const user = await fetch(
-    "https://idfinalassignment-8af7.restdb.io/rest/db-user",
-    {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "x-apikey": "63da313e3bc6b255ed0c4536",
-        "cache-control": "no-cache",
-      },
-      body: JSON.stringify({
-        secret: key,
-        username: username,
-        points: 0,
-      }),
-    }
-  ).then((res) => res.json());
-
-  if (user === undefined) {
-    createAlert(
-      "danger",
-      `
-      <h2>Oh no!</h2>
-      <p class="mb-0">Something went wrong. Please try again.</p>
-      `
-    );
-  } else {
-    localStorage.setItem("userID", user._id);
-    createAlert(
-      "success",
-      `
-      <h2>Account created!</h2>
-      You can now sign in with this username and this key. <p><b>Please keep this key</b>; you'll need it again to sign in! Once done, <a href="/">click here to go back home</a>.</p>
-      <hr>
-      <b>Key:</b>
-      <p class="mb-0 text-break font-monospace">${key}</p>
-      `
-    );
-  }
-}
-
-function signInUser(user, key) {
-  if (user.secret === key) {
-    localStorage.setItem("userID", user._id);
+if (document.cookie !== "") {
+  if (document.referrer === window.location.href) {
     window.location.href = "/";
   } else {
-    createAlert(
-      "danger",
-      `
-      <h2>That's not right.</h2>
-      <p class="mb-0">The key you've supplied is likely incorrect for the given username.</p>
-      `
-    );
+    window.location.href = document.referrer;
   }
 }
 
-function getStringedKey(buffer) {
-  const array = new Uint8Array(buffer);
-  return Array.from(array)
-    .map((byte) => byte.toString())
-    .join("");
+function setButtonDisabled(bool) {
+  signInButton.disabled = bool;
+  signUpButton.disabled = bool;
+}
+
+function validateEntries() {
+  if (emailField.value !== "" && passwordField.value !== "") {
+    setButtonDisabled(false);
+  } else {
+    setButtonDisabled(true);
+  }
+}
+validateEntries();
+
+async function handleSubmit(button) {
+  setButtonDisabled(true);
+  await authenticateUser(button.id);
+  setButtonDisabled(false);
+}
+
+async function authenticateUser(action) {
+  const payload = {
+    email: emailField.value,
+    password: passwordField.value,
+    returnSecureToken: true,
+  };
+  let url;
+
+  switch (action) {
+    case "signIn":
+      url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${FIREBASE_API_KEY}`;
+      break;
+
+    case "signUp":
+      url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${FIREBASE_API_KEY}`;
+      break;
+  }
+
+  await fetch(url, {
+    method: "POST",
+    body: JSON.stringify(payload),
+  })
+    .then(async (response) => {
+      if (response.ok) {
+        // Handle if data is OK
+        const data = await response.json();
+        const { idToken, refreshToken, expiresIn, localId } = data;
+        const cookies = [
+          { idToken: idToken },
+          { refreshToken: refreshToken },
+          { localId: localId },
+        ];
+
+        cookies.forEach(function (cookie) {
+          const key = Object.keys(cookie)[0];
+          const value = cookie[key];
+          const expiryTime = new Date(new Date().getTime() + expiresIn * 1000);
+          document.cookie = `${key}=${value}; expires=${expiryTime.toUTCString()}; path=/; SameSite=Strict`;
+        });
+
+        window.location.href = "/";
+      } else {
+        return response.text().then((text) => {
+          const code = JSON.parse(text).error.message;
+          let message;
+
+          switch (code) {
+            case "EMAIL_NOT_FOUND":
+              message =
+                "The email address you've entered doesn't match any account. Try again or click 'Sign Up' to create a new account.";
+              break;
+            case "INVALID_PASSWORD":
+              message =
+                "The password you've entered for the given email address is incorrect. Try again.";
+              break;
+            case "EMAIL_EXISTS":
+              message =
+                "The email address you're trying to use already exists. Try again or click 'Sign In' to sign in to your account.";
+              break;
+            case "TOO_MANY_ATTEMPTS_TRY_LATER":
+              message =
+                "You've made too many unsuccessful attempts. Try again later.";
+              break;
+            case "WEAK_PASSWORD : Password should be at least 6 characters":
+              message =
+                "The password you've entered is too weak. Enter a stronger password (at least 6 characters) and try again";
+              break;
+            default:
+              message = "Something went wrong. Try again later.";
+              break;
+          }
+
+          throw new Error(message);
+        });
+      }
+    })
+    .catch((error) => {
+      createAlert(
+        "danger",
+        `
+        <h3>Uh oh!</h3>
+        <hr>
+        <p class='mb-0'>${error.message}</p>
+        `
+      );
+    });
 }
 
 function createAlert(type, content) {
-  if (usernameField.previousElementSibling) {
-    usernameField.previousElementSibling.remove();
+  if (emailField.previousElementSibling) {
+    emailField.previousElementSibling.remove();
   }
   const alertDiv = document.createElement("div");
   alertDiv.classList.add(
@@ -164,19 +135,18 @@ function createAlert(type, content) {
   alertDiv.role = "alert";
   alertDiv.id = "alert";
   alertDiv.innerHTML = content;
-  usernameField.parentNode.insertBefore(alertDiv, usernameField);
+  emailField.parentNode.insertBefore(alertDiv, emailField);
 }
 
-function clearAlert() {
-  const alert = document.getElementById("alert");
-  if (alert) {
-    alert.remove();
-  }
-}
-
-usernameField.addEventListener("keyup", (event) => {
-  if (event.code === 13) {
+emailField.addEventListener("keypress", (event) => {
+  if (event.key === "Enter") {
     event.preventDefault();
-    handleCheckSubmit();
+    handleSubmit({ id: "signIn" });
+  }
+});
+passwordField.addEventListener("keypress", (event) => {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    handleSubmit({ id: "signIn" });
   }
 });
