@@ -67,13 +67,35 @@ aside {
   font-weight: bold;
   margin-right: 5px;
 }
-#add__place_button {
+#add__place__button {
   margin-right:0px;
   background-color: var(--accent-dark-gray);
   border-radius: 50%;
 }
-#somethin{
+#add__place__interface{
   display:none;
+  position: relative;
+  margin-top:10px;
+  flex-direction: row;
+  background-color: var(--bg-dark-gray-pale);
+  padding:20px;
+  border-radius: 5px;
+  border: 1px solid var(--add-place-outline-purple);
+  width:450px;
+}
+#add__place__form{
+  display:flex;
+  flex-direction: column;
+  width: 200px;
+}
+#add__place__form *{
+  font-size: 0.6vw;
+  border: 1px solid var(--add-place-outline-purple);
+}
+#add__place__submit{
+  background-color:#5dbea3;
+  margin-top:5px;
+
 }
 
 #side__menu {

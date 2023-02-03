@@ -121,7 +121,6 @@ document
     document.getElementById("side__menu").style.display = "none";
   });
 
-
-document.getElementById("add__place__button").addEventListener("click",function(){
-  document.getElementById("somethin").style.display = "block";
-})
+  document.getElementById("add__place__button").addEventListener("click",function(){
+    document.getElementById("add__place__interface").style.display="flex";
+  })
