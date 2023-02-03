@@ -65,6 +65,21 @@ function showResults(data) {
     searchContainer.nextSibling
   );
 }
+//Gets the current location of the user and calls Mapbox
+function getCurrentLocation() {
+  function success(position) {
+    console.log(position.coords.latitude, position.coords.longitude, position.coords.accuracy);
+    console.log((Math.random() - 0.5) * 360, (Math.random() - 0.5) * 100)
+    map.flyTo({
+      center: [position.coords.longitude,position.coords.latitude],
+      essential: true,
+      zoom: 15,
+    });
+
+  }
+  navigator.geolocation.getCurrentPosition(success);
+
+}
 
 function searchLocation() {
   const resultsDiv = document.querySelector("#search__results");
@@ -105,3 +120,8 @@ document
     document.getElementById("side__menu__button").style.display = "block";
     document.getElementById("side__menu").style.display = "none";
   });
+
+
+document.getElementById("add__place__button").addEventListener("click",function(){
+  document.getElementById("somethin").style.display = "block";
+})

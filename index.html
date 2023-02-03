@@ -52,11 +52,24 @@
         </div>
       </div>
     </section>
-    <section id="right__interface">
-      <button id="add__place_button"><i class="fa-solid fa-plus"></i></button>
-
+    <section id="right__interface" class="position-absolute bottom-0 end-50 translate-middle margin-0">
+      <button id="add__place__button"><i class="fa-solid fa-plus"></i></button>
     </section>
 
+
+    <section id="somethin" class="position-absolute bottom-50 end-50 translate-middle margin-0">
+      <div>
+      <input
+        style="margin-right: 5px"
+        id="search__input"
+        class="flex-fill"
+        type="text"
+        placeholder="Search for a place..."
+      />
+      <button class="button__primary" onclick="searchLocation()">Search</button>
+      </div>
+      <button onclick="getCurrentLocation()">Get Current Location</button>
+    </section>
 
 
     </section>
