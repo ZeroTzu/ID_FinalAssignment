@@ -122,7 +122,9 @@
           name="guess"
           placeholder="Where is this?"
         />
-        <button class="button__primary" onclick="checkAnswer()" id="guess__attempt">Guess</button>
+        <button class="button__primary" onclick="setTimeout(function() {
+          checkAnswer();
+        }, 1500)" id="guess__attempt">Guess</button>
         <button class="button__primary" onclick="startRound()" id="guess__skip">Skip</button>
       </section>
     </main>
