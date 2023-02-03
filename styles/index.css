@@ -62,10 +62,21 @@ aside {
   font-weight: bold;
   margin-right: 5px;
 }
-#add__place_button {
-  background-color: var(--accent-dark-green);
+#add__place__button {
+  background-color: var(--accent-dark-gray);
+  margin-right:0px;
 }
 
+#add__place__interface{
+  display: none;
+  position:relative;
+  width: 400px;
+  height:fit-content;
+  margin-top:10px;
+  background-color: var(--bg-dark-gray-pale);
+}
+#add__place__form{
+}
 .cancelbutton {
   background: none;
   max-width: 50%;
