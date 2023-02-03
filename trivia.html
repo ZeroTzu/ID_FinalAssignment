@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Where's Where</title>
+
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" href="styles/trivia.css" />
+  </head>
+  <body data-bs-theme="dark">
+    <section
+      id="intro"
+      class="min-vh-100 min-vw-100 d-flex flex-column align-items-center justify-content-center gap-4 position-fixed "
+    >
+      <lottie-player
+        src="https://assets2.lottiefiles.com/private_files/lf30_noclpt6t.json"
+        background="transparent"
+        speed="0.5"
+        style="width: auto; height: 256px"
+        loop
+        autoplay
+      ></lottie-player>
+      <div id="intro__content" class="text-center">
+        <h1>Welcome to Where's Where!</h1>
+        <p>
+          A little trivia game that gives you the chance to earn something when
+          you play it right.
+        </p>
+      </div>
+
+      <div class="accordion w-50" id="intro__accordion">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="intro__accordion_about-header">
+            <button
+              class="accordion-button"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#intro__accordion__about-content"
+              aria-expanded="true"
+              aria-controls="intro__accordion__about-content"
+            >
+              What's this game all about?
+            </button>
+          </h2>
+          <div
+            id="intro__accordion__about-content"
+            class="accordion-collapse collapse show"
+            aria-labelledby="intro__accordion_about-header"
+            data-bs-parent="#intro__accordion"
+          >
+            <div class="accordion-body">
+              We'll give you a photo of a place from someone who has previously
+              shared it and ask you to guess where it is. We'll also give you a
+              hint by giving a small part of the map to help you figure out
+              where it is.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="intro__accordion_wins-header">
+            <button
+              class="accordion-button"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#intro__accordion_wins-content"
+              aria-expanded="true"
+              aria-controls="intro__accordion_wins-content"
+            >
+              What will I get from this?
+            </button>
+          </h2>
+          <div
+            id="intro__accordion_wins-content"
+            class="accordion-collapse collapse show"
+            aria-labelledby="intro__accordion_wins-header"
+            data-bs-parent="#intro__accordion"
+          >
+            <div class="accordion-body">
+              You'll earn XP based on how many attempts you've made and how
+              close you were. You'll be able to exchange your XP for flight
+              miles in the long run, so get playing and earn your way to a
+              flight for free!
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="button__primary" onclick="hideIntro()">
+        Let's start!
+      </button>
+    </section>
+
+    <main
+      class="vh-100 vw-100 d-flex justify-content-center p-5 flex-column gap-4"
+    >
+      <h1>Where's this?</h1>
+      <section
+        id="game__container"
+        class="flex-fill w-100 border border-1 placeholder-glow position-relative"
+      >
+        <img class="h-100 w-100 min-h-50 object-fit-scale p-0" id="game__image"></img>
+        <div class="position-absolute end-0 bottom-0 w-25">
+          <img class="bg-transparent ratio ratio-1x1" id="game__map"></img>
+        </div>
+      </section>
+
+      <section id="guess__container" class="d-flex gap-4 w-100">
+        <input
+          type="text"
+          id="guess__input"
+          class="flex-fill"
+          name="guess"
+          placeholder="Where is this?"
+        />
+        <button class="button__primary" onclick="setTimeout(function() {
+          checkAnswer();
+        }, 1500)" id="guess__attempt">Guess</button>
+        <button class="button__primary" onclick="setTimeout(function() {
+          startRound();
+        }, 1500)" id="guess__skip">Skip</button>
+      </section>
+    </main>
+
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+      integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
+      crossorigin="anonymous"
+    ></script>
+    <script src="scripts/trivia.js"></script>
+  </body>
+</html>

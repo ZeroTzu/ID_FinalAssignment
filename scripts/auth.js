@@ -87,7 +87,7 @@ async function usernameExists(username) {
 }
 
 async function createUser(key, username) {
-  const ok = await fetch(
+  const user = await fetch(
     "https://idfinalassignment-8af7.restdb.io/rest/db-user",
     {
       method: "POST",
@@ -102,9 +102,9 @@ async function createUser(key, username) {
         points: 0,
       }),
     }
-  ).then((res) => res.ok);
+  ).then((res) => res.json());
 
-  if (!ok) {
+  if (user === undefined) {
     createAlert(
       "danger",
       `
@@ -113,11 +113,12 @@ async function createUser(key, username) {
       `
     );
   } else {
+    localStorage.setItem("userID", user._id);
     createAlert(
       "success",
       `
       <h2>Account created!</h2>
-      You can now sign in with this username and this key. <p><b>Please keep this key</b>; you'll need it again to sign in! Once done, <a href="/">refresh to sign in</a>.</p>
+      You can now sign in with this username and this key. <p><b>Please keep this key</b>; you'll need it again to sign in! Once done, <a href="/">click here to go back home</a>.</p>
       <hr>
       <b>Key:</b>
       <p class="mb-0 text-break font-monospace">${key}</p>
