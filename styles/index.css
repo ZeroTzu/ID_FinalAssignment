@@ -75,7 +75,7 @@ aside {
   display:none;
   position: relative;
   margin-top:10px;
-  flex-direction: row;
+  flex-direction: column;
   background-color: var(--bg-dark-gray-pale);
   padding:20px;
   border-radius: 5px;
