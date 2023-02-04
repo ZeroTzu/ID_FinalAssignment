@@ -8,7 +8,8 @@
   --bg-dark-gray-pale: rgb(17, 17, 37);
   --add-place-outline-purple: rgb(42, 42, 83);
   --add-place-outline-purple2: rgb(35, 35, 66);
-  --add-place-outline-purple3: rgb(33, 33, 75);
+  --highlighted-purple:rgb(68, 68, 116);
+
 }
 
 body {

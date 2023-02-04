@@ -82,9 +82,8 @@ function getCurrentLocation() {
       $("#location").html(function(i,currentHTML){
         return currentHTML+`${userCurrentLocationName}`
       });
-      $("#")
     } catch(error){
-      console.log(error)
+      console.log("Error",error)
     }
     
     map.flyTo({
@@ -155,17 +154,52 @@ $("#add__place__back__button").on("click",function(){
 })
 
 //for Post button to do input validation then POST into firebase server
-let titleField=document.getElementById("title")
-let descriptionField= document.getElementById("description")
 
-console.log(titleField,descriptionField,document.getElementById("add__place__submit"))
 $("#add__place__form").submit(function(event){
   event.preventDefault(); 
-  let description=descriptionField.value;
-  let title=titleField.value
+  let description=document.getElementById("title").value;
+  let title=document.getElementById("title").value
   console.log(title,description);
+  console.log(description,title,document.getElementById("add__place__submit"))
   if(title.length<5){
     $("#add__place__form__title").placeholder="Title (Minimum 5-25 characters allowed)"
   }
+})
+
+
+
+//dropHandler for users to drop an image
+function dropHandler(ev) {
+  console.log('File(s) dropped');
+  // Prevent default behavior (Prevent file from being opened)
+  ev.preventDefault();
+
+  if (ev.dataTransfer.items) {
+    // Use DataTransferItemList interface to access the file(s)
+    [...ev.dataTransfer.items].forEach((item, i) => {
+      // If dropped items aren't files, reject them
+      if (item.kind === 'file') {
+        const file = item.getAsFile();
+        console.log(`… file[${i}].name = ${file.name}`);
+      }
+    });
+  } else {
+    // Use DataTransfer interface to access the file(s)
+    [...ev.dataTransfer.files].forEach((file, i) => {
+      console.log(`… file[${i}].name = ${file.name}`);
+    });
+  }
+}
+
+
+
+//function to highlight imagebox when dragged over
+document.getElementById("image__holder").addEventListener('dragover',function(){
+  console.log("DRAGING")
+  document.getElementById("image__holder").classList.add("image__hover")
+})
+document.getElementById("image__holder").addEventListener('dragleave',function(){
+  console.log("drag leave")
+  document.getElementById("image__holder").classList.remove("image__hover")
 })
 
