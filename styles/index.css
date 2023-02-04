@@ -70,7 +70,6 @@ aside {
 #add__place__button {
   margin-right:0px;
   background-color: var(--accent-dark-gray);
-  border-radius: 50%;
 }
 #add__place__interface{
   display:none;
