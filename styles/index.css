@@ -175,3 +175,6 @@ aside {
     margin: 0.25rem 0;
   }
 }
+.image__hover{
+  border: 2px groove white !important;
+}
