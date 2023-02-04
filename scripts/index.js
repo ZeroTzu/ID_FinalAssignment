@@ -80,7 +80,7 @@ function getCurrentLocation() {
       console.log(results);
       userCurrentLocationName=results.features[0].place_name;
       $("#location").html(function(i,currentHTML){
-        return currentHTML+`${userCurrentLocationName}`
+        return `Location: ${userCurrentLocationName}`
       });
     } catch(error){
       console.log("Error",error)
@@ -143,6 +143,7 @@ document
 $("#add__place__button").on("click",async function(){
   $("#add__place__interface").css("display","flex");
   console.log("HIHI");
+
   })
 $(".float-out").css({
   right: "0"
@@ -168,38 +169,61 @@ $("#add__place__form").submit(function(event){
 
 
 
-//dropHandler for users to drop an image
-function dropHandler(ev) {
-  console.log('File(s) dropped');
-  // Prevent default behavior (Prevent file from being opened)
-  ev.preventDefault();
-
-  if (ev.dataTransfer.items) {
-    // Use DataTransferItemList interface to access the file(s)
-    [...ev.dataTransfer.items].forEach((item, i) => {
-      // If dropped items aren't files, reject them
-      if (item.kind === 'file') {
-        const file = item.getAsFile();
-        console.log(`… file[${i}].name = ${file.name}`);
-      }
-    });
-  } else {
-    // Use DataTransfer interface to access the file(s)
-    [...ev.dataTransfer.files].forEach((file, i) => {
-      console.log(`… file[${i}].name = ${file.name}`);
-    });
-  }
-}
 
 
 
 //function to highlight imagebox when dragged over
-document.getElementById("image__holder").addEventListener('dragover',function(){
+document.getElementById("image__holder").addEventListener('dragover',function(event){
+  event.preventDefault();
   console.log("DRAGING")
   document.getElementById("image__holder").classList.add("image__hover")
 })
-document.getElementById("image__holder").addEventListener('dragleave',function(){
+document.getElementById("image__holder").addEventListener('dragleave',function(event){
+  event.preventDefault();
   console.log("drag leave")
   document.getElementById("image__holder").classList.remove("image__hover")
 })
 
+//dropHandler for users to drop an image
+document.getElementById("image__holder").addEventListener("drop",function(event){
+  event.preventDefault();
+  function updateImage(image){
+    console.log("Running updateImage")
+    let thumbnailElement=document.getElementById("image__holder").querySelector(".post__image")
+    if(!thumbnailElement){
+      console.log(document.getElementById("image__holder").querySelector("#placeholder__lottie"));
+      document.getElementById("image__holder").querySelector("#placeholder__lottie").style.display="none";
+      thumbnailElement=document.createElement("img");
+      thumbnailElement.classList.add("post__image");
+      thumbnailElement.src=URL.createObjectURL(image);
+      document.getElementById("image__holder").appendChild(thumbnailElement);
+      console.log("Logged if");
+
+    }
+    else{
+      console.log("Logged not")
+    }
+    
+  }
+  let userFiles=event.dataTransfer.files
+  let firstImage;
+  console.log("Detected drop")
+  let isAllImage=true;
+  let imageTypes= ['image/png', 'image/jpeg'];
+  if (userFiles.length<1){
+    console.log("No Files Detected")
+    return "nothing";
+  }
+  for (let i=0;i<userFiles.length;i++){
+    if(imageTypes.includes(userFiles[i].type)==false){
+      isAllImage=false;
+      break;
+    }
+  }
+  if(isAllImage==false){
+    console.log("Unsupported file type detected: png and jpeg files only")
+    return
+  }
+  let image1=userFiles[0];
+  updateImage(image1)
+})
