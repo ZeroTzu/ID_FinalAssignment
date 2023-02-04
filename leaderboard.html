@@ -4,18 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Working title, changeable in future -->
     <title>Leaderboard</title>
-
-    <!-- Mapbox GL JS -->
-    <script src="https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js"></script>
-    <link
-      href="https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css"
-      rel="stylesheet"
-    />
-
-    <!-- LottieFiles -->
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
     <!-- Bootstrap -->
     <link
@@ -24,102 +13,99 @@
       integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
       crossorigin="anonymous"
     />
-    <!--Font Awesome-->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
-    <script src="https://kit.fontawesome.com/1bb416726a.js" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="styles/index.css" />
   </head>
 
   <body>
     <table class="table table-striped table-dark">
-        <thead>
-          <tr>
-            <th scope="col">Rank</th>
-            <th scope="col">Gamer</th>
-            <th scope="col">Points</th>
-            <th scope="col">Trivia High Score</th>
-          </tr> 
-        </thead> 
-        <tbody id="tbody1"></tbody>
-      </table>
+      <thead>
+        <tr>
+          <th scope="col">Rank</th>
+          <th scope="col">Gamer</th>
+          <th scope="col">Points</th>
+          <th scope="col">Trivia High Score</th>
+        </tr>
+      </thead>
+      <tbody id="tbody1"></tbody>
+    </table>
 
-      <!--Firestore Libraries-->
-      <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
-
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
   </body>
 </html>
-   
 
-<script id="MainScript">
-
+<script>
   const firebaseConfig = {
-  apiKey: "AIzaSyDOTQFVNf8Uryge39sxBAhmVjhOkzjYiik",
-  authDomain: "exdatabase-1a7c3.firebaseapp.com",
-  projectId: "exdatabase-1a7c3",
-  storageBucket: "exdatabase-1a7c3.appspot.com",
-  messagingSenderId: "857622055165",
-  appId: "1:857622055165:web:bf5e8559033206db635694",
-  measurementId: "G-5YMV97BR5B"
-};
+    apiKey: "AIzaSyDOTQFVNf8Uryge39sxBAhmVjhOkzjYiik",
+    authDomain: "exdatabase-1a7c3.firebaseapp.com",
+    projectId: "exdatabase-1a7c3",
+    storageBucket: "exdatabase-1a7c3.appspot.com",
+    messagingSenderId: "857622055165",
+    appId: "1:857622055165:web:bf5e8559033206db635694",
+  };
 
-firebase.initializeApp(firebaseConfig);
-let db = firebase.firestore();
+  firebase.initializeApp(firebaseConfig);
+  let db = firebase.firestore();
 
-function GetAllDataOnce(){
-  db.collection("Users").get().then((querySnapshot)=>{
-    var users = [];
-    querySnapshot.forEach(doc => {
-      users.push(doc.data());
+  function getAllDataOnce() {
+    db.collection("users")
+      .get()
+      .then((querySnapshot) => {
+        var users = [];
+        querySnapshot.forEach((doc) => {
+          users.push(doc.data());
+        });
+        addAllItemsToTable(users);
+      });
+  }
 
+  function getAllDataRealtime() {
+    db.collection("users").onSnapshot((querySnapshot) => {
+      var users = [];
+      querySnapshot.forEach((doc) => {
+        users.push(doc.data());
+      });
+      addAllItemsToTable(users);
     });
-    AddAllItemsToTheTable(users);
-  });
-}
- 
-function GetAllDataRealtime(){
-  db.collection("Users").onSnapshot((querySnapshot)=>{
-    var users = [];
-    querySnapshot.forEach(doc => {
-      users.push(doc.data());
+  }
 
+  var uNo = 0;
+  var tbody = document.getElementById("tbody1");
+
+  function addItemToTable(username, points, htp) {
+    var trow = document.createElement("tr");
+    var td1 = document.createElement("td");
+    var td2 = document.createElement("td");
+    var td3 = document.createElement("td");
+    var td4 = document.createElement("td");
+
+    td1.innerHTML = ++uNo;
+    td2.innerHTML = username;
+    td3.innerHTML = points;
+    td4.innerHTML = htp;
+
+    trow.appendChild(td1);
+    trow.appendChild(td2);
+    trow.appendChild(td3);
+    trow.appendChild(td4);
+
+    tbody.appendChild(trow);
+  }
+
+  function addAllItemsToTable(UserDocsList) {
+    uNo = 0;
+    tbody.innerHTML = "";
+    UserDocsList.forEach((element) => {
+      addItemToTable(
+        element.username,
+        element.points,
+        element.highestTriviaPoints
+      );
     });
-    AddAllItemsToTheTable(users);
-  });
-}
+  }
 
-var uNo=0
-var tbody = document.getElementById('tbody1');
-
-function AddItemToTable(username, points, ths){
-  var trow = document.createElement('tr');
-  var td1 = document.createElement('td');
-  var td2 = document.createElement('td'); 
-  var td3 = document.createElement('td');
-  var td4 = document.createElement('td');
-
-  td1.innerHTML = ++uNo;
-  td2.innerHTML = username;
-  td3.innerHTML = points;
-  td4.innerHTML = ths;
-
-  trow.appendChild(td1);
-  trow.appendChild(td2);
-  trow.appendChild(td3);
-  trow.appendChild(td4);
-
-  tbody.appendChild(trow);
-} 
-
-function AddAllItemsToTheTable(UserDocsList){
-  uNo = 0;
-  tbody.innerHTML=""; 
-  UserDocsList.forEach(element => {
-    AddItemToTable(element.Username, element.Points, element.TriviaHighScore);
-  });
-}
-
-window.onload = GetAllDataOnce;
+  window.onload = getAllDataOnce;
 </script>
