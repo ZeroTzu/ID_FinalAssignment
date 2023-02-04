@@ -67,11 +67,26 @@ function showResults(data) {
     searchContainer.nextSibling
   );
 }
-//Gets the current location of the user and calls Mapbox
+//Gets the current coords of user,calls mapbox inputing the coords, gets name of the closest match,
+var userCurrentLocationCoords;
+var userCurrentLocationName;
 function getCurrentLocation() {
-  function success(position) {
-    console.log(position.coords.latitude, position.coords.longitude, position.coords.accuracy);
-    console.log((Math.random() - 0.5) * 360, (Math.random() - 0.5) * 100)
+  async function success(position) {
+    userCurrentLocationCoords=[position.coords.longitude,position.coords.latitude]
+    try{
+      const url=`https://api.mapbox.com/geocoding/v5/mapbox.places/${position.coords.longitude},${position.coords.latitude}.json?access_token=${mapboxgl.accessToken}`;
+      const response= await fetch(url);
+      const results= await response.json();
+      console.log(results);
+      userCurrentLocationName=results.features[0].place_name;
+      $("#location").html(function(i,currentHTML){
+        return currentHTML+`${userCurrentLocationName}`
+      });
+      $("#")
+    } catch(error){
+      console.log(error)
+    }
+    
     map.flyTo({
       center: [position.coords.longitude,position.coords.latitude],
       essential: true,
@@ -96,6 +111,7 @@ function searchLocation() {
     .then((data) => {
       showResults(data);
       return data;
+      
     });
 }
 
@@ -125,9 +141,8 @@ document
 
 
 //For Add Place button to show the add__place__interface
-$("#add__place__button").on("click",function(){
+$("#add__place__button").on("click",async function(){
   $("#add__place__interface").css("display","flex");
-  $("#add__place__interface").toggleClass("float-out");
   console.log("HIHI");
   })
 $(".float-out").css({
@@ -136,6 +151,7 @@ $(".float-out").css({
 //for back button to hide add__place__interface
 $("#add__place__back__button").on("click",function(){
   $("#add__place__interface").css("display","none");
+  
 })
 
 //for Post button to do input validation then POST into firebase server
