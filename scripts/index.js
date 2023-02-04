@@ -1,4 +1,6 @@
 // Loads the Mapbox GL JS library and creates a map
+
+
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYXJhc2hucmltIiwiYSI6ImNsZGU1MjgybzA1ZGczcG81aTRlYnNsc2wifQ.pl_hnGv5vMnM1Yi5QXDmYA"; // Add your Mapbox access token here
 
@@ -121,6 +123,33 @@ document
     document.getElementById("side__menu").style.display = "none";
   });
 
-  document.getElementById("add__place__button").addEventListener("click",function(){
-    document.getElementById("add__place__interface").style.display="flex";
+
+//For Add Place button to show the add__place__interface
+$("#add__place__button").on("click",function(){
+  $("#add__place__interface").css("display","flex");
+  $("#add__place__interface").toggleClass("float-out");
+  console.log("HIHI");
   })
+$(".float-out").css({
+  right: "0"
+});
+//for back button to hide add__place__interface
+$("#add__place__back__button").on("click",function(){
+  $("#add__place__interface").css("display","none");
+})
+
+//for Post button to do input validation then POST into firebase server
+let titleField=document.getElementById("title")
+let descriptionField= document.getElementById("description")
+
+console.log(titleField,descriptionField,document.getElementById("add__place__submit"))
+$("#add__place__form").submit(function(event){
+  event.preventDefault(); 
+  let description=descriptionField.value;
+  let title=titleField.value
+  console.log(title,description);
+  if(title.length<5){
+    $("#add__place__form__title").placeholder="Title (Minimum 5-25 characters allowed)"
+  }
+})
+

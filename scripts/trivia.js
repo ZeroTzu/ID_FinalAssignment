@@ -8,8 +8,7 @@
   const guessFieldElement = document.querySelector("#guess__input");
   const attemptButtonElement = document.querySelector("#guess__attempt");
   const skipButtonElement = document.querySelector("#guess__skip");
-  var place, attempts;
-
+  console.log(guessFieldElement)
   function hideIntro() {
     const introElement = document.getElementById("intro");
     introElement.style.opacity = 0;
