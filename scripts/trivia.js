@@ -69,13 +69,13 @@ async function updatePoints(points) {
       } else {
         const newPoints = document.data().Points + points;
         let reachedHighScore = false;
-        if (newPoints > document.data().TriviaHighScore) {
+        if (points > document.data().TriviaHighScore) {
           reachedHighScore = true;
         }
         transaction.update(doc(db, "users", user.uid), {
           Points: newPoints,
           TriviaHighScore: reachedHighScore
-            ? newPoints
+            ? points
             : document.data().TriviaHighScore,
         });
       }
