@@ -175,16 +175,14 @@ $("#add__place__form").submit(function(event){
 //function to highlight imagebox when dragged over
 document.getElementById("image__holder").addEventListener('dragover',function(event){
   event.preventDefault();
-  console.log("DRAGING")
   document.getElementById("image__holder").classList.add("image__hover")
 })
 document.getElementById("image__holder").addEventListener('dragleave',function(event){
   event.preventDefault();
-  console.log("drag leave")
   document.getElementById("image__holder").classList.remove("image__hover")
 })
 
-//dropHandler for users to drop an image
+//drop Handler for users to drop an image into image__holder
 document.getElementById("image__holder").addEventListener("drop",function(event){
   event.preventDefault();
   function updateImage(image){
@@ -194,19 +192,21 @@ document.getElementById("image__holder").addEventListener("drop",function(event)
       console.log(document.getElementById("image__holder").querySelector("#placeholder__lottie"));
       document.getElementById("image__holder").querySelector("#placeholder__lottie").style.display="none";
       thumbnailElement=document.createElement("img");
+      thumbnailElement.style.maxWidth=("100%");
+      thumbnailElement.style.maxHeight=("100%");
       thumbnailElement.classList.add("post__image");
       thumbnailElement.src=URL.createObjectURL(image);
       document.getElementById("image__holder").appendChild(thumbnailElement);
-      console.log("Logged if");
-
+      console.log("Image drop initiated")
+      document.getElementById("image__holder").classList.remove("image__hover")
     }
     else{
       console.log("Logged not")
+      document.getElementById("image__holder").classList.remove("image__hover")
     }
     
   }
   let userFiles=event.dataTransfer.files
-  let firstImage;
   console.log("Detected drop")
   let isAllImage=true;
   let imageTypes= ['image/png', 'image/jpeg'];
