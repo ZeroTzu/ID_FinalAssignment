@@ -1,26 +1,18 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+import { auth } from "./utils/firebase.js";
 import {
-  getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  updateProfile,
+  signOut,
 } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
 
+const usernameField = document.getElementById("username");
 const emailField = document.getElementById("email");
 const passwordField = document.getElementById("password");
 const signInButton = document.getElementById("signIn");
 const signUpButton = document.getElementById("signUp");
-const firebaseConfig = {
-  apiKey: "AIzaSyDOTQFVNf8Uryge39sxBAhmVjhOkzjYiik",
-  authDomain: "exdatabase-1a7c3.firebaseapp.com",
-  projectId: "exdatabase-1a7c3",
-  storageBucket: "exdatabase-1a7c3.appspot.com",
-  messagingSenderId: "857622055165",
-  appId: "1:857622055165:web:bf5e8559033206db635694",
-};
-
-const app = initializeApp(firebaseConfig);
-let auth = getAuth(app);
+const signOutButton = document.getElementById("signOut");
 
 onAuthStateChanged(auth, function (user) {
   if (user) {
@@ -88,13 +80,6 @@ async function handleSubmit(button) {
 }
 
 async function authenticateUser(action) {
-  const payload = {
-    email: emailField.value,
-    password: passwordField.value,
-    returnSecureToken: true,
-  };
-  let url;
-
   switch (action) {
     case "signIn":
       signInWithEmailAndPassword(
@@ -107,13 +92,22 @@ async function authenticateUser(action) {
       break;
 
     case "signUp":
-      createUserWithEmailAndPassword(
-        auth,
-        emailField.value,
-        passwordField.value
-      ).catch(function (error) {
+      try {
+        await createUserWithEmailAndPassword(
+          auth,
+          emailField.value,
+          passwordField.value
+        ).catch(function (error) {
+          throw error;
+        });
+        await updateProfile(auth.currentUser, {
+          displayName: usernameField.value,
+        }).catch(function (error) {
+          throw error;
+        });
+      } catch (error) {
         handleFailedAuth(error.code);
-      });
+      }
       break;
   }
 }
@@ -163,4 +157,17 @@ signInButton.addEventListener("click", function (event) {
 signUpButton.addEventListener("click", function (event) {
   event.preventDefault();
   handleSubmit(event.target);
+});
+signOutButton.addEventListener("click", function (event) {
+  event.preventDefault();
+  signOut(auth).catch(function (error) {
+    createAlert(
+      "danger",
+      `
+      <h3>Uh oh!</h3>
+      <hr>
+      <p class='mb-0'>Sign out error: ${error.message}</p>
+      `
+    );
+  });
 });

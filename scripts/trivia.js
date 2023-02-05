@@ -36,6 +36,17 @@ function hideIntro() {
 }
 window["hideIntro"] = hideIntro;
 
+function setButtonsDisabled(state) {
+  attemptButtonElement.disabled = state;
+  skipButtonElement.disabled = state;
+}
+
+function handleRestart() {
+  setButtonsDisabled(true);
+  startRound(true);
+}
+window.handleRestart = handleRestart;
+
 async function fetchRandomPhoto() {
   const snapshot = await getDocs(collection(db, "placePhoto"));
   const selectedPhoto =
@@ -50,25 +61,22 @@ async function updatePoints(points) {
       const document = await transaction.get(doc(db, "users", user.uid));
       if (!document.exists()) {
         const payload = {
-          username: user.displayName,
-          points: points,
-          triviaHighScore: 0,
+          Username: user.displayName,
+          Points: points,
+          TriviaHighScore: 0,
         };
         transaction.set(doc(db, "users", user.uid), payload);
-        console.warn(
-          `Document did not exist for user ${user.uid}; created one. This should not happen.`
-        );
       } else {
-        const newPoints = document.data().points + points;
+        const newPoints = document.data().Points + points;
         let reachedHighScore = false;
-        if (newPoints > document.data().triviaHighScore) {
+        if (newPoints > document.data().TriviaHighScore) {
           reachedHighScore = true;
         }
         transaction.update(doc(db, "users", user.uid), {
-          points: newPoints,
-          triviaHighScore: reachedHighScore
+          Points: newPoints,
+          TriviaHighScore: reachedHighScore
             ? newPoints
-            : document.data().triviaHighScore,
+            : document.data().TriviaHighScore,
         });
       }
     });
@@ -81,6 +89,7 @@ async function updatePoints(points) {
 }
 
 async function checkAnswer() {
+  setButtonsDisabled(true);
   const input = guessFieldElement.value;
   const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${input}.json?promximity=${[
     place.coordinates.longitude,
@@ -162,6 +171,7 @@ async function checkAnswer() {
             } kilometres away.`
       } Keep going!`
     );
+    setButtonsDisabled(false);
   }
 }
 window["checkAnswer"] = checkAnswer;
@@ -173,8 +183,10 @@ function displayMap(latitude, longitude) {
 
 async function resetRound() {
   // Resets all the variables and elements back to their initial forms
+  setButtonsDisabled(true);
   place = undefined;
   attempts = [];
+  guessFieldElement.value = "";
   attemptButtonElement.disabled = true;
   skipButtonElement.disabled = true;
 
@@ -185,7 +197,7 @@ async function resetRound() {
   });
 }
 
-async function startRound() {
+async function startRound(delayButtonEnable = false) {
   resetRound();
 
   fetchRandomPhoto()
@@ -203,8 +215,24 @@ async function startRound() {
       });
     })
     .then(function () {
-      attemptButtonElement.disabled = false;
-      skipButtonElement.disabled = false;
+      if (!delayButtonEnable) {
+        setButtonsDisabled(false);
+      } else {
+        setTimeout(function () {
+          setButtonsDisabled(false);
+        }, 2500);
+      }
     });
 }
 window["startRound"] = startRound;
+
+var keyupTimeout;
+guessFieldElement.addEventListener("keyup", function (event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    clearTimeout(keyupTimeout);
+    keyupTimeout = setTimeout(function () {
+      checkAnswer();
+    }, 500);
+  }
+});
