@@ -1,6 +1,7 @@
 (function () {
-  if (!localStorage.getItem("userID")) {
-    window.location.href = "auth.html";
+  // Check if there is a valid idToken in the website's cookies
+  if (document.cookie === "") {
+    window.location.href = "/auth.html";
   }
 
   const gameImageElement = document.getElementById("game__image");
@@ -8,8 +9,7 @@
   const guessFieldElement = document.querySelector("#guess__input");
   const attemptButtonElement = document.querySelector("#guess__attempt");
   const skipButtonElement = document.querySelector("#guess__skip");
-  var place, attempts;
-
+  console.log(guessFieldElement)
   function hideIntro() {
     const introElement = document.getElementById("intro");
     introElement.style.opacity = 0;

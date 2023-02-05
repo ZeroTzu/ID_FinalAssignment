@@ -37,19 +37,35 @@
       </p>
     </aside>
     <main class="col-md-6 d-flex flex-column gap-4 p-5 justify-content-center">
-      <input type="text" name="username" id="username" placeholder="Username" />
+      <input
+        type="email"
+        name="email"
+        id="email"
+        placeholder="Email address"
+        onkeyup="validateEntries()"
+      />
       <input
         type="password"
-        name="key"
-        id="key"
-        placeholder="Key"
-        class="d-none"
+        name="password"
+        id="password"
+        placeholder="Password"
+        onkeyup="validateEntries()"
       />
 
       <div class="d-flex gap-3">
-        <button id="check" onclick="handleCheckSubmit()">Check</button>
-        <button id="signIn" class="d-none" onclick="handleSignIn()">
+        <button
+          id="signIn"
+          class="button__primary"
+          onclick="handleSubmit(this)"
+        >
           Sign in
+        </button>
+        <button
+          id="signUp"
+          class="button__primary"
+          onclick="handleSubmit(this)"
+        >
+          Sign up
         </button>
       </div>
     </main>

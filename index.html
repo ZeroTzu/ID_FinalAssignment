@@ -28,6 +28,8 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/1bb416726a.js" crossorigin="anonymous"></script>
 
+    <!--JQuery-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="styles/index.css" />
   </head>
   <body data-bs-theme="dark">
@@ -52,15 +54,11 @@
         </div>
       </div>
     </section>
-    <section id="right__interface" class="position-absolute bottom-0 end-50 translate-middle margin-0">
-      
-    </section>
 
 
 
-    <section class="position-absolute" style="top:50px; left:50px" >
+    <section class="position-absolute" style="top:20px; left:50px" >
       <div style="max-width: 390px;">
-        
         <aside class="d-flex flex-column p-2">
           <div id="aside__header" class="d-flex flex-row w-100 gap-1 justify-content-center">
             <button id="side__menu__button"><i class="fa fa-bars"></i></button>
@@ -69,6 +67,7 @@
               class="flex-fill"
               type="text"
               placeholder="Search for a place..."
+              style="font-size:0.7vw"
             />
             <button class="button__primary"onclick="searchLocation()">Search</button>
             <button id="add__place__button"  onclick="getCurrentLocation()"><i class="fa-solid fa-plus"></i></button>
@@ -87,15 +86,22 @@
       </div>
 
       <div id="add__place__interface" style="height: fit-content;">
+        <h6 id="location">Location: </h6>
         <form id="add__place__form" class="flex-column">
-          <input type="text" placeholder="Title" font>
-          <textarea placeholder="Describe your experience here..." style=" border-top-left-radius:0px ;margin-top: 5px;"rows="10"column="8"></textarea>
-          <button type="submit" id="add__place__submit">Post!</button>
+          <input type="text" id="title" placeholder="Title" font>
+          <div id="image__holder"style="width:100%;  border: 1.5px solid var(--add-place-outline-purple);">
+            <lottie-player 
+              id="placeholder__lottie"
+              src="https://assets9.lottiefiles.com/packages/lf20_jdh7d1du.json"  
+              background="transparent"  speed="1"  style="width: 100%; height: 100%;"  
+              loop autoplay>
+            </lottie-player>
+          </div>
+          <textarea placeholder="Describe your experience here..." id="description" style=" border-top-left-radius:0px ;margin-top: 5px;"rows="10"column="8"></textarea>
+          <button id="add__place__submit" type="submit" >Post!</button>
         </form>
-        <div style="width:200px; height:200px; margin-left:10px; border: 1.5px solid var(--add-place-outline-purple);">
-          <img src="cancel.png" style="background-color:var(--bg-dark-gray-pale); width: 100%;height: auto;">
-        </div>
-      <button></button>
+
+      <button id="add__place__back__button"></i></button>
       </div>
     </section>
 
