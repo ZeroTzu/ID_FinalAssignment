@@ -80,12 +80,13 @@ aside {
   padding: 20px;
   border-radius: 5px;
   border: 1px solid var(--add-place-outline-purple);
-  max-width: 900px;
+  max-width: 450px;
 }
 #add__place__form {
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-width: 100%;
 }
 #add__place__form * {
   font-size: 0.6vw;
