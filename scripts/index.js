@@ -1,5 +1,5 @@
 // Loads the Mapbox GL JS library and creates a map
-import {auth} from "./utils/firebase";
+import {auth} from "./utils/firebase.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
 import { getAuth,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
