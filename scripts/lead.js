@@ -19,7 +19,12 @@ function GetAllDataOnce(){
       users.push(doc.data());
 
     });
+    users.sort(function compareFn(a, b){
+      return b.Points - a.Points 
+
+    })
     AddAllItemsToTheTable(users);
+
   });
 }
  
