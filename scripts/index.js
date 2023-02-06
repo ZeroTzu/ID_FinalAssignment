@@ -1,5 +1,9 @@
 // Loads the Mapbox GL JS library and creates a map
-
+import {auth} from "./utils/firebase";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+import { getAuth,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
+import { getStorage } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-storage.js";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYXJhc2hucmltIiwiYSI6ImNsZGU1MjgybzA1ZGczcG81aTRlYnNsc2wifQ.pl_hnGv5vMnM1Yi5QXDmYA"; // Add your Mapbox access token here
@@ -130,6 +134,7 @@ document
     document.getElementById("side__menu").style.display = "block";
     document.getElementById("side__menu__button").style.display = "none";
   });
+  
 //for side__menu__back to hide the menu
 document
   .getElementById("side__menu__back")
