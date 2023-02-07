@@ -1,9 +1,19 @@
+import {auth,app,onAuthStateChanged,db,storage ,getDocs ,collection , onSnapshot ,ref,uploadBytes,setDoc,doc} from "./utils/firebase.js";
+
+
 // Loads the Mapbox GL JS library and creates a map
-import {auth} from "./utils/firebase.js";
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
-import { getAuth,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
-import { getStorage } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-storage.js";
+
+var userIsSignedIn;
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    userIsSignedIn=true
+  } else {
+    // User is signed out
+    userIsSignedIn=false
+  }
+});
+
+
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYXJhc2hucmltIiwiYSI6ImNsZGU1MjgybzA1ZGczcG81aTRlYnNsc2wifQ.pl_hnGv5vMnM1Yi5QXDmYA"; // Add your Mapbox access token here
@@ -71,6 +81,7 @@ function showResults(data) {
     searchContainer.nextSibling
   );
 }
+
 //Gets the current coords of user,calls mapbox inputing the coords, gets name of the closest match,
 var userCurrentLocationCoords;
 var userCurrentLocationName;
@@ -100,7 +111,8 @@ function getCurrentLocation() {
   navigator.geolocation.getCurrentPosition(success);
 
 }
-
+$("#search__button").on("click",searchLocation())
+$("#add__place__button").on("click",getCurrentLocation())
 function searchLocation() {
   const resultsDiv = document.querySelector("#search__results");
   if (resultsDiv) {
@@ -159,22 +171,6 @@ $("#add__place__back__button").on("click",function(){
   
 })
 
-//for Post button to do input validation then POST into firebase server
-
-$("#add__place__form").submit(function(event){
-  event.preventDefault(); 
-  let description=document.getElementById("title").value;
-  let title=document.getElementById("title").value
-  console.log(title,description);
-  console.log(description,title,document.getElementById("add__place__submit"))
-  if(title.length<5){
-    $("#add__place__form__title").placeholder="Title (Minimum 5-25 characters allowed)"
-  }
-})
-
-
-
-
 
 
 //function to highlight imagebox when dragged over
@@ -187,10 +183,77 @@ document.getElementById("image__holder").addEventListener('dragleave',function(e
   document.getElementById("image__holder").classList.remove("image__hover")
 })
 
+
+
+//for Post button to do input validation then POST into firebase server
+var images;
+$("#add__place__form").submit(async function(event){
+  event.preventDefault(); 
+  let title=document.getElementById("title").value;
+  let description=document.getElementById("description").value;
+  console.log(title,description,images[0]);
+  console.log(description,title,document.getElementById("add__place__submit"))
+  if(title.length<5){
+    $("#add__place__form__title").placeholder="Title (Minimum 5-25 characters allowed)"
+  }
+  if (userIsSignedIn==false){
+    console.log("Unable to post...user isn't signed in")
+    //do something to alert user in html here PLS
+    return
+  }
+  else{
+    console.log("User IS signed in")
+    let user=auth.currentUser;
+    let uid=user.uid;
+    let userName=user.displayName;
+    let fb_storageImage
+    let currentDate=new Date()
+    console.log(`UserName: ${userName} UserID: ${uid}`)
+    let postDoc =doc(collection(db,"post"),`${uid}_${format(currentDate)}`)
+    let storageRef=ref(storage,`images/${images[0].name}`)//SOME ERROR HERE
+    await uploadBytes(storageRef,images[0]).then((snapshot)=>{
+      console.log('Uploaded a blob or file!')
+  
+
+      
+      
+    }).catch(function(error){
+      console.log(error)
+    }).finally(()=>{
+      setDoc(postDoc,{ 
+        uid: uid, 
+        displayName: userName,
+        description: false, population: 860000,
+        postTime:currentDate,
+        locationName:userCurrentLocationName,
+        locationCoords:userCurrentLocationCoords,
+        photoArray:[`photos/${images[0].name}`]
+      })  
+    })
+  }
+})
+function format(inputDate) {
+  let date, month, year;
+
+  date = inputDate.getDate();
+  month = inputDate.getMonth() + 1;
+  year = inputDate.getFullYear();
+
+    date = date
+        .toString()
+        .padStart(2, '0');
+
+    month = month
+        .toString()
+        .padStart(2, '0');
+
+  return `${date}${month}${year}`;
+}
+
 //drop Handler for users to drop an image into image__holder
 document.getElementById("image__holder").addEventListener("drop",function(event){
   event.preventDefault();
-  function updateImage(image){
+  function updateShowImage(image){
     console.log("Running updateImage")
     let thumbnailElement=document.getElementById("image__holder").querySelector(".post__image")
     if(!thumbnailElement){
@@ -202,7 +265,7 @@ document.getElementById("image__holder").addEventListener("drop",function(event)
       thumbnailElement.classList.add("post__image");
       thumbnailElement.src=URL.createObjectURL(image);
       document.getElementById("image__holder").appendChild(thumbnailElement);
-      console.log("Image drop initiated")
+      console.log("Image drop initiated",image)
       document.getElementById("image__holder").classList.remove("image__hover")
     }
     else{
@@ -229,6 +292,9 @@ document.getElementById("image__holder").addEventListener("drop",function(event)
     console.log("Unsupported file type detected: png and jpeg files only")
     return
   }
-  let image1=userFiles[0];
-  updateImage(image1)
+  images=[userFiles[0]];
+  updateShowImage(images[0])
 })
+
+
+
