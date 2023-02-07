@@ -247,7 +247,7 @@ function format(inputDate) {
         .toString()
         .padStart(2, '0');
 
-  return `${date}${month}${year}`;
+  return `${date}${month}${year}${inputDate.getHours()}${inputDate.getMinutes()}${inputDate.getSeconds()}`;
 }
 
 //drop Handler for users to drop an image into image__holder
