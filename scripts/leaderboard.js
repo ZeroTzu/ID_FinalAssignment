@@ -2,7 +2,6 @@ import { db } from "./utils/firebase.js";
 import {
   getDocs,
   collection,
-  onSnapshot,
 } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
 
 async function GetAllDataOnce() {
@@ -18,15 +17,6 @@ async function GetAllDataOnce() {
   });
 }
 
-function GetAllDataRealtime() {
-  onSnapshot(collection(db, "users"), (querySnapshot) => {
-    var users = [];
-    querySnapshot.forEach((doc) => {
-      users.push(doc.data());
-    });
-    AddAllItemsToTheTable(users);
-  });
-}
 
 var uNo = 0;
 var tbody = document.getElementById("tbody1");
