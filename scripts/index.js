@@ -206,7 +206,6 @@ $("#add__place__form").submit(async function(event){
     let user=auth.currentUser;
     let uid=user.uid;
     let userName=user.displayName;
-    let fb_storageImage
     let currentDate=new Date()
     console.log(`UserName: ${userName} UserID: ${uid}`)
     let postDoc =doc(collection(db,"post"),`${uid}_${format(currentDate)}`)
@@ -223,7 +222,8 @@ $("#add__place__form").submit(async function(event){
       setDoc(postDoc,{ 
         uid: uid, 
         displayName: userName,
-        description: false, population: 860000,
+        title: title,
+        description: description,
         postTime:currentDate,
         locationName:userCurrentLocationName,
         locationCoords:userCurrentLocationCoords,
