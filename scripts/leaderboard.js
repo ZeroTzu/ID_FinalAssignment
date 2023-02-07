@@ -1,9 +1,5 @@
-import { db } from "./utils/firebase.js";
-import {
-  getDocs,
-  collection,
-  onSnapshot,
-} from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
+import { db,getDocs,collection,onSnapshot } from "./utils/firebase.js";
+;
 
 async function GetAllDataOnce() {
   await getDocs(collection(db, "users")).then((querySnapshot) => {
