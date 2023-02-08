@@ -54,6 +54,11 @@ aside {
   max-height: 50%;
 }
 
+.fa-solid, .fas {
+  font-weight: 900;
+  color: white ;
+  }
+
 #side__menu__button,
 #add__place_button {
   background-color: var(--bg-dark-gray);
@@ -68,9 +73,16 @@ aside {
   margin-right: 5px;
 }
 #add__place__button {
-  margin-right: 0px;
+  margin-left: 3px;
   background-color: var(--accent-dark-gray);
+  border: 1px solid var(--accent-dark-gray);
+  width: 30px;
 }
+
+#add__place__button:hover {
+  background-color: var(--bg-dark-gray);
+}
+
 #add__place__interface {
   display: none;
   position: relative;
@@ -130,7 +142,7 @@ aside {
   background-color: var(--pale-black);
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 415px) {
   #map__container {
     height: 100vh;
     width: 100vw;
@@ -167,7 +179,7 @@ aside {
     z-index: 149;
     background-color: var(--bg-dark-gray);
     height: fit-content;
-    border-radius: var(--radius);
+    border-radius: 0;
     font-size: 12px;
   }
   .search__result > * {
@@ -182,4 +194,25 @@ aside {
 .post__image{
   max-height: 500px;
   max-width:  800px;
+}
+
+
+@media screen and (max-width: 380px) {
+  aside{
+    position: absolute;
+    z-index: 149;
+    background-color: var(--bg-dark-gray);
+    height: fit-content;
+    border-radius: 0;
+    font-size: 9px;
+    top:-10px;
+    left: -30px;
+  }
+
+  #add__place__button {
+    margin-left: 3px;
+    background-color: var(--accent-dark-gray);
+    border: 1px solid var(--accent-dark-gray);
+    width: 21px;
+  }
 }
