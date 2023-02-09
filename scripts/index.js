@@ -173,15 +173,6 @@ $("#add__place__back__button").on("click",function(){
 
 
 
-//function to highlight imagebox when dragged over
-document.getElementById("image__holder").addEventListener('dragover',function(event){
-  event.preventDefault();
-  document.getElementById("image__holder").classList.add("image__hover")
-})
-document.getElementById("image__holder").addEventListener('dragleave',function(event){
-  event.preventDefault();
-  document.getElementById("image__holder").classList.remove("image__hover")
-})
 
 
 
@@ -249,6 +240,18 @@ function format(inputDate) {
 
   return `${date}${month}${year}${inputDate.getHours()}${inputDate.getMinutes()}${inputDate.getSeconds()}`;
 }
+//function to highlight imagebox when dragged over
+document.getElementById("image__holder").addEventListener('dragover',function(event){
+  event.preventDefault();
+  console.log("drag over")
+  document.getElementById("image__holder").classList.add("image__hover")
+  
+})
+document.getElementById("image__holder").addEventListener('dragleave',function(event){
+  event.preventDefault();
+  document.getElementById("image__holder").classList.remove("image__hover")
+
+})
 
 //drop Handler for users to drop an image into image__holder
 document.getElementById("image__holder").addEventListener("drop",function(event){
@@ -296,5 +299,20 @@ document.getElementById("image__holder").addEventListener("drop",function(event)
   updateShowImage(images[0])
 })
 
-
+//onclick event and hover event for image__holder to activate file explorer
+$("#image__holder").mouseenter(function(event){
+  event.stopPropagation();
+  console.log("mouse over event")
+  if (event!="dragover"){
+    const see__through__div=$("#see__through__div")
+    see__through__div.fadeTo(100,0.4)
+  }
+})
+document.getElementById("image__holder").addEventListener("mouseleave",function(event){
+  console.log("mouse out event")
+  if (event!="dragover"&&event!="hover"){
+    const see__through__div=$("#see__through__div")
+    see__through__div.fadeOut(100)
+  }
+})
 
