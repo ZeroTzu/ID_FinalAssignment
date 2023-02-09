@@ -1,19 +1,29 @@
-import {auth,app,onAuthStateChanged,db,storage ,getDocs ,collection , onSnapshot ,ref,uploadBytes,setDoc,doc} from "./utils/firebase.js";
-
+import {
+  auth,
+  app,
+  onAuthStateChanged,
+  db,
+  storage,
+  getDocs,
+  collection,
+  onSnapshot,
+  ref,
+  uploadBytes,
+  setDoc,
+  doc,
+} from "./utils/firebase.js";
 
 // Loads the Mapbox GL JS library and creates a map
 
 var userIsSignedIn;
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    userIsSignedIn=true
+    userIsSignedIn = true;
   } else {
     // User is signed out
-    userIsSignedIn=false
+    userIsSignedIn = false;
   }
 });
-
-
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYXJhc2hucmltIiwiYSI6ImNsZGU1MjgybzA1ZGczcG81aTRlYnNsc2wifQ.pl_hnGv5vMnM1Yi5QXDmYA"; // Add your Mapbox access token here
@@ -87,32 +97,35 @@ var userCurrentLocationCoords;
 var userCurrentLocationName;
 function getCurrentLocation() {
   async function success(position) {
-    userCurrentLocationCoords=[position.coords.longitude,position.coords.latitude]
-    try{
-      const url=`https://api.mapbox.com/geocoding/v5/mapbox.places/${position.coords.longitude},${position.coords.latitude}.json?access_token=${mapboxgl.accessToken}`;
-      const response= await fetch(url);
-      const results= await response.json();
+    userCurrentLocationCoords = [
+      position.coords.longitude,
+      position.coords.latitude,
+    ];
+    try {
+      const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${position.coords.longitude},${position.coords.latitude}.json?access_token=${mapboxgl.accessToken}`;
+      const response = await fetch(url);
+      const results = await response.json();
       console.log(results);
-      userCurrentLocationName=results.features[0].place_name;
-      $("#location").html(function(i,currentHTML){
-        return `Location: ${userCurrentLocationName}`
+      userCurrentLocationName = results.features[0].place_name;
+      $("#location__span").html(function (i, currentHTML) {
+        return `${userCurrentLocationName}`;
       });
-    } catch(error){
-      console.log("Error",error)
+    } catch (error) {
+      console.log("Error", error);
     }
 
     map.flyTo({
-      center: [position.coords.longitude,position.coords.latitude],
+      center: [position.coords.longitude, position.coords.latitude],
       essential: true,
       zoom: 15,
     });
-
   }
   navigator.geolocation.getCurrentPosition(success);
-
 }
-$("#search__button").on("click",searchLocation())
-$("#add__place__button").on("click",getCurrentLocation())
+$("#search__button").on("click", function () {
+  searchLocation();
+});
+
 function searchLocation() {
   const resultsDiv = document.querySelector("#search__results");
   if (resultsDiv) {
@@ -126,7 +139,6 @@ function searchLocation() {
     .then((data) => {
       showResults(data);
       return data;
-
     });
 }
 
@@ -139,7 +151,7 @@ searchInput.addEventListener("keyup", (event) => {
   }
 });
 
-//for add_button to display the menu
+//for side__menu__button to display the menu
 document
   .getElementById("side__menu__button")
   .addEventListener("click", function () {
@@ -155,75 +167,76 @@ document
     document.getElementById("side__menu").style.display = "none";
   });
 
-
 //For Add Place button to show the add__place__interface
-$("#add__place__button").on("click",async function(){
-  $("#add__place__interface").css("display","flex");
+$("#add__place__button").on("click", async function () {
+  $("#add__place__interface").css("display", "flex");
   console.log("HIHI");
-
-  })
+});
+$("#get__my__location__button").on("click", function () {
+  getCurrentLocation();
+});
 $(".float-out").css({
-  right: "0"
+  right: "0",
 });
 //for back button to hide add__place__interface
-$("#add__place__back__button").on("click",function(){
-  $("#add__place__interface").css("display","none");
-
-})
-
-
-
-
-
+$("#add__place__back__button").on("click", function () {
+  $("#add__place__interface").css("display", "none");
+});
 
 //for Post button to do input validation then POST into firebase server
 var images;
-$("#add__place__form").submit(async function(event){
+$("#add__place__form").submit(async function (event) {
   event.preventDefault();
-  let title=document.getElementById("title").value;
-  let description=document.getElementById("description").value;
-  console.log(title,description,images[0]);
-  console.log(description,title,document.getElementById("add__place__submit"))
-  if(title.length<5){
-    $("#add__place__form__title").placeholder="Title (Minimum 5-25 characters allowed)"
+  let title = document.getElementById("title").value;
+  let description = document.getElementById("description").value;
+  console.log(title, description, images[0]);
+  console.log(
+    description,
+    title,
+    document.getElementById("add__place__submit")
+  );
+  if (title.length < 5) {
+    $("#add__place__form__title").placeholder =
+      "Title (Minimum 5-25 characters allowed)";
   }
-  if (userIsSignedIn==false){
-    console.log("Unable to post...user isn't signed in")
+  if (userIsSignedIn == false) {
+    console.log("Unable to post...user isn't signed in");
     //do something to alert user in html here PLS
-    return
-  }
-  else{
-    console.log("User IS signed in")
-    let user=auth.currentUser;
-    let uid=user.uid;
-    let userName=user.displayName;
-    let currentDate=new Date()
-    console.log(`UserName: ${userName} UserID: ${uid}`)
-    let postDoc =doc(collection(db,"post"),`${uid}_${format(currentDate)}`)
-    let storageRef=ref(storage,`images/${images[0].name}`)//SOME ERROR HERE
-    await uploadBytes(storageRef,images[0]).then((snapshot)=>{
-      console.log('Uploaded a blob or file!')
-
-
-
-
-    }).catch(function(error){
-      console.log(error)
-    }).finally(()=>{
-      setDoc(postDoc,{
-        uid: uid,
-        displayName: userName,
-        title: title,
-        description: description,
-        postTime:currentDate,
-        locationName:userCurrentLocationName.split(", ")[0],
-        locationAddress:userCurrentLocationName.split(", ").slice(1).join(", "),
-        locationCoords:userCurrentLocationCoords,
-        photoArray:[`photos/${images[0].name}`]
+    return;
+  } else {
+    console.log("User IS signed in");
+    let user = auth.currentUser;
+    let uid = user.uid;
+    let userName = user.displayName;
+    let currentDate = new Date();
+    console.log(`UserName: ${userName} UserID: ${uid}`);
+    let postDoc = doc(collection(db, "post"), `${uid}_${format(currentDate)}`);
+    let storageRef = ref(storage, `images/${images[0].name}`); //SOME ERROR HERE
+    await uploadBytes(storageRef, images[0])
+      .then((snapshot) => {
+        console.log("Uploaded a blob or file!");
       })
-    })
+      .catch(function (error) {
+        console.log(error);
+      })
+      .finally(() => {
+        setDoc(postDoc, {
+          uid: uid,
+          displayName: userName,
+          title: title,
+          description: description,
+          postTime: currentDate,
+          locationName: userCurrentLocationName.split(", ")[0],
+          locationAddress: userCurrentLocationName
+            .split(", ")
+            .slice(1)
+            .join(", "),
+          locationCoords: userCurrentLocationCoords,
+          photoArray: [`images/${images[0].name}`],
+        });
+      });
   }
-})
+});
 function format(inputDate) {
   let date, month, year;
 
@@ -231,89 +244,134 @@ function format(inputDate) {
   month = inputDate.getMonth() + 1;
   year = inputDate.getFullYear();
 
-    date = date
-        .toString()
-        .padStart(2, '0');
+  date = date.toString().padStart(2, "0");
 
-    month = month
-        .toString()
-        .padStart(2, '0');
+  month = month.toString().padStart(2, "0");
 
   return `${date}${month}${year}${inputDate.getHours()}${inputDate.getMinutes()}${inputDate.getSeconds()}`;
 }
 //function to highlight imagebox when dragged over
-document.getElementById("image__holder").addEventListener('dragover',function(event){
-  event.preventDefault();
-  console.log("drag over")
-  document.getElementById("image__holder").classList.add("image__hover")
-
-})
-document.getElementById("image__holder").addEventListener('dragleave',function(event){
-  event.preventDefault();
-  document.getElementById("image__holder").classList.remove("image__hover")
-
-})
+document
+  .getElementById("image__holder")
+  .addEventListener("dragover", function (event) {
+    event.preventDefault();
+    console.log("drag over");
+    document.getElementById("image__holder").classList.add("image__hover");
+  });
+document
+  .getElementById("image__holder")
+  .addEventListener("dragleave", function (event) {
+    event.preventDefault();
+    document.getElementById("image__holder").classList.remove("image__hover");
+  });
 
 //drop Handler for users to drop an image into image__holder
-document.getElementById("image__holder").addEventListener("drop",function(event){
-  event.preventDefault();
-  function updateShowImage(image){
-    console.log("Running updateImage")
-    let thumbnailElement=document.getElementById("image__holder").querySelector(".post__image")
-    if(!thumbnailElement){
-      console.log(document.getElementById("image__holder").querySelector("#placeholder__lottie"));
-      document.getElementById("image__holder").querySelector("#placeholder__lottie").style.display="none";
-      thumbnailElement=document.createElement("img");
-      thumbnailElement.style.maxWidth=("100%");
-      thumbnailElement.style.maxHeight=("100%");
-      thumbnailElement.classList.add("post__image");
-      thumbnailElement.src=URL.createObjectURL(image);
-      document.getElementById("image__holder").appendChild(thumbnailElement);
-      console.log("Image drop initiated",image)
-      document.getElementById("image__holder").classList.remove("image__hover")
-    }
-    else{
-      console.log("Logged not")
-      document.getElementById("image__holder").classList.remove("image__hover")
-    }
-
+var userFiles;
+function updateShowImage(image) {
+  console.log("Running updateImage");
+  let thumbnailElement = document
+    .getElementById("image__holder")
+    .querySelector(".post__image");
+  if (!thumbnailElement) {
+    console.log(
+      document
+        .getElementById("image__holder")
+        .querySelector("#placeholder__lottie")
+    );
+    document
+      .getElementById("image__holder")
+      .querySelector("#placeholder__lottie").style.display = "none";
+    thumbnailElement = document.createElement("img");
+    thumbnailElement.style.maxWidth = "100%";
+    thumbnailElement.style.maxHeight = "100%";
+    thumbnailElement.classList.add("post__image");
+    thumbnailElement.src = URL.createObjectURL(image);
+    document.getElementById("image__holder").appendChild(thumbnailElement);
+    console.log("Image drop initiated", image);
+    document.getElementById("image__holder").classList.remove("image__hover");
+  } else {
+    console.log("Logged not");
+    document.getElementById("image__holder").classList.remove("image__hover");
   }
-  let userFiles=event.dataTransfer.files
-  console.log("Detected drop")
-  let isAllImage=true;
-  let imageTypes= ['image/png', 'image/jpeg'];
-  if (userFiles.length<1){
-    console.log("No Files Detected")
-    return "nothing";
+}
+function checkAllImages(files) {
+  let isAllImage = true;
+  let imageTypes = ["image/png", "image/jpeg"];
+  if (files.length < 1) {
+    isAllImage = "nothing";
   }
-  for (let i=0;i<userFiles.length;i++){
-    if(imageTypes.includes(userFiles[i].type)==false){
-      isAllImage=false;
+  for (let i = 0; i < files.length; i++) {
+    if (imageTypes.includes(files[i].type) == false) {
+      isAllImage = false;
       break;
     }
   }
-  if(isAllImage==false){
-    console.log("Unsupported file type detected: png and jpeg files only")
-    return
+  if (isAllImage == false) {
+    console.log("Unsupported file type detected: png and jpeg files only");
+  } else if (isAllImage == "nothing") {
+    console.log("No Files Detected");
   }
-  images=[userFiles[0]];
-  updateShowImage(images[0])
-})
+
+  return isAllImage;
+}
+
+document
+  .getElementById("image__holder")
+  .addEventListener("drop", function (event) {
+    event.preventDefault();
+    console.log("Detected drop");
+    userFiles = null;
+    images = null;
+    userFiles = event.dataTransfer.files;
+    console.log("The files are: ", userFiles);
+    let isAllImage = checkAllImages(userFiles);
+    if (isAllImage != true) {
+      return;
+    }
+    images = userFiles;
+    updateShowImage(images[0]);
+  });
 
 //onclick event and hover event for image__holder to activate file explorer
-$("#image__holder").mouseenter(function(event){
-  event.stopPropagation();
-  console.log("mouse over event")
-  if (event!="dragover"){
-    const see__through__div=$("#see__through__div")
-    see__through__div.fadeTo(100,0.4)
-  }
-})
-document.getElementById("image__holder").addEventListener("mouseleave",function(event){
-  console.log("mouse out event")
-  if (event!="dragover"&&event!="hover"){
-    const see__through__div=$("#see__through__div")
-    see__through__div.fadeOut(100)
-  }
-})
+$("#image__holder").on("click", function () {
+  var input = document.createElement("input");
+  input.type = "file";
+  input.onchange = (e) => {
+    // getting a hold of the file reference
+    var userFiles = e.target.files;
+    console.log("The files are: ", userFiles);
+    // // setting up the reader
+    // var reader = new FileReader();
+    // // here we tell the reader what to do when it's done reading...
+    // reader.onload = readerEvent => {
+    //    userFiles = readerEvent.target.result; // this is the content!
+    //    console.log( userFiles );
+    // }
+    let isAllImage = checkAllImages(userFiles);
+    if (isAllImage != true) {
+      console.log("Not all image");
+      return;
+    }
+    images = userFiles;
+    updateShowImage(images[0]);
+  };
+  input.click();
+});
 
+$("#image__holder").mouseenter(function (event) {
+  event.stopPropagation();
+  console.log("mouse over event");
+  if (event != "dragover") {
+    const see__through__div = $("#see__through__div");
+    see__through__div.fadeTo(100, 0.4);
+  }
+});
+document
+  .getElementById("image__holder")
+  .addEventListener("mouseleave", function (event) {
+    console.log("mouse out event");
+    if (event != "dragover" && event != "hover") {
+      const see__through__div = $("#see__through__div");
+      see__through__div.fadeOut(100);
+    }
+  });
