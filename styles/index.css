@@ -121,7 +121,6 @@ aside {
   padding: 20px;
   border-radius: 5px;
   border: 1px solid var(--add-place-outline-purple);
-  max-width: 380px;
 }
 #add__place__form {
   display: flex;
