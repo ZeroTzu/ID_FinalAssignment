@@ -82,7 +82,21 @@ aside {
 #add__place__button:hover {
   background-color: var(--bg-dark-gray);
 }
-
+#see__through__div {
+  opacity: 0;
+  background-color: white;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1vw;
+}
 #add__place__interface {
   display: none;
   position: relative;
@@ -136,12 +150,68 @@ aside {
   color: white;
   position: relative;
 }
+#add__place__back__button{
+  width: 30px;
+  height: 30px;
+}
 
 #side__menu__button:hover {
   background-color: var(--pale-black);
 }
 
-@media screen and (max-width: 415px) {
+
+
+/**TEST BUTTON**/
+.btn-one {
+  color: #FFF;
+  transition: all 0.3s;
+  position: relative;
+}
+.btn-one span {
+  transition: all 0.3s;
+}
+.btn-one::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0;
+  transition: all 0.3s;
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+  border-top-style: solid;
+  border-bottom-style: solid;
+  border-top-color: var(--highlighted-purple);
+  border-bottom-color: var(--highlighted-purple);
+  transform: scale(0.1, 1);
+}
+.btn-one:hover span {
+  letter-spacing: 2px;
+}
+.btn-one:hover::before {
+  opacity: 1; 
+  transform: scale(1, 1); 
+}
+.btn-one::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  transition: all 0.3s;
+  background-color: none;
+}
+.btn-one:hover::after {
+  opacity: 0; 
+  transform: scale(0.1, 1);
+}
+/**end of TEST BUTTON**/
+@media screen and (max-width: 400px) {
   #map__container {
     height: 100vh;
     width: 100vw;
@@ -190,9 +260,9 @@ aside {
   border: 2px groove white !important;
 }
 
-.post__image{
+.post__image {
   max-height: 500px;
-  max-width:  800px;
+  max-width: 800px;
 }
 
 
