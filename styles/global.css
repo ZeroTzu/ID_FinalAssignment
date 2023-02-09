@@ -42,7 +42,7 @@ textarea::placeholder {
   border-radius: var(--radius) !important;
   width: fit-content;
   cursor: pointer;
-  transition: background-color 0.15s, opacity 0.15;
+  transition: background-color 0.15s, opacity 0.15s;
   font-weight: bold;
 }
 

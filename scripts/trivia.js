@@ -23,7 +23,7 @@ var gSelectedPhoto,
 
 onAuthStateChanged(auth, function (u) {
   if (!u) {
-    window.location.href = "/auth.html";
+    window.location.href = "./auth.html";
   } else {
     user = u;
   }
@@ -193,9 +193,7 @@ window["checkAnswer"] = checkAnswer;
 
 async function displayImages(selectedPhoto) {
   // Creates the required elements and displays the images
-  const gameImageElement = $(
-    '<img class="h-100 w-100 min-h-50 object-fit-cover p-0" />'
-  );
+  const gameImageElement = $('<img class="object-fit-cover p-0" />');
   const mapContainerElement = $(
     '<div class="position-absolute end-0 bottom-0 w-25"></div>'
   );
