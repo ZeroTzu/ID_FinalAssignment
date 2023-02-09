@@ -114,7 +114,6 @@ aside {
   display: none;
   background-color: var(--bg-dark-gray);
   flex-direction: column;
-  width: 2 00px !important;
   padding: 5px;
   margin: 0;
 }
