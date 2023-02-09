@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Leaderboard</title>
 
+<!--Font Awesome-->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+<script src="https://kit.fontawesome.com/1bb416726a.js" crossorigin="anonymous"></script>
+
     <!-- LottieFiles -->
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
@@ -17,11 +21,14 @@
       crossorigin="anonymous"
     />
 
-    <link rel="stylesheet" href="styles/index.css" />
+    <link rel="stylesheet" href="styles/leaderboard.css" />
   </head>
 
   <body>
-    <table id="leaderboard" class="table table-striped table-dark">
+    <div class="flex-box">
+      <button class="btn-one" onclick="window.location.href='index.html';"><span><i class="fa-solid fa-arrow-left"></i></span></button>
+    <div class="table-container">
+      <table id="leaderboard" class="table table-striped table-dark">
       <thead>
         <tr>
           <th scope="col">Rank</th>
@@ -32,6 +39,8 @@
       </thead>
       <tbody id="tbody1"></tbody>
     </table>
+  </div>
+    </div>
 
     <script type="module" src="scripts/leaderboard.js"></script>
   </body>

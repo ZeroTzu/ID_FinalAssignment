@@ -1,0 +1,60 @@
+body {
+    background-color: black !important;
+  }
+
+.table-container{
+    position: relative;    
+    top: 0;
+    left: 0;
+    opacity: 0.7;
+}
+  
+.flex-box{
+    flex: 1;
+    max-width: 100%;
+    max-height: 100%;    
+    position: relative;
+}
+
+
+.fa-solid,
+.fas {
+  font-weight: 900;
+}
+
+.btn-one {
+    border: none;
+    background-color: transparent;
+    text-align: right;
+    color: #fff;
+    transition: all 0.3s;
+    z-index: 9;
+    margin: 7px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+  }
+ 
+  .btn-one:hover {
+    background-color: gray;  
+}
+
+@media screen and (max-width: 420px) {
+    .flex-box{
+        font-size: 80% !important;
+        flex: 1;
+        max-width: 100%;
+        max-height: 100%;    
+        position: relative;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .flex-box{
+        font-size: 55% !important;
+        flex: 1;
+        max-width: 100%;
+        max-height: 100%;    
+        position: relative;
+    }
+}
