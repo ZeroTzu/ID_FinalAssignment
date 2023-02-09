@@ -68,6 +68,7 @@
             />
             <button id="search__button" class="button__primary">Search</button>
             <button id="add__place__button"  ><i class="fa-solid fa-plus"></i></button>
+            <button id="get__my__location__button"><i class="fa-solid fa-location-crosshairs"></i></button>
           </div>
         </aside>
 
@@ -84,8 +85,9 @@
 
       </div>
 
-      <div id="add__place__interface" style="height: fit-content;">
-        <h6 id="location">Location: </h6>
+      <div id="add__place__interface" style="height: fit-content;"> 
+        <div class="d-flex flex-row" style="background-color: var(--bg-dark-gray);"><h6 id="location">Location: <span id="location__span"> </span></h6><button id="add__place__edit" style="background-color: var(--bg-dark-gray)"><i class="fa-solid fa-pen-to-square"></i></button></div>
+
         <form id="add__place__form" class="flex-column">
           <input type="text" id="title" placeholder="Title" font>
           <div id="image__holder"style="position:relative; width:100%;  border: 1.5px solid var(--add-place-outline-purple);">

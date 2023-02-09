@@ -94,8 +94,8 @@ function getCurrentLocation() {
       const results= await response.json();
       console.log(results);
       userCurrentLocationName=results.features[0].place_name;
-      $("#location").html(function(i,currentHTML){
-        return `Location: ${userCurrentLocationName}`
+      $("#location__span").html(function(i,currentHTML){
+        return `${userCurrentLocationName}`
       });
     } catch(error){
       console.log("Error",error)
@@ -111,8 +111,11 @@ function getCurrentLocation() {
   navigator.geolocation.getCurrentPosition(success);
 
 }
-$("#search__button").on("click",searchLocation())
-$("#add__place__button").on("click",getCurrentLocation())
+$("#search__button").on("click",function(){
+  searchLocation()
+})
+
+
 function searchLocation() {
   const resultsDiv = document.querySelector("#search__results");
   if (resultsDiv) {
@@ -139,7 +142,7 @@ searchInput.addEventListener("keyup", (event) => {
   }
 });
 
-//for add_button to display the menu
+//for side__menu__button to display the menu
 document
   .getElementById("side__menu__button")
   .addEventListener("click", function () {
@@ -160,8 +163,10 @@ document
 $("#add__place__button").on("click",async function(){
   $("#add__place__interface").css("display","flex");
   console.log("HIHI");
-
   })
+$("#get__my__location__button").on("click",function(){
+  getCurrentLocation()
+})
 $(".float-out").css({
   right: "0"
 });
@@ -218,8 +223,10 @@ $("#add__place__form").submit(async function(event){
         postTime:currentDate,
         locationName:userCurrentLocationName,
         locationCoords:userCurrentLocationCoords,
-        photoArray:[`photos/${images[0].name}`]
-      })  
+        photoArray:[`images/${images[0].name}`],
+        
+      }) 
+
     })
   }
 })
@@ -254,52 +261,92 @@ document.getElementById("image__holder").addEventListener('dragleave',function(e
 })
 
 //drop Handler for users to drop an image into image__holder
-document.getElementById("image__holder").addEventListener("drop",function(event){
-  event.preventDefault();
-  function updateShowImage(image){
-    console.log("Running updateImage")
-    let thumbnailElement=document.getElementById("image__holder").querySelector(".post__image")
-    if(!thumbnailElement){
-      console.log(document.getElementById("image__holder").querySelector("#placeholder__lottie"));
-      document.getElementById("image__holder").querySelector("#placeholder__lottie").style.display="none";
-      thumbnailElement=document.createElement("img");
-      thumbnailElement.style.maxWidth=("100%");
-      thumbnailElement.style.maxHeight=("100%");
-      thumbnailElement.classList.add("post__image");
-      thumbnailElement.src=URL.createObjectURL(image);
-      document.getElementById("image__holder").appendChild(thumbnailElement);
-      console.log("Image drop initiated",image)
-      document.getElementById("image__holder").classList.remove("image__hover")
-    }
-    else{
-      console.log("Logged not")
-      document.getElementById("image__holder").classList.remove("image__hover")
-    }
-    
+var userFiles;
+function updateShowImage(image){
+  console.log("Running updateImage")
+  let thumbnailElement=document.getElementById("image__holder").querySelector(".post__image")
+  if(!thumbnailElement){
+    console.log(document.getElementById("image__holder").querySelector("#placeholder__lottie"));
+    document.getElementById("image__holder").querySelector("#placeholder__lottie").style.display="none";
+    thumbnailElement=document.createElement("img");
+    thumbnailElement.style.maxWidth=("100%");
+    thumbnailElement.style.maxHeight=("100%");
+    thumbnailElement.classList.add("post__image");
+    thumbnailElement.src=URL.createObjectURL(image);
+    document.getElementById("image__holder").appendChild(thumbnailElement);
+    console.log("Image drop initiated",image)
+    document.getElementById("image__holder").classList.remove("image__hover")
   }
-  let userFiles=event.dataTransfer.files
-  console.log("Detected drop")
+  else{
+    console.log("Logged not")
+    document.getElementById("image__holder").classList.remove("image__hover")
+  }
+}
+function checkAllImages(files){
   let isAllImage=true;
   let imageTypes= ['image/png', 'image/jpeg'];
-  if (userFiles.length<1){
-    console.log("No Files Detected")
-    return "nothing";
+  if (files.length<1){
+    isAllImage="nothing";
   }
-  for (let i=0;i<userFiles.length;i++){
-    if(imageTypes.includes(userFiles[i].type)==false){
+  for (let i=0;i<files.length;i++){
+    if(imageTypes.includes(files[i].type)==false){
       isAllImage=false;
       break;
     }
   }
   if(isAllImage==false){
     console.log("Unsupported file type detected: png and jpeg files only")
+  } else if (isAllImage=="nothing"){
+    console.log("No Files Detected")
+  } 
+  
+  return isAllImage
+}
+
+document.getElementById("image__holder").addEventListener("drop",function(event){
+  event.preventDefault();
+  console.log("Detected drop")
+  userFiles=null;
+  images=null;
+  userFiles=event.dataTransfer.files
+  console.log("The files are: ",userFiles)
+  let isAllImage=checkAllImages(userFiles)
+  if(isAllImage!=true){
     return
   }
-  images=[userFiles[0]];
+  images=userFiles;
   updateShowImage(images[0])
 })
 
 //onclick event and hover event for image__holder to activate file explorer
+$("#image__holder").on("click",function(){
+  var input = document.createElement('input');
+  input.type = 'file';
+  input.onchange = e => { 
+    // getting a hold of the file reference
+    var userFiles = e.target.files 
+     console.log("The files are: ",userFiles)
+    // // setting up the reader
+    // var reader = new FileReader();
+    // // here we tell the reader what to do when it's done reading...
+    // reader.onload = readerEvent => {
+    //    userFiles = readerEvent.target.result; // this is the content!
+    //    console.log( userFiles );
+    // }
+    let isAllImage=checkAllImages(userFiles)
+    if(isAllImage!=true){
+      console.log("Not all image")
+      return
+    }
+    images=userFiles;
+    updateShowImage(images[0])
+
+ }
+  input.click();
+
+  
+})
+
 $("#image__holder").mouseenter(function(event){
   event.stopPropagation();
   console.log("mouse over event")
