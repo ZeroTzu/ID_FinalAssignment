@@ -184,8 +184,8 @@ aside {
   border-bottom-width: 1px;
   border-top-style: solid;
   border-bottom-style: solid;
-  border-top-color: rgba(255,255,255,0.5);
-  border-bottom-color: rgba(255,255,255,0.5);
+  border-top-color: var(--highlighted-purple);
+  border-bottom-color: var(--highlighted-purple);
   transform: scale(0.1, 1);
 }
 .btn-one:hover span {
@@ -204,7 +204,7 @@ aside {
   height: 100%;
   z-index: 1;
   transition: all 0.3s;
-  background-color: rgba(255,255,255,0.1);
+  background-color: none;
 }
 .btn-one:hover::after {
   opacity: 0; 
