@@ -24,6 +24,7 @@ async function getPhoto(photoDocsList){
     list.push(element.file);   
   });
   for (let i = 0; i < list.length; i++) {
+    document.body.innerHTML += '<div class="gallery"><img class="col-xs-6 col-sm-4 col-md-2 col-lg-2" id="image' + i + '"></div>'
     var text = "image" + i;
     var pathReference = ref(storage, list[i]);
     await getDownloadURL(pathReference)

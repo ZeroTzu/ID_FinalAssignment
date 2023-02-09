@@ -55,9 +55,9 @@
       </div>
     </section>
 
-    <section class="position-absolute" style="top:20px; left:50px" >
-      <div style="max-width: 390px;">
-        <aside class="d-flex flex-column p-2">
+    <section class="position-absolute" style="top:20px; left:40px">
+      <div style="max-width: 380px;">
+        <aside id="aside1" class="d-flex flex-column p-2">
           <div id="aside__header" class="d-flex flex-row w-100 gap-1 justify-content-center">
             <button id="side__menu__button"><i class="fa fa-bars"></i></button>
             <input style="margin-right: 5px"
@@ -65,7 +65,6 @@
               class="flex-fill"
               type="text"
               placeholder="Search for a place..."
-              style="font-size:0.7vw"
             />
             <button id="search__button" class="button__primary">Search</button>
             <button id="add__place__button"  ><i class="fa-solid fa-plus"></i></button>
@@ -80,6 +79,7 @@
             <button id="side__menu__back" class="btn-one"style="position:relative;margin-top:5px; border-bottom: none;width:fit-content"><span><i class="fa-solid fa-arrow-left-long"></i></span></button>
           </div>
         </menu>
+      </div>
 
       </div>
 
@@ -100,8 +100,8 @@
             </div>
 
           </div>
-          <textarea placeholder="Describe your experience here..." id="description" style=" border-top-left-radius:0px ;margin-top: 5px;"rows="10"column="8"></textarea>
-          <button id="add__place__submit" type="submit" >Post!</button>
+          <textarea placeholder="Describe your experience here..." id="description" style=" border-top-left-radius:0px; margin-top: 5px;" rows="10" column="8"></textarea>
+          <button id="add__place__submit" type="submit">Post!</button>
         </form>
         <div style="display:flex; justify-content: flex-end;">
           <button id="add__place__back__button" style="margin-top:5px"><i class="fa-solid fa-arrow-left"></i></button>
@@ -119,6 +119,6 @@
       integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
       crossorigin="anonymous"
     ></script>
-    <script type="module"src="scripts/index.js"></script>
+    <script type="module" src="scripts/index.js"></script>
   </body>
 </html>

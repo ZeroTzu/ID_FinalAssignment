@@ -1,17 +1,16 @@
-#display_image{
-
-  border: 1px solid white;
+html {
+  background-color: black;
 }
 
 div.gallery {
-    margin: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid white;
+    margin: 1.5px;
     float: left;
     width: 180px;
   }
   
   div.gallery:hover {
-    border: 1px solid #777;
+    border: 1.5px solid darkblue;
   }
   
   div.gallery img {

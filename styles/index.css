@@ -54,6 +54,11 @@ aside {
   max-height: 50%;
 }
 
+.fa-solid, .fas {
+  font-weight: 900;
+  color: white ;
+  }
+
 #side__menu__button,
 #add__place_button {
   background-color: var(--bg-dark-gray);
@@ -68,8 +73,14 @@ aside {
   margin-right: 5px;
 }
 #add__place__button {
-  margin-right: 0px;
+  margin-left: 3px;
   background-color: var(--accent-dark-gray);
+  border: 1px solid var(--accent-dark-gray);
+  width: 30px;
+}
+
+#add__place__button:hover {
+  background-color: var(--bg-dark-gray);
 }
 #see__through__div {
   opacity: 0;
@@ -117,7 +128,6 @@ aside {
   display: none;
   background-color: var(--bg-dark-gray);
   flex-direction: column;
-  width: 2 00px !important;
   padding: 5px;
   margin: 0;
 }
@@ -238,7 +248,7 @@ aside {
     z-index: 149;
     background-color: var(--bg-dark-gray);
     height: fit-content;
-    border-radius: var(--radius);
+    border-radius: 0;
     font-size: 12px;
   }
   .search__result > * {
@@ -253,4 +263,25 @@ aside {
 .post__image {
   max-height: 500px;
   max-width: 800px;
+}
+
+
+@media screen and (max-width: 380px) {
+  aside{
+    position: absolute;
+    z-index: 149;
+    background-color: var(--bg-dark-gray);
+    height: fit-content;
+    border-radius: 0;
+    font-size: 9px;
+    top:-10px;
+    left: -30px;
+  }
+
+  #add__place__button {
+    margin-left: 3px;
+    background-color: var(--accent-dark-gray);
+    border: 1px solid var(--accent-dark-gray);
+    width: 21px;
+  }
 }
