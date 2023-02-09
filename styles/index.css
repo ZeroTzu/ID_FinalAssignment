@@ -68,7 +68,7 @@ aside {
 #add__place_button {
   margin-right: 5px;
 }
-#add__place__button {
+#add__place__button,#get__my__location__button {
   margin-left: 3px;
   background-color: var(--accent-dark-gray);
   border: 1px solid var(--accent-dark-gray);
