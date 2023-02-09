@@ -87,6 +87,7 @@ function showResults(data) {
       $("#location__span").html(function(i,currentHTML){
         return `${userCurrentLocationName}`
       })
+      $("#add__place__interface").css("display","flex")
       
       
     })
