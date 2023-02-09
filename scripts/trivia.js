@@ -11,14 +11,15 @@ import {
   getDownloadURL,
 } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-storage.js";
 
-const gameContainerElement = document.querySelector("#game__container");
-const gameContainerLoaderElement = document.querySelector(
-  "#game__container-loader"
-);
-const guessFieldElement = document.querySelector("#guess__input");
-const attemptButtonElement = document.querySelector("#guess__attempt");
-const skipButtonElement = document.querySelector("#guess__skip");
-var place, attempts, user;
+const gameContainerElement = $("#game__container");
+const gameContainerLoaderElement = $("#game__container-loader");
+const guessFieldElement = $("#guess__input");
+const attemptButtonElement = $("#guess__attempt");
+const skipButtonElement = $("#guess__skip");
+var place,
+  attempts,
+  user,
+  pastLocations = [];
 
 onAuthStateChanged(auth, function (u) {
   if (!u) {
@@ -29,18 +30,18 @@ onAuthStateChanged(auth, function (u) {
 });
 
 function hideIntro() {
-  const introElement = document.getElementById("intro");
-  introElement.style.opacity = 0;
+  const introElement = $("#intro");
+  introElement.css("opacity", 0);
   setTimeout(function () {
-    introElement.parentNode.removeChild(introElement);
+    introElement.remove();
     startRound();
   }, 500);
 }
 window["hideIntro"] = hideIntro;
 
 function setButtonsDisabled(state) {
-  attemptButtonElement.disabled = state;
-  skipButtonElement.disabled = state;
+  attemptButtonElement.prop("disabled", state);
+  skipButtonElement.prop("disabled", state);
 }
 
 function handleRestart() {
@@ -51,9 +52,21 @@ window.handleRestart = handleRestart;
 
 async function fetchRandomPhoto() {
   const snapshot = await getDocs(collection(db, "placePhoto"));
-  const selectedPhoto =
-    snapshot.docs[Math.floor(Math.random() * snapshot.docs.length)].data();
-
+  var selectedPhoto;
+  while (true) {
+    selectedPhoto =
+      snapshot.docs[Math.floor(Math.random() * snapshot.docs.length)].data();
+    if (!pastLocations.includes(selectedPhoto.file)) {
+      pastLocations.push(selectedPhoto.file);
+      break;
+    } else if (pastLocations.length === snapshot.docs.length) {
+      alert("You've seen all the photos! Restarting...");
+      pastLocations = [];
+      break;
+    } else {
+      continue;
+    }
+  }
   return selectedPhoto;
 }
 
@@ -92,7 +105,7 @@ async function updatePoints(points) {
 
 async function checkAnswer() {
   setButtonsDisabled(true);
-  const input = guessFieldElement.value;
+  const input = guessFieldElement.val();
   const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${input}.json?promximity=${[
     place.coordinates.longitude,
     place.coordinates.latitude,
@@ -180,64 +193,31 @@ window["checkAnswer"] = checkAnswer;
 
 async function displayImages(selectedPhoto) {
   // Creates the required elements and displays the images
-  const gameImageElement = document.createElement("img");
-  const mapContainerElement = document.createElement("div");
-  const mapImageElement = document.createElement("img");
-  gameContainerLoaderElement.classList.add("d-none");
-  var gameImageLoaded = false,
-    mapImageLoaded = false;
+  const gameImageElement = $(
+    '<img class="h-100 w-100 min-h-50 object-fit-cover p-0" />'
+  );
+  const mapContainerElement = $(
+    '<div class="position-absolute end-0 bottom-0 w-25"></div>'
+  );
+  const mapImageElement = $('<img class="bg-transparent ratio ratio-1x1" />');
 
   // Fetches the map of the place and adds it to mapImageElement
   const { longitude, latitude } = selectedPhoto.location.coordinates;
-  mapImageElement.src = `https://api.mapbox.com/styles/v1/arashnrim/cldmza7li000t01qt6ypmzlwy/static/${longitude},${latitude},11/256x256?access_token=pk.eyJ1IjoiYXJhc2hucmltIiwiYSI6ImNsZGU1MjgybzA1ZGczcG81aTRlYnNsc2wifQ.pl_hnGv5vMnM1Yi5QXDmYA`;
-  mapImageElement.alt = "Map of the place";
-  mapImageElement.classList.add("bg-transparent", "ratio", "ratio-1x1");
-
-  // Configures the map container with specific Bootstrap classes
-  mapContainerElement.classList.add(
-    "position-absolute",
-    "end-0",
-    "bottom-0",
-    "w-25"
+  mapImageElement.prop(
+    "src",
+    `https://api.mapbox.com/styles/v1/arashnrim/cldmza7li000t01qt6ypmzlwy/static/${longitude},${latitude},11/256x256?access_token=pk.eyJ1IjoiYXJhc2hucmltIiwiYSI6ImNsZGU1MjgybzA1ZGczcG81aTRlYnNsc2wifQ.pl_hnGv5vMnM1Yi5QXDmYA`
   );
+  mapImageElement.prop("alt", "Map of the place");
 
   // Fetches the place's image and adds it to gameImageElement
   await getDownloadURL(ref(storage, selectedPhoto.file)).then(function (url) {
-    gameImageElement.src = url;
-    gameImageElement.alt = "Image of the place";
-    gameImageElement.classList.add(
-      "h-100",
-      "w-100",
-      "min-h-50",
-      "object-fit-cover",
-      "p-0"
-    );
+    gameImageElement.prop("src", url);
+    gameImageElement.prop("alt", "Image of the place");
   });
 
-  if (gameContainerElement.hasChildNodes()) {
-    while (gameContainerElement.firstChild) {
-      gameContainerElement.removeChild(gameContainerElement.firstChild);
-    }
-  }
-
-  mapContainerElement.appendChild(mapImageElement);
-  gameContainerElement.appendChild(gameImageElement);
-  gameContainerElement.appendChild(mapContainerElement);
-  gameContainerLoaderElement.classList.add("d-none");
-
-  // Add event listeners to both images and check if both have loaded
-  gameImageElement.addEventListener("load", function () {
-    gameImageLoaded = true;
-    if (gameImageLoaded && mapImageLoaded) {
-      gameContainerLoaderElement.classList.add("d-none");
-    }
-  });
-  mapImageElement.addEventListener("load", function () {
-    mapImageElement = true;
-    if (gameImageLoaded && mapImageLoaded) {
-      gameContainerLoaderElement.classList.add("d-none");
-    }
-  });
+  gameContainerLoaderElement.siblings().remove();
+  mapContainerElement.append(mapImageElement);
+  gameContainerElement.append(gameImageElement, mapContainerElement);
 }
 
 async function resetRound() {
@@ -245,33 +225,40 @@ async function resetRound() {
   setButtonsDisabled(true);
   place = undefined;
   attempts = [];
-  guessFieldElement.value = "";
-  attemptButtonElement.disabled = true;
-  skipButtonElement.disabled = true;
+  guessFieldElement.val("");
+  gameContainerLoaderElement.removeClass("opacity-0").addClass("opacity-100");
 }
 
 async function startRound(delayButtonEnable = false) {
   resetRound();
 
-  fetchRandomPhoto()
-    .then(async function (selectedPhoto) {
-      place = selectedPhoto.location;
-      await displayImages(selectedPhoto);
-    })
-    .then(function () {
-      if (!delayButtonEnable) {
-        setButtonsDisabled(false);
-      } else {
-        setTimeout(function () {
+  setTimeout(async function () {
+    fetchRandomPhoto()
+      .then(async function (selectedPhoto) {
+        place = selectedPhoto.location;
+        await displayImages(selectedPhoto);
+      })
+      .then(function () {
+        if (!delayButtonEnable) {
           setButtonsDisabled(false);
-        }, 2500);
-      }
-    });
+          gameContainerLoaderElement
+            .removeClass("opacity-100")
+            .addClass("opacity-0");
+        } else {
+          setTimeout(function () {
+            setButtonsDisabled(false);
+            gameContainerLoaderElement
+              .removeClass("opacity-100")
+              .addClass("opacity-0");
+          }, 2500);
+        }
+      });
+  }, 500);
 }
 window["startRound"] = startRound;
 
 var keyupTimeout;
-guessFieldElement.addEventListener("keyup", function (event) {
+guessFieldElement.on("keyup", function (event) {
   if (event.keyCode === 13) {
     event.preventDefault();
     clearTimeout(keyupTimeout);

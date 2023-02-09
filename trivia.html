@@ -108,7 +108,18 @@
         id="game__container"
         class="flex-fill w-100 border border-1 placeholder-glow position-relative"
       >
-        <div id="game__container-loader">
+        <div
+          id="game__container-loader"
+          class="position-absolute h-100 w-100 d-flex flex-column justify-content-center align-items-center"
+        >
+          <lottie-player
+            src="https://assets2.lottiefiles.com/private_files/lf30_noclpt6t.json"
+            background="transparent"
+            speed="0.5"
+            style="width: auto; height: 128px"
+            loop
+            autoplay
+          ></lottie-player>
           <h2>One sec, loading the location!</h2>
         </div>
       </section>
@@ -147,6 +158,11 @@
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
       integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.3.min.js"
+      integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
       crossorigin="anonymous"
     ></script>
     <script type="module" src="scripts/trivia.js"></script>
