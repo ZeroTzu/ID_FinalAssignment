@@ -68,6 +68,11 @@ aside {
 #add__place_button {
   margin-right: 5px;
 }
+
+#side__menu__buton:hover{
+
+}
+
 #add__place__button,#get__my__location__button {
   margin-left: 3px;
   background-color: var(--accent-dark-gray);
@@ -134,9 +139,6 @@ aside {
   color: #FFF;
 }
 
-#add__place__submit:hover {
-  background-color: var(--bg-dark-gray);
-}
 
 #side__menu {
   position: relative;
@@ -181,6 +183,11 @@ background-color: grey;
   color: white;
 }
 
+.add__to__post{
+  background-color: var(--accent-dark-gray);
+  border: none;
+  color: white;
+}
 
 
 /**TEST BUTTON**/
@@ -318,9 +325,9 @@ h6{
     flex-direction: column;
     gap: 10px;
     max-height: 90vh;
-    max-width: 350px;
+    max-width: 365px;
     top: 20px; 
-    left: 18px;
+    left: 12px;
   }
   aside {
     z-index: 149;
@@ -420,7 +427,7 @@ h6{
     flex-direction: column;
     gap: 10px;
     max-height: 90vh;
-    max-width: 250px;
+    max-width: 265  px;
     top: 10px;
     left: 6px;
   }
