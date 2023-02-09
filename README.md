@@ -27,27 +27,30 @@ This project is written with web languages (i.e., HTML, CSS, and vanilla JavaScr
 ### User stories
 
 We started to think about what a travel tracker would have. We formulated the following user statements to help the features we would develop for our solution:
-As a user, I want to be able to contribute to others' experiences by sharing more about the trips and experiences I've made.
-As a user, I want to learn more about the experiences others have shared and particularly see the places that they have gone to.
-As a user, I want to be rewarded for sharing more about my experiences and interacting with the platform.
+
+- As a user, I want to be able to contribute to others' experiences by sharing more about the trips and experiences I've made.
+- As a user, I want to learn more about the experiences others have shared and particularly see the places that they have gone to.
+- As a user, I want to be rewarded for sharing more about my experiences and interacting with the platform.
 
 ### Implemented features
 
 We explored each user statement to help guide and structure our thinking. Eventually, we settled on having the following features that Travel Buddy currently has implemented:
-A sharing feature where a user can add photos and descriptions of the places they have gone to.
-A community-like feature where users can see the pictures that other users have shared.
-A dedicated authentication system. With this, users will be able to sign in to their accounts or create one. Internally, we can associate user accounts with pictures shared and perform identification if needed.
-An interactive and searchable globe. With this, users will be able to explore, recall, and look for places around the world.
-A gamified points system. With this, users can be encouraged to spend more time and interact more with the platform and be rewarded in terms of points.
-Mobile responsiveness. With this, users will be able to quickly create a post from wherever they are with ease.
-A guessing/trivia mini-game. With this, users stand the chance to earn points while being able to view the photos that other users have taken.
+
+- A sharing feature where a user can add photos and descriptions of the places they have gone to.
+- A community-like feature where users can see the pictures that other users have shared.
+- A dedicated authentication system. With this, users will be able to sign in to their accounts or create one. Internally, we can associate user accounts with pictures shared and perform identification if needed.
+- An interactive and searchable globe. With this, users will be able to explore, recall, and look for places around the world.
+- A gamified points system. With this, users can be encouraged to spend more time and interact more with the platform and be rewarded in terms of points.
+- Mobile responsiveness. With this, users will be able to quickly create a post from wherever they are with ease.
+- A guessing/trivia mini-game. With this, users stand the chance to earn points while being able to view the photos that other users have taken.
 
 ### Future features
 
 We had several features that we'd like to implement but couldn't because of time constraints. These features include:
-A profile page that enables users to follow each other.
-An extensive community feature where users can like and comment on each other's posts.
-Conversion to airline mileage points. Since this project is in a fictitious context, we pitch the idea that points can eventually be used to be converted into airline mileage points. This adds further incentive for participation as users can earn their way to flights with the platform.
+
+- A profile page that enables users to follow each other.
+- An extensive community feature where users can like and comment on each other's posts.
+- Conversion to airline mileage points. Since this project is in a fictitious context, we pitch the idea that points can eventually be used to be converted into airline mileage points. This adds further incentive for participation as users can earn their way to flights with the platform.
 
 ## Technologies
 
@@ -71,7 +74,29 @@ We would like to warn you that two images should not have the same name.
 
 ## Running locally
 
+0. Perform the following for each service mentioned below:
+
+- [Mapbox](https://mapbox.com): Register for an account. Optionally, create a token that is further scoped for better security.
+- [Firebase](https://firebase.console.google.com): Create a new Firebase project, then enable email authentication in Authentication. Start your Cloud Firestore database and Storage in test mode.
+
+1. Clone the repository using the code below or download a ZIP archive of the repository:
+   ```sh
+   git clone https://github.com/ZeroTzu/ID_FinalAssignment
+   ```
+2. Open your web browser of choice.
+3. Find the path to the `index.html` file; typically, this path is an absolute path (e.g., `C:\Users\<yourname>\<pathtorepo>\index.html` for Windows, or `~/<pathtorepo>/index.html` for Mac/Linux).
+4. Open the file in your browser. You may do so through either of the following ways:
+   - Drag and drop the file to the header of the browser. This is usually the area next to the new tab button.
+   - Copy or note the path to the file, then paste or type the path in the address bar.
+
+If you are using [Visual Studio Code](https://code.visualstudio.com), we recommend [the Live Server extension](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer). With the extension installed, you may run the project locally by doing either of the following:
+
+- Opening the Command Prompt (<kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>) then selecting "Live Server: Open with Live Server".
+- Using the keyboard shortcut <kbd>Alt</kbd>/<kbd>Option</kbd> + <kbd>L</kbd>, <kbd>Alt</kbd>/<kbd>Option</kbd> + <kbd>O</kbd>.
+
 ## Deployment
+
+This project is currently being hosted on GitHub Pages. As per mentioned in the section above, it is recommended to generate and use your API keys for the services mentioned in step 0. We have exposed our keys for grading and will regenerate or deprecate the tokens in due time.
 
 ## Contributions
 
