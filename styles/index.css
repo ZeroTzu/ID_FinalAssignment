@@ -54,22 +54,14 @@ aside {
   max-height: 50%;
 }
 
-.fa-solid, .fas {
+.fa-solid,
+.fas {
   font-weight: 900;
-  color: white ;
-  }
+  color: white;
+}
 
 #side__menu__button,
 #add__place_button {
-  background-color: var(--bg-dark-gray);
-  color: var(--primary-color);
-  padding: 0.5em 1em;
-  border: 1px solid var(--accent-dark-gray);
-  border-radius: 0;
-  width: fit-content;
-  cursor: pointer;
-  transition: background-color 0.15s;
-  font-weight: bold;
   margin-right: 5px;
 }
 #add__place__button {
@@ -150,20 +142,14 @@ aside {
   color: white;
   position: relative;
 }
-#add__place__back__button{
+#add__place__back__button {
   width: 30px;
   height: 30px;
 }
 
-#side__menu__button:hover {
-  background-color: var(--pale-black);
-}
-
-
-
 /**TEST BUTTON**/
 .btn-one {
-  color: #FFF;
+  color: #fff;
   transition: all 0.3s;
   position: relative;
 }
@@ -171,7 +157,7 @@ aside {
   transition: all 0.3s;
 }
 .btn-one::before {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
@@ -192,11 +178,11 @@ aside {
   letter-spacing: 2px;
 }
 .btn-one:hover::before {
-  opacity: 1; 
-  transform: scale(1, 1); 
+  opacity: 1;
+  transform: scale(1, 1);
 }
 .btn-one::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
@@ -207,7 +193,7 @@ aside {
   background-color: none;
 }
 .btn-one:hover::after {
-  opacity: 0; 
+  opacity: 0;
   transform: scale(0.1, 1);
 }
 /**end of TEST BUTTON**/
@@ -265,16 +251,15 @@ aside {
   max-width: 800px;
 }
 
-
 @media screen and (max-width: 380px) {
-  aside{
+  aside {
     position: absolute;
     z-index: 149;
     background-color: var(--bg-dark-gray);
     height: fit-content;
     border-radius: 0;
     font-size: 9px;
-    top:-10px;
+    top: -10px;
     left: -30px;
   }
 
