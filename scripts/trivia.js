@@ -16,7 +16,7 @@ const gameContainerLoaderElement = $("#game__container-loader");
 const guessFieldElement = $("#guess__input");
 const attemptButtonElement = $("#guess__attempt");
 const skipButtonElement = $("#guess__skip");
-var place,
+var gSelectedPhoto,
   attempts,
   user,
   pastLocations = [];
@@ -51,7 +51,7 @@ function handleRestart() {
 window.handleRestart = handleRestart;
 
 async function fetchRandomPhoto() {
-  const snapshot = await getDocs(collection(db, "placePhoto"));
+  const snapshot = await getDocs(collection(db, "post"));
   var selectedPhoto;
   while (true) {
     selectedPhoto =
@@ -107,8 +107,8 @@ async function checkAnswer() {
   setButtonsDisabled(true);
   const input = guessFieldElement.val();
   const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${input}.json?promximity=${[
-    place.coordinates.longitude,
-    place.coordinates.latitude,
+    gSelectedPhoto.locationCoords[0],
+    gSelectedPhoto.locationCoords[1],
   ]}&access_token=pk.eyJ1IjoiYXJhc2hucmltIiwiYSI6ImNsZGU1MjgybzA1ZGczcG81aTRlYnNsc2wifQ.pl_hnGv5vMnM1Yi5QXDmYA&limit=10`;
   const places = await fetch(url)
     .then((response) => response.json())
@@ -136,8 +136,8 @@ async function checkAnswer() {
     const distance = calculateDistanceDifference(
       gLatitude,
       gLongitude,
-      place.coordinates.latitude,
-      place.coordinates.longitude
+      gSelectedPhoto.locationCoords[1],
+      gSelectedPhoto.locationCoords[0]
     );
 
     if (distance < 10) {
@@ -155,9 +155,9 @@ async function checkAnswer() {
     alert(
       `You got it! You took ${attempts.length} ${
         attempts.length === 1 ? "try" : "tries"
-      } to figure out where this is. This is ${place.name} at ${
-        place.address
-      }. ${
+      } to figure out where this is. This is ${
+        gSelectedPhoto.locationName
+      } at ${gSelectedPhoto.locationAddress}. ${
         bestAttempt <= 1
           ? `You hit the nail on the head!`
           : `Your nearest guest was ${
@@ -202,7 +202,7 @@ async function displayImages(selectedPhoto) {
   const mapImageElement = $('<img class="bg-transparent ratio ratio-1x1" />');
 
   // Fetches the map of the place and adds it to mapImageElement
-  const { longitude, latitude } = selectedPhoto.location.coordinates;
+  const [longitude, latitude] = selectedPhoto.locationCoords;
   mapImageElement.prop(
     "src",
     `https://api.mapbox.com/styles/v1/arashnrim/cldmza7li000t01qt6ypmzlwy/static/${longitude},${latitude},11/256x256?access_token=pk.eyJ1IjoiYXJhc2hucmltIiwiYSI6ImNsZGU1MjgybzA1ZGczcG81aTRlYnNsc2wifQ.pl_hnGv5vMnM1Yi5QXDmYA`
@@ -210,10 +210,12 @@ async function displayImages(selectedPhoto) {
   mapImageElement.prop("alt", "Map of the place");
 
   // Fetches the place's image and adds it to gameImageElement
-  await getDownloadURL(ref(storage, selectedPhoto.file)).then(function (url) {
-    gameImageElement.prop("src", url);
-    gameImageElement.prop("alt", "Image of the place");
-  });
+  await getDownloadURL(ref(storage, selectedPhoto.photoArray[0])).then(
+    function (url) {
+      gameImageElement.prop("src", url);
+      gameImageElement.prop("alt", "Image of the place");
+    }
+  );
 
   gameContainerLoaderElement.siblings().remove();
   mapContainerElement.append(mapImageElement);
@@ -223,7 +225,7 @@ async function displayImages(selectedPhoto) {
 async function resetRound() {
   // Resets all the variables and elements back to their initial forms
   setButtonsDisabled(true);
-  place = undefined;
+  gSelectedPhoto = undefined;
   attempts = [];
   guessFieldElement.val("");
   gameContainerLoaderElement.removeClass("opacity-0").addClass("opacity-100");
@@ -235,7 +237,7 @@ async function startRound(delayButtonEnable = false) {
   setTimeout(async function () {
     fetchRandomPhoto()
       .then(async function (selectedPhoto) {
-        place = selectedPhoto.location;
+        gSelectedPhoto = selectedPhoto;
         await displayImages(selectedPhoto);
       })
       .then(function () {
