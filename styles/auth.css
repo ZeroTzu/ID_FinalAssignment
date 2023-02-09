@@ -17,11 +17,8 @@ button{
   line-height: inherit;
 }
 
-@media screen and (max-width: 400px){
-  .d-flex {
-    display: flex!important;
-    justify-content: space-between;
-  }
+@media screen and (max-width: 420px){
+
   body{
     font-size: 75%;
   }
@@ -33,6 +30,7 @@ button{
     line-height: inherit;
   }
 }
+
 
 @media screen and (max-width: 315px){
 body{
