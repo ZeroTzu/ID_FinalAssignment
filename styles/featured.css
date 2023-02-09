@@ -1,24 +1,48 @@
-html {
-  background-color: black;
+@import "global.css";
+
+main {
+  background-color: var(--bg-dark-gray);
 }
 
-div.gallery {
-    border: 1px solid white;
-    margin: 1.5px;
-    float: left;
-    width: 180px;
-  }
-  
-  div.gallery:hover {
-    border: 1.5px solid darkblue;
-  }
-  
-  div.gallery img {
-    width: 100%;
-    height: auto;
-  }
-  
-  div.desc {
-    padding: 15px;
-    text-align: center;
-  }
+#intro {
+  min-height: 35vh;
+  color: var(--primary-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2em;
+}
+
+.gallery__image-container {
+  transition: border 0.3s ease-in-out;
+  position: relative;
+  min-height: fit-content;
+  aspect-ratio: 4 / 3;
+}
+
+.gallery__image-container:hover {
+  border: 8px solid var(--accent-dark-gray) !important;
+}
+
+.gallery__image-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gallery__image-text {
+  position: absolute;
+  bottom: 0;
+  padding: 1em;
+  color: var(--primary-color);
+}
+
+.gallery__image-text > * {
+  display: block;
+}
+
+.desc {
+  padding: 15px;
+  text-align: center;
+}
