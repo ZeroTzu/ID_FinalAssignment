@@ -34,12 +34,12 @@ onAuthStateChanged(auth, async function (user) {
         }).catch(function (error) {
           throw error;
         });
-        window.location.href = "";
+        window.location.href = "./";
       } catch (error) {
         handleFailedAuth(error.code);
       }
     } else {
-      window.location.href = "";
+      window.location.href = "./";
     }
   }
 });

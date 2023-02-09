@@ -23,7 +23,7 @@ var gSelectedPhoto,
 
 onAuthStateChanged(auth, function (u) {
   if (!u) {
-    window.location.href = "auth.html";
+    window.location.href = "./auth.html";
   } else {
     user = u;
   }
