@@ -19,7 +19,7 @@
   <body data-bs-theme="dark">
     <section
       id="intro"
-      class="min-vh-100 min-vw-100 d-flex flex-column align-items-center justify-content-center gap-4 position-fixed "
+      class="min-vh-100 min-vw-100 d-flex flex-column align-items-center justify-content-center gap-4 position-fixed"
     >
       <lottie-player
         src="https://assets2.lottiefiles.com/private_files/lf30_noclpt6t.json"
@@ -108,9 +108,8 @@
         id="game__container"
         class="flex-fill w-100 border border-1 placeholder-glow position-relative"
       >
-        <img class="h-100 w-100 min-h-50 object-fit-scale p-0" id="game__image"></img>
-        <div class="position-absolute end-0 bottom-0 w-25">
-          <img class="bg-transparent ratio ratio-1x1" id="game__map"></img>
+        <div id="game__container-loader">
+          <h2>One sec, loading the location!</h2>
         </div>
       </section>
 
@@ -122,8 +121,20 @@
           name="guess"
           placeholder="Where is this?"
         />
-        <button class="button__primary" onclick="checkAnswer()" id="guess__attempt">Guess</button>
-        <button class="button__primary" onclick="handleRestart()" id="guess__skip">Skip</button>
+        <button
+          class="button__primary"
+          onclick="checkAnswer()"
+          id="guess__attempt"
+        >
+          Guess
+        </button>
+        <button
+          class="button__primary"
+          onclick="handleRestart()"
+          id="guess__skip"
+        >
+          Skip
+        </button>
       </section>
     </main>
 

@@ -11,8 +11,10 @@ import {
   getDownloadURL,
 } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-storage.js";
 
-const gameImageElement = document.getElementById("game__image");
-const mapImageElement = document.getElementById("game__map");
+const gameContainerElement = document.querySelector("#game__container");
+const gameContainerLoaderElement = document.querySelector(
+  "#game__container-loader"
+);
 const guessFieldElement = document.querySelector("#guess__input");
 const attemptButtonElement = document.querySelector("#guess__attempt");
 const skipButtonElement = document.querySelector("#guess__skip");
@@ -176,9 +178,66 @@ async function checkAnswer() {
 }
 window["checkAnswer"] = checkAnswer;
 
-function displayMap(latitude, longitude) {
+async function displayImages(selectedPhoto) {
+  // Creates the required elements and displays the images
+  const gameImageElement = document.createElement("img");
+  const mapContainerElement = document.createElement("div");
+  const mapImageElement = document.createElement("img");
+  gameContainerLoaderElement.classList.add("d-none");
+  var gameImageLoaded = false,
+    mapImageLoaded = false;
+
+  // Fetches the map of the place and adds it to mapImageElement
+  const { longitude, latitude } = selectedPhoto.location.coordinates;
   mapImageElement.src = `https://api.mapbox.com/styles/v1/arashnrim/cldmza7li000t01qt6ypmzlwy/static/${longitude},${latitude},11/256x256?access_token=pk.eyJ1IjoiYXJhc2hucmltIiwiYSI6ImNsZGU1MjgybzA1ZGczcG81aTRlYnNsc2wifQ.pl_hnGv5vMnM1Yi5QXDmYA`;
-  mapImageElement.classList.toggle("placeholder");
+  mapImageElement.alt = "Map of the place";
+  mapImageElement.classList.add("bg-transparent", "ratio", "ratio-1x1");
+
+  // Configures the map container with specific Bootstrap classes
+  mapContainerElement.classList.add(
+    "position-absolute",
+    "end-0",
+    "bottom-0",
+    "w-25"
+  );
+
+  // Fetches the place's image and adds it to gameImageElement
+  await getDownloadURL(ref(storage, selectedPhoto.file)).then(function (url) {
+    gameImageElement.src = url;
+    gameImageElement.alt = "Image of the place";
+    gameImageElement.classList.add(
+      "h-100",
+      "w-100",
+      "min-h-50",
+      "object-fit-cover",
+      "p-0"
+    );
+  });
+
+  if (gameContainerElement.hasChildNodes()) {
+    while (gameContainerElement.firstChild) {
+      gameContainerElement.removeChild(gameContainerElement.firstChild);
+    }
+  }
+
+  mapContainerElement.appendChild(mapImageElement);
+  gameContainerElement.appendChild(gameImageElement);
+  gameContainerElement.appendChild(mapContainerElement);
+  gameContainerLoaderElement.classList.add("d-none");
+
+  // Add event listeners to both images and check if both have loaded
+  gameImageElement.addEventListener("load", function () {
+    gameImageLoaded = true;
+    if (gameImageLoaded && mapImageLoaded) {
+      gameContainerLoaderElement.classList.add("d-none");
+    }
+  });
+  mapImageElement.addEventListener("load", function () {
+    mapImageElement = true;
+    if (gameImageLoaded && mapImageLoaded) {
+      gameContainerLoaderElement.classList.add("d-none");
+    }
+  });
 }
 
 async function resetRound() {
@@ -189,30 +248,15 @@ async function resetRound() {
   guessFieldElement.value = "";
   attemptButtonElement.disabled = true;
   skipButtonElement.disabled = true;
-
-  const elements = [gameImageElement, mapImageElement];
-  elements.forEach(function (element) {
-    element.removeAttribute("src");
-    element.classList.toggle("placeholder");
-  });
 }
 
 async function startRound(delayButtonEnable = false) {
   resetRound();
 
   fetchRandomPhoto()
-    .then(function (selectedPhoto) {
+    .then(async function (selectedPhoto) {
       place = selectedPhoto.location;
-      displayMap(
-        selectedPhoto.location.coordinates.latitude,
-        selectedPhoto.location.coordinates.longitude
-      );
-
-      // Fetches the place's image and replaces the placeholder image with it
-      getDownloadURL(ref(storage, selectedPhoto.file)).then(function (url) {
-        gameImageElement.src = url;
-        gameImageElement.classList.toggle("placeholder");
-      });
+      await displayImages(selectedPhoto);
     })
     .then(function () {
       if (!delayButtonEnable) {
