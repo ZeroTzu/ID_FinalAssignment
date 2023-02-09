@@ -74,23 +74,21 @@
 
         <menu id="side__menu">
           <div id="side__menu__content" style="  position:relative;display:flex; flex-direction: row;">
-            <li style="list-style: none; margin-right:5px"><button class="btn-one" style="margin:0px; margin-top: 5px;"><span><i class="fa-solid fa-user"></i> &nbsp;Profile</span></button> </li>
-            <li style="list-style: none; margin-right:5px"><button class="btn-one" style="margin:0px; margin-top: 5px;"><span><i class="fas fa-cog"></i> &nbsp;Settings</button></span> </li>
-            <li style="list-style: none; margin-right:5px"><button class="btn-one" style="margin:0px; margin-top: 5px;"onclick="window.location.href='trivia.html';"><span><i class="fa-solid fa-clipboard-question"></i> &nbsp;Trivia!</button></span> </li>
-            <li style="list-style: none; margin-right:5px"><button class="btn-one" style="margin:0px; margin-top: 5px;"onclick="window.location.href='leaderboard.html';"><span><i class="fas fa-trophy"></i> &nbsp;Leaderboard</span></button> </li>
-            <button id="side__menu__back" class="btn-one"style="position:relative;margin-top:5px; border-bottom: none;width:fit-content"><span><i class="fa-solid fa-arrow-left-long"></i></span></button>
+            <li style="list-style: none; margin-right:5px"><button class="btn-one" style="margin:0px; margin-top: 5px;"><span><i class="fa-solid fa-user"></i> &nbsp;Profile</span></button></li>
+            <li style="list-style: none; margin-right:5px"><button class="btn-one" style="margin:0px; margin-top: 5px;"><span><i class="fas fa-cog"></i> &nbsp;Settings</span></button></li>
+            <li style="list-style: none; margin-right:5px"><button class="btn-one" style="margin:0px; margin-top: 5px;" onclick="window.location.href='trivia.html';"><span><i class="fa-solid fa-clipboard-question"></i> &nbsp;Trivia!</span></button></li>
+            <li style="list-style: none; margin-right:5px"><button class="btn-one" style="margin:0px; margin-top: 5px;" onclick="window.location.href='leaderboard.html';"><span><i class="fas fa-trophy"></i> &nbsp;Leaderboard</span></button> </li>
+            <button id="side__menu__back" class="btn-one" style="position:relative;margin-top:5px; border-bottom: none; width:fit-content"><span><i class="fa-solid fa-arrow-left-long"></i></span></button>
           </div>
         </menu>
-      </div>
-
       </div>
 
       <div id="add__place__interface" style="height: fit-content;"> 
         <div class="d-flex flex-row" style="background-color: var(--bg-dark-gray);"><h6 id="location">Location: <span id="location__span"> </span></h6><button id="add__place__edit" style="background-color: var(--bg-dark-gray)"><i class="fa-solid fa-pen-to-square"></i></button></div>
 
         <form id="add__place__form" class="flex-column">
-          <input type="text" id="title" placeholder="Title" font>
-          <div id="image__holder"style="position:relative; width:100%;  border: 1.5px solid var(--add-place-outline-purple);">
+          <input type="text" id="title" placeholder="Title">
+          <div id="image__holder" style="position:relative; width:100%;  border: 1.5px solid var(--add-place-outline-purple);">
             <lottie-player 
               id="placeholder__lottie"
               src="https://assets9.lottiefiles.com/packages/lf20_jdh7d1du.json"  
@@ -103,7 +101,7 @@
             </div>
 
           </div>
-          <textarea placeholder="Describe your experience here..." id="description" style=" border-top-left-radius:0px; margin-top: 5px;" rows="10" column="8"></textarea>
+          <textarea placeholder="Describe your experience here..." id="description" style="border-top-left-radius:0px; margin-top: 5px;" rows="10"></textarea>
           <button id="add__place__submit" type="submit">Post!</button>
         </form>
         <div style="display:flex; justify-content: flex-end;">
