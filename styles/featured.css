@@ -22,9 +22,11 @@ p{
   transition: border 0.3s ease-in-out;
   position: relative;
   min-height: fit-content;
-  aspect-ratio: 4 / 3;
 }
 
+.gallery__image-container:hover {
+  border: 8px solid var(--accent-dark-gray) !important;
+}
 .gallery__image-img {
   max-width: 100%;
   max-height: 100%;
