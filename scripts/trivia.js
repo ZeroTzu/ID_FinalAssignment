@@ -56,8 +56,8 @@ async function fetchRandomPhoto() {
   while (true) {
     selectedPhoto =
       snapshot.docs[Math.floor(Math.random() * snapshot.docs.length)].data();
-    if (!pastLocations.includes(selectedPhoto.file)) {
-      pastLocations.push(selectedPhoto.file);
+    if (!pastLocations.includes(selectedPhoto.photoArray[0])) {
+      pastLocations.push(selectedPhoto.photoArray[0]);
       break;
     } else if (pastLocations.length === snapshot.docs.length) {
       alert("You've seen all the photos! Restarting...");
