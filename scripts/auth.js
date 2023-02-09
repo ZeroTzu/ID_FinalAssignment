@@ -1,4 +1,4 @@
-import { auth } from "./utils/firebase.js";
+import { auth, db } from "./utils/firebase.js";
 import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -6,27 +6,51 @@ import {
   updateProfile,
   signOut,
 } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
+import {
+  doc,
+  setDoc,
+} from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
 
-const usernameField = document.getElementById("username");
-const emailField = document.getElementById("email");
-const passwordField = document.getElementById("password");
-const signInButton = document.getElementById("signIn");
-const signUpButton = document.getElementById("signUp");
-const signOutButton = document.getElementById("signOut");
+const usernameField = $("#username");
+const emailField = $("#email");
+const passwordField = $("#password");
+const signInButton = $("#signIn");
+const signUpButton = $("#signUp");
+const signOutButton = $("#signOut");
 
-onAuthStateChanged(auth, function (user) {
+onAuthStateChanged(auth, async function (user) {
   if (user) {
-    window.location.href = "/";
+    if (user.metadata.creationTime === user.metadata.lastSignInTime) {
+      try {
+        await updateProfile(auth.currentUser, {
+          displayName: usernameField.val(),
+        }).catch(function (error) {
+          throw error;
+        });
+        await setDoc(doc(db, "users", auth.currentUser.uid), {
+          Username: auth.currentUser.displayName,
+          Points: 0,
+          TriviaHighScore: 0,
+        }).catch(function (error) {
+          throw error;
+        });
+        window.location.href = "/";
+      } catch (error) {
+        handleFailedAuth(error.code);
+      }
+    } else {
+      window.location.href = "/";
+    }
   }
 });
 
 function setButtonDisabled(bool) {
-  signInButton.disabled = bool;
-  signUpButton.disabled = bool;
+  signInButton.prop("disabled", bool);
+  signUpButton.prop("disabled", bool);
 }
 
 function validateEntries() {
-  if (emailField.value !== "" && passwordField.value !== "") {
+  if (emailField.val() !== "" && passwordField.val() !== "") {
     setButtonDisabled(false);
   } else {
     setButtonDisabled(true);
@@ -59,6 +83,9 @@ function handleFailedAuth(code) {
       message =
         "You've made too many unsuccessful attempts. Try again later or reset your password.";
       break;
+    case "auth/invalid-username":
+      message = "Please enter a username.";
+      break;
     default:
       message = "An error has occurred. Please try again later.";
   }
@@ -84,8 +111,8 @@ async function authenticateUser(action) {
     case "signIn":
       signInWithEmailAndPassword(
         auth,
-        emailField.value,
-        passwordField.value
+        emailField.val(),
+        passwordField.val()
       ).catch(function (error) {
         handleFailedAuth(error.code);
       });
@@ -93,16 +120,16 @@ async function authenticateUser(action) {
 
     case "signUp":
       try {
+        if (usernameField.val() === "") {
+          throw {
+            code: "auth/invalid-username",
+          };
+        }
         await createUserWithEmailAndPassword(
           auth,
-          emailField.value,
-          passwordField.value
+          emailField.val(),
+          passwordField.val()
         ).catch(function (error) {
-          throw error;
-        });
-        await updateProfile(auth.currentUser, {
-          displayName: usernameField.value,
-        }).catch(function (error) {
           throw error;
         });
       } catch (error) {
@@ -113,52 +140,47 @@ async function authenticateUser(action) {
 }
 
 function createAlert(type, content) {
-  if (emailField.previousElementSibling) {
-    emailField.previousElementSibling.remove();
+  if (usernameField.prev()) {
+    usernameField.prev().remove();
   }
-  const alertDiv = document.createElement("div");
-  alertDiv.classList.add(
-    "alert",
-    `alert-${type}`,
-    "alert-dismissible",
-    "fade",
-    "show"
+  const alertDiv = $(
+    `<div class="alert alert-${type} alert-dismissible fade show"></div>`
   );
-  alertDiv.role = "alert";
-  alertDiv.id = "alert";
-  alertDiv.innerHTML = content;
-  emailField.parentNode.insertBefore(alertDiv, emailField);
+  alertDiv.prop("role", "alert");
+  alertDiv.prop("id", "alert");
+  alertDiv.html(content);
+  usernameField.before(alertDiv);
 }
 
 // Binds relevant event listeners to their respective elements.
 // Since this file is made into a module, we cannot use this in the global scope (i.e., accessible to HTML).
-emailField.addEventListener("keyup", function () {
+emailField.on("keyup", function () {
   validateEntries();
 });
-emailField.addEventListener("keypress", function (event) {
+emailField.on("keypress", function (event) {
   if (event.key === "Enter") {
     event.preventDefault();
     handleSubmit({ id: "signIn" });
   }
 });
-passwordField.addEventListener("keyup", function () {
+passwordField.on("keyup", function () {
   validateEntries();
 });
-passwordField.addEventListener("keypress", function (event) {
+passwordField.on("keypress", function (event) {
   if (event.key === "Enter") {
     event.preventDefault();
     handleSubmit({ id: "signIn" });
   }
 });
-signInButton.addEventListener("click", function (event) {
+signInButton.on("click", function (event) {
   event.preventDefault();
   handleSubmit(event.target);
 });
-signUpButton.addEventListener("click", function (event) {
+signUpButton.on("click", function (event) {
   event.preventDefault();
   handleSubmit(event.target);
 });
-signOutButton.addEventListener("click", function (event) {
+signOutButton.on("click", function (event) {
   event.preventDefault();
   signOut(auth).catch(function (error) {
     createAlert(

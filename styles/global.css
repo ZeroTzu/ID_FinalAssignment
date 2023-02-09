@@ -1,3 +1,5 @@
+@import "header.css";
+
 :root {
   --bg-dark-gray: rgb(11, 11, 25);
   --accent-dark-gray: rgb(56, 56, 128);
@@ -8,8 +10,7 @@
   --bg-dark-gray-pale: rgb(17, 17, 37);
   --add-place-outline-purple: rgb(42, 42, 83);
   --add-place-outline-purple2: rgb(35, 35, 66);
-  --highlighted-purple:rgb(68, 68, 116);
-
+  --highlighted-purple: rgb(68, 68, 116);
 }
 
 body {
@@ -33,7 +34,7 @@ textarea::placeholder {
   opacity: 1;
 }
 
-.button__primary{
+.button-primary {
   background-color: var(--accent-dark-gray);
   color: var(--primary-color);
   padding: 0.5em 1em;
@@ -43,6 +44,22 @@ textarea::placeholder {
   cursor: pointer;
   transition: background-color 0.15s, opacity 0.15;
   font-weight: bold;
+}
+
+.button-secondary {
+  background-color: var(--bg-dark-gray);
+  color: var(--primary-color);
+  padding: 0.5em 1em;
+  border: 1px solid var(--accent-dark-gray);
+  height: fit-content;
+  width: fit-content;
+  cursor: pointer;
+  transition: background-color 0.15s;
+  font-weight: bold;
+}
+
+.button-secondary:hover {
+  background-color: var(--pale-black);
 }
 
 button[disabled] {
