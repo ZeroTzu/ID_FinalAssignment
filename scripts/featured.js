@@ -53,7 +53,7 @@ async function getPhoto(photoDocsList) {
     const textContainer = document.createElement("div");
     textContainer.classList.add("gallery__image-text");
     textContainer.innerHTML = `
-    <h2>${list[i].title}</h2>
+    <h5>${list[i].title}</h5>
     <span>${list[i].locationName}</span>
     <span>${new Date(list[i].postTime.seconds * 1000).toDateString()}</span>
     `;

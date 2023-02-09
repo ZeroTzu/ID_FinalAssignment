@@ -25,6 +25,7 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
+
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYXJhc2hucmltIiwiYSI6ImNsZGU1MjgybzA1ZGczcG81aTRlYnNsc2wifQ.pl_hnGv5vMnM1Yi5QXDmYA"; // Add your Mapbox access token here
 
@@ -57,7 +58,12 @@ const markers = [];
 function showResults(data) {
   const resultsList = data.features.map((feature) => {
     const div = document.createElement("div");
+    const addToPostLink=document.createElement("p");
+    div.style.position="relative";
+    console.log(feature)
     div.className = "search__result";
+    div.dataset.coords=[feature.geometry.longitude,feature.geometry.latitude]
+    div.dataset.name=[feature.place_name]
     div.innerHTML = `
       <h3>${feature.text}</h3>
       ${
@@ -67,6 +73,23 @@ function showResults(data) {
       }
       <p>${feature.place_name.replace(feature.text + ", ", "")}</p>
     `;
+    const addToPost=document.createElement('button')
+    addToPost.innerHTML="Add";
+    addToPost.style.position="absolute";
+    addToPost.style.top=0;
+    addToPost.style.right=0;
+    addToPost.classList.add("add__to__post")
+    div.appendChild(addToPost)
+    
+    addToPost.addEventListener("click",function(){
+      userCurrentLocationCoords=div.dataset.coords;
+      userCurrentLocationName=div.dataset.name;
+      $("#location__span").html(function(i,currentHTML){
+        return `${userCurrentLocationName}`
+      })
+      
+      
+    })
     div.addEventListener("click", () => {
       markers.forEach((marker) => {
         marker.remove();
@@ -92,6 +115,22 @@ function showResults(data) {
   );
 }
 
+function searchLocation() {
+  const resultsDiv = document.querySelector("#search__results");
+  if (resultsDiv) {
+    resultsDiv.parentNode.removeChild(resultsDiv);
+  }
+
+  const input = document.querySelector("#search__input").value;
+  const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${input}.json?access_token=${mapboxgl.accessToken}&limit=10`;
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      showResults(data);
+      return data;
+      
+    });
+}
 //Gets the current coords of user,calls mapbox inputing the coords, gets name of the closest match,
 var userCurrentLocationCoords;
 var userCurrentLocationName;
@@ -122,25 +161,10 @@ function getCurrentLocation() {
   }
   navigator.geolocation.getCurrentPosition(success);
 }
-$("#search__button").on("click", function () {
-  searchLocation();
-});
+$("#search__button").on("click",function(){
+  searchLocation()
+})
 
-function searchLocation() {
-  const resultsDiv = document.querySelector("#search__results");
-  if (resultsDiv) {
-    resultsDiv.parentNode.removeChild(resultsDiv);
-  }
-
-  const input = document.querySelector("#search__input").value;
-  const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${input}.json?access_token=${mapboxgl.accessToken}&limit=10`;
-  fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-      showResults(data);
-      return data;
-    });
-}
 
 // Listens for an enter key press on the search input
 const searchInput = document.querySelector("#search__input");

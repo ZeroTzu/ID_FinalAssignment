@@ -10,6 +10,7 @@ body {
 }
   
 .flex-box{
+    font-size: 18px !important;
     flex: 1;
     max-width: 100%;
     max-height: 100%;    
@@ -23,13 +24,13 @@ body {
 }
 
 .btn-one {
-    border: none;
+    border-color: black;
     background-color: transparent;
     text-align: right;
     color: #fff;
     transition: all 0.3s;
     z-index: 9;
-    margin: 7px;
+    margin: 5px;
     position: absolute;
     top: 0px;
     right: 0px;
@@ -41,7 +42,7 @@ body {
 
 @media screen and (max-width: 420px) {
     .flex-box{
-        font-size: 80% !important;
+        font-size: 70% !important;
         flex: 1;
         max-width: 100%;
         max-height: 100%;    
@@ -51,7 +52,7 @@ body {
 
 @media screen and (max-width: 300px) {
     .flex-box{
-        font-size: 55% !important;
+        font-size: 45% !important;
         flex: 1;
         max-width: 100%;
         max-height: 100%;    
