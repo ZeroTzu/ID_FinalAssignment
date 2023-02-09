@@ -100,7 +100,7 @@ function getCurrentLocation() {
     } catch(error){
       console.log("Error",error)
     }
-    
+
     map.flyTo({
       center: [position.coords.longitude,position.coords.latitude],
       essential: true,
@@ -126,7 +126,7 @@ function searchLocation() {
     .then((data) => {
       showResults(data);
       return data;
-      
+
     });
 }
 
@@ -146,7 +146,7 @@ document
     document.getElementById("side__menu").style.display = "block";
     document.getElementById("side__menu__button").style.display = "none";
   });
-  
+
 //for side__menu__back to hide the menu
 document
   .getElementById("side__menu__back")
@@ -168,7 +168,7 @@ $(".float-out").css({
 //for back button to hide add__place__interface
 $("#add__place__back__button").on("click",function(){
   $("#add__place__interface").css("display","none");
-  
+
 })
 
 
@@ -179,7 +179,7 @@ $("#add__place__back__button").on("click",function(){
 //for Post button to do input validation then POST into firebase server
 var images;
 $("#add__place__form").submit(async function(event){
-  event.preventDefault(); 
+  event.preventDefault();
   let title=document.getElementById("title").value;
   let description=document.getElementById("description").value;
   console.log(title,description,images[0]);
@@ -203,23 +203,24 @@ $("#add__place__form").submit(async function(event){
     let storageRef=ref(storage,`images/${images[0].name}`)//SOME ERROR HERE
     await uploadBytes(storageRef,images[0]).then((snapshot)=>{
       console.log('Uploaded a blob or file!')
-  
 
-      
-      
+
+
+
     }).catch(function(error){
       console.log(error)
     }).finally(()=>{
-      setDoc(postDoc,{ 
-        uid: uid, 
+      setDoc(postDoc,{
+        uid: uid,
         displayName: userName,
         title: title,
         description: description,
         postTime:currentDate,
-        locationName:userCurrentLocationName,
+        locationName:userCurrentLocationName.split(", ")[0],
+        locationAddress:userCurrentLocationName.split(", ").slice(1).join(", "),
         locationCoords:userCurrentLocationCoords,
         photoArray:[`photos/${images[0].name}`]
-      })  
+      })
     })
   }
 })
@@ -245,7 +246,7 @@ document.getElementById("image__holder").addEventListener('dragover',function(ev
   event.preventDefault();
   console.log("drag over")
   document.getElementById("image__holder").classList.add("image__hover")
-  
+
 })
 document.getElementById("image__holder").addEventListener('dragleave',function(event){
   event.preventDefault();
@@ -275,7 +276,7 @@ document.getElementById("image__holder").addEventListener("drop",function(event)
       console.log("Logged not")
       document.getElementById("image__holder").classList.remove("image__hover")
     }
-    
+
   }
   let userFiles=event.dataTransfer.files
   console.log("Detected drop")
