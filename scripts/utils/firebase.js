@@ -28,6 +28,7 @@ export {
   collection,
   onSnapshot,
   setDoc,
-  doc
+  doc,
+  GeoPoint
 } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js"
 export{ref,uploadBytes } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-storage.js";
