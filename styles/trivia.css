@@ -13,13 +13,10 @@
   max-height: 640px;
 }
 
-.progress {
+#game__container-loader {
+  z-index: 1;
+  transition: opacity 0.5s linear 0.5s;
   background-color: var(--bg-dark-gray);
-  border: 1px solid var(--accent-dark-gray);
-}
-
-.progress-bar {
-  background-color: var(--accent-dark-gray);
 }
 
 @media screen and (max-width: 640px) {
