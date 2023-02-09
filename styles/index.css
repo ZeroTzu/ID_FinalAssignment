@@ -64,7 +64,7 @@ aside {
   color: white;
 }
 
-#side__menu__button,
+#side__menu__buton,
 #add__place_button {
   margin-right: 5px;
 }
@@ -72,7 +72,6 @@ aside {
   margin-left: 3px;
   background-color: var(--accent-dark-gray);
   border: 1px solid var(--accent-dark-gray);
-  width: 30px;
 }
 
 #add__place__button:hover {
@@ -379,11 +378,6 @@ h6{
     left: 7px;
   }
 
-  #add__place__button {
-    background-color: var(--accent-dark-gray);
-    border: 1px solid var(--accent-dark-gray);
-    width: 21px;
-  }
   aside {
     z-index: 149;
     background-color: var(--bg-dark-gray);
@@ -431,11 +425,6 @@ h6{
     left: 6px;
   }
 
-  #add__place__button {
-    background-color: var(--accent-dark-gray);
-    border: 1px solid var(--accent-dark-gray);
-    width: 21px;
-  }
   aside {
     z-index: 149;
     background-color: var(--bg-dark-gray);
