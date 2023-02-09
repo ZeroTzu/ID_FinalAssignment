@@ -12,13 +12,19 @@ import {
 
 // Create a reference with an initial file path and name
 const storage = getStorage();
-
+var placePhoto = []    ;
 async function getAllDataOnce() {
   await getDocs(collection(db, "post")).then((querySnapshot) => {
-    var placePhoto = [];
+
+    
     querySnapshot.forEach((doc) => {
       placePhoto.push(doc.data());
     });
+    placePhoto.forEach(function(obj,index ){
+      const newObj={...obj,index:index}
+      placePhoto[index]=newObj
+      console.log(newObj)
+    })
     getPhoto(placePhoto);
   });
 }
@@ -45,9 +51,22 @@ async function getPhoto(photoDocsList) {
       "border-white",
       "p-0"
     );
+    container.dataset.index=i
+    container.dataset.title=placePhoto[i].title
+    container.dataset.description=placePhoto[i].description
+    container.dataset.time=placePhoto[i].postTIme
+    container.dataset.locationName=placePhoto[i].locationName
+    container.dataset.locationAddress=placePhoto[i].locationAddress
+    container.dataset.coords=placePhoto[i].locationCoords
+    
+    container.addEventListener("click",function(element){
+      console.log(container.dataset)
+    })
 
     const image = document.createElement("img");
     image.classList.add("gallery__image-img");
+    image.style.objectFit="cover";
+    image.style.height="100%";
     image.id = "image" + i;
 
     const textContainer = document.createElement("div");
@@ -60,7 +79,7 @@ async function getPhoto(photoDocsList) {
 
     container.append(image);
     container.append(textContainer);
-    document.querySelector("#gallery > .row").append(container);
+    document.querySelector("#gallery").querySelector("#images__container").append(container);
     var pathReference = ref(storage, list[i].path);
     await getDownloadURL(pathReference)
       .then((url) => {
@@ -91,3 +110,7 @@ async function getPhoto(photoDocsList) {
   }
 }
 window.onload = getAllDataOnce;
+function openPost(element){ 
+
+
+}

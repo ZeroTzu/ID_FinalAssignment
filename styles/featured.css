@@ -17,7 +17,10 @@ p{
   align-items: center;
   padding: 2em;
 }
-
+#images__container{
+display:flex;
+justify-content: center;
+}
 .gallery__image-container {
   transition: border 0.3s ease-in-out;
   position: relative;
