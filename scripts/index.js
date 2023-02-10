@@ -58,7 +58,10 @@ function showResults(data) {
   data.features.map(function (feature) {
     const div = $(`<div class="search__result"></div>`);
     div.css("position", "relative");
-    div.data("coords", [feature.geometry.longitude, feature.geometry.latitude]);
+    div.data("coords", [
+      feature.geometry.coordinates[0],
+      feature.geometry.coordinates[1],
+    ]);
     div.data("name", [feature.place_name]);
     div.html(`
       <h3>${feature.text}</h3>
@@ -210,6 +213,12 @@ $("#add-place__form").submit(async function (event) {
   if (userIsSignedIn === false) {
     alert("Please sign in before posting!");
     return;
+  } else if (
+    userCurrentLocationName === undefined ||
+    userCurrentLocationCoords === undefined
+  ) {
+    alert("Please select a location!");
+    return;
   } else {
     let user = auth.currentUser,
       uid = user.uid,
@@ -227,8 +236,8 @@ $("#add-place__form").submit(async function (event) {
             title: title,
             description: description,
             postTime: currentDate,
-            locationName: userCurrentLocationName.split(", ")[0],
-            locationAddress: userCurrentLocationName
+            locationName: userCurrentLocationName[0].split(", ")[0],
+            locationAddress: userCurrentLocationName[0]
               .split(", ")
               .slice(1)
               .join(", "),
