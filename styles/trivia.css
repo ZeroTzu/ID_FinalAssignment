@@ -33,6 +33,12 @@ a{
   text-decoration:none;
 }
 
+/* An arbitrary margin to give space to the header. Wish we had time to
+explore this in more depth! */
+main {
+  margin-top: 10vh;
+}
+
 @media screen and (max-width: 640px) {
   #guess__container {
     flex-direction: column !important;

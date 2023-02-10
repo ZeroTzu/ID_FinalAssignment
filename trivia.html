@@ -30,6 +30,26 @@
     <link rel="stylesheet" href="styles/trivia.css" />
   </head>
   <body data-bs-theme="dark">
+    <header
+      class="position-absolute top-0 vw-100 d-flex align-items-center px-4"
+    >
+      <a href="./">
+        <img src="./images/logo.png" height="52" />
+      </a>
+      <div></div>
+      <button id="hamburger" class="button-secondary" data-open="true">
+        <i class="fas fa-bars"></i>
+      </button>
+      <nav id="header__nav" class="row m-0">
+        <a class="col" href="./leaderboard.html"
+          ><i class="fas fa-trophy"></i> &nbsp;Leaderboard</a
+        >
+        <a class="col" href="./featured.html"
+          ><i class="fa-solid fa-star"></i>&nbsp;Featured</a
+        >
+      </nav>
+    </header>
+
     <section
       id="intro"
       class="vh-100 vw-100 d-flex flex-column align-items-center justify-content-center gap-4 position-fixed p-4 overflow-scroll"
@@ -114,9 +134,7 @@
       <button class="button-primary" onclick="hideIntro()">Let's start!</button>
     </section>
 
-    <main
-      class="vh-100 vw-100 d-flex justify-content-center p-5 flex-column gap-4"
-    >
+    <main class="vh-100 vw-100 d-flex justify-content-center p-5 flex-column gap-4">
     <div class="f-box"><a class="button-secondary align-self-start" href="./">
       Home
     </a>
@@ -183,6 +201,8 @@
       integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
       crossorigin="anonymous"
     ></script>
+
+    <script type="module" src="scripts/header.js"></script>
     <script type="module" src="scripts/trivia.js"></script>
   </body>
 </html>
