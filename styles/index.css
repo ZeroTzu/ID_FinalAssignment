@@ -113,7 +113,7 @@ aside {
   display: none;
   position: relative;
   flex-direction: column;
-  background-color: var(--bg-dark-gray-pale);
+  background-color: var(--bg-dark-gray);
   padding: 20px;
   border-radius: 5px;
   border: 1px solid var(--add-place-outline-purple);
