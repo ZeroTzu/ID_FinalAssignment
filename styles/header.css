@@ -5,13 +5,17 @@ header {
   z-index: 10;
 }
 
-body{
+
+
+#header__nav{
   font-size: 120%;
 }
 
 header > div {
   flex: 1;
 }
+
+
 
 #header__nav {
   display: none;
@@ -53,20 +57,50 @@ header > div {
   background-color: rgb(54, 54, 54);
 }
 @media screen and (max-width: 980px) {
-  body{
+  #header__nav{
     font-size: 110%;
   }
 }
 
-@media screen and (max-width: 900px) {
-  body{
+@media screen and (max-width: 910px) {
+  #header__nav{
     font-size: 100%;
   }
 }
 
 @media screen and (max-width: 840px) {
-  body{
+  #header__nav{
     font-size: 90%;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .button-secondary, #header__nav{
+    font-size: 70%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .button-secondary, #header__nav{
+    font-size: 60%;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .button-secondary, #header__nav{
+    font-size: 50%;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .button-secondary, #header__nav{
+    font-size: 40%;
+  }
+}
+
+@media screen and (max-width: 290px) {
+  .button-secondary, #header__nav{
+    font-size: 30%;
   }
 }
 

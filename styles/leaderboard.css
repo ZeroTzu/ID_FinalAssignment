@@ -1,8 +1,16 @@
 @import "global.css";
 
+.l-height{
+  height: 52px;
+}
+
 body {
   background-color: var(--bg-dark-gray);
   color: var(--primary-color);
+}
+
+.row {
+  --bs-gutter-x: 0 !important; 
 }
 
 #leaderboard__loader {
@@ -37,3 +45,67 @@ body {
 .btn-one:hover {
   background-color: gray;
 } */
+
+
+h1{
+  font-size: 200%
+}
+table{
+  font-size: 90%;
+}
+
+#font-smaller{
+  font-size: 120% !important;
+}
+#font-small{
+  font-size: 110% !important;
+}
+.font-small{
+  font-size: 120% !important;
+}
+
+
+@media screen and (max-width: 450px) {
+  h1{
+    font-size: 130%;
+  }
+  table{
+    font-size: 80%;
+  }
+  
+  #font-smaller{
+    font-size: 90% !important;
+  }
+  #font-small{
+    font-size: 70% !important;
+  }
+  .font-small{
+    font-size: 90% !important;
+  }
+  .l-height{
+    height: 38px;
+  }
+  }
+
+  
+@media screen and (max-width: 450px) {
+  h1{
+    font-size: 100%;
+  }
+  table{
+    font-size: 60%;
+  }
+  
+  #font-smaller{
+    font-size: 80% !important;
+  }
+  #font-small{
+    font-size: 60% !important;
+  }
+  .font-small{
+    font-size: 70% !important;
+  }
+  .l-height{
+    height: 30px;
+  }
+  }
