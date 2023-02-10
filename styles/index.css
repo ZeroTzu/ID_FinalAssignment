@@ -132,6 +132,8 @@ aside {
 
 #side-menu__content > li {
   list-style: none;
+  display: flex!important;
+    align-items: center;
 }
 
 #side-menu__content a {
@@ -234,9 +236,18 @@ aside {
 
 /**end of TEST BUTTON**/
 @media screen and (max-width: 640px) {
+
+  #side-menu__content {
+    overflow-x: scroll;
+  }
+
   h6 {
     font-size: 12px;
   }
+
+  ul {
+    padding-left: 0rem;
+}
 
   #add-place__form-submit {
     font-size: 12px;
@@ -427,9 +438,7 @@ aside {
     font-size: 8px;
   }
 
-  #side-menu__content {
-    overflow-x: scroll;
-  }
+
 
   #side-menu__content a {
     appearance: none;
