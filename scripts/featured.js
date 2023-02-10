@@ -1,7 +1,10 @@
 import { db } from "./utils/firebase.js";
 import {
   getDocs,
+  getDoc,
   collection,
+  doc,
+  runTransaction
 } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
 
 import {
@@ -54,14 +57,64 @@ async function getPhoto(photoDocsList) {
     container.dataset.index=i
     container.dataset.title=placePhoto[i].title
     container.dataset.description=placePhoto[i].description
-    container.dataset.time=placePhoto[i].postTIme
+    container.dataset.time=placePhoto[i].postTime
     container.dataset.locationName=placePhoto[i].locationName
     container.dataset.locationAddress=placePhoto[i].locationAddress
     container.dataset.coords=placePhoto[i].locationCoords
-    
+    container.dataset.displayName=placePhoto[i].displayName
+    container.dataset.id=placePhoto[i].id
+    container.dataset.likes=placePhoto[i].likes
+    container.dataset.hasliked=false
+    //This shows the modal when a tile is clicked on
+
     container.addEventListener("click",function(element){
-      console.log(container.dataset)
-    })
+      const mc=document.getElementById("modal__container")
+      const m1=document.getElementById("modal-1")
+      mc.style.display="flex";
+      document.getElementById("modal-title").innerHTML=container.dataset.title;
+      document.getElementById("modal-user").querySelector("span").innerHTML=container.dataset.displayName;
+      document.getElementById("modal-image").setAttribute("src",container.dataset.imageURL);
+      document.getElementById("modal-description").innerHTML=container.dataset.description;
+   
+        document.getElementById("like-button").addEventListener("click", async function(){
+          console.log("Before",container.dataset.likes)
+          try{
+            console.log(container.dataset.id)
+            const docRef=doc(db,"post",`${container.dataset.id}`); 
+            const newLikes= await runTransaction(db, async (transaction) => {
+              const sfDoc = await transaction.get(docRef);
+              if (!sfDoc.exists()) {
+                throw "Document does not exist!";
+              }
+              console.log(container.dataset.likes)
+              if (container.dataset.hasliked==false){
+                const newLikes = sfDoc.data().likes + 1;
+                container.dataset.likes+=1
+                container.dataset.hasliked=true
+                transaction.update(docRef, { likes: newLikes })
+              }
+              else{
+                const newLikes = sfDoc.data().likes - 1;
+                container.dataset.likes-=1
+                container.dataset.hasliked=false
+                transaction.update(docRef, { likes: newLikes })
+              }
+              console.log("After",container.dataset.likes)
+
+              
+              
+              
+
+
+            })
+
+
+
+          }catch(error){
+          console.log("Error getting likes",error)
+          }
+          })
+        })
 
     const image = document.createElement("img");
     image.classList.add("gallery__image-img");
@@ -85,6 +138,7 @@ async function getPhoto(photoDocsList) {
       .then((url) => {
         var img = document.getElementById("image" + i);
         img.setAttribute("src", url);
+        container.dataset.imageURL=url
       })
       .catch((error) => {
         // A full list of error codes is available at
@@ -109,6 +163,11 @@ async function getPhoto(photoDocsList) {
       });
   }
 }
+console.log(document.getElementById("modal__button"))
+ document.getElementById("modal__button").addEventListener("click",function(){
+  document.getElementById("modal__container").style.display="none";
+ })
+
 window.onload = getAllDataOnce;
 function openPost(element){ 
 
