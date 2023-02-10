@@ -1,13 +1,21 @@
 header {
   background-color: var(--bg-dark-gray);
   position: absolute;
-  padding: 1em 2em;
+  padding: 1em 1em;
   z-index: 10;
+}
+
+
+
+#header__nav{
+  font-size: 120%;
 }
 
 header > div {
   flex: 1;
 }
+
+
 
 #header__nav {
   display: none;
@@ -47,6 +55,53 @@ header > div {
 #header__nav > button:hover {
   color: rgb(106, 105, 105);
   background-color: rgb(54, 54, 54);
+}
+@media screen and (max-width: 980px) {
+  #header__nav{
+    font-size: 110%;
+  }
+}
+
+@media screen and (max-width: 910px) {
+  #header__nav{
+    font-size: 100%;
+  }
+}
+
+@media screen and (max-width: 840px) {
+  #header__nav{
+    font-size: 90%;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .button-secondary, #header__nav{
+    font-size: 70%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .button-secondary, #header__nav{
+    font-size: 60%;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .button-secondary, #header__nav{
+    font-size: 50%;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .button-secondary, #header__nav{
+    font-size: 40%;
+  }
+}
+
+@media screen and (max-width: 290px) {
+  .button-secondary, #header__nav{
+    font-size: 30%;
+  }
 }
 
 @media screen and (min-width: 768px) {
