@@ -24,12 +24,13 @@ aside {
 }
 
 #search__results {
-  margin-top: 1em;
   display: flex;
   flex-direction: column;
+  padding: 0.5em;
   gap: 1em;
   overflow-y: scroll;
   max-height: 20vh;
+  background-color: var(--bg-dark-gray);
 }
 
 .search__result {
@@ -60,7 +61,7 @@ aside {
   color: white;
 }
 
-#add-place,
+#add-place__button,
 #get-location {
   border-radius: 0 !important;
 }

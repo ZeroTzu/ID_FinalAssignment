@@ -15,8 +15,8 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     userIsSignedIn = true;
   } else {
-    // User is signed out
     userIsSignedIn = false;
+    $("#add-place__button").css("display", "none");
   }
 });
 
@@ -51,6 +51,9 @@ map.on("load", async () => {
 const markers = [];
 function showResults(data) {
   const resultsDiv = $(`<div id="search__results"></div>`);
+  if (resultsDiv.children().length > 0) {
+    resultsDiv.empty();
+  }
 
   data.features.map(function (feature) {
     const div = $(`<div class="search__result"></div>`);
@@ -77,10 +80,9 @@ function showResults(data) {
     addToPost.on("click", function () {
       userCurrentLocationCoords = div.data("coords");
       userCurrentLocationName = div.data("name");
-      $("#add-place__form-location").html(function () {
-        return `${userCurrentLocationName}`;
-      });
+      $("#add-place__form-location").text(`${userCurrentLocationName}`);
       $("#add-place__container").css("display", "flex");
+      checkFields();
     });
 
     div.on("click", () => {
@@ -99,12 +101,13 @@ function showResults(data) {
     resultsDiv.append(div);
   });
 
-  $("#aside__header").after(resultsDiv);
+  console.log(resultsDiv);
+  $("#aside1").after(resultsDiv);
 }
 
 function searchLocation() {
   const resultsDiv = $("#search__results");
-  if (resultsDiv) {
+  if (resultsDiv.length > 0) {
     resultsDiv.remove();
   }
 
@@ -131,9 +134,8 @@ function getCurrentLocation() {
       const response = await fetch(url);
       const results = await response.json();
       userCurrentLocationName = results.features[0].place_name;
-      $("#add-place__form-location").html(function () {
-        return `${userCurrentLocationName}`;
-      });
+      $("#add-place__form-location").text(`${userCurrentLocationName}`);
+      checkFields();
     } catch (error) {
       console.log("Error", error);
     }
@@ -166,7 +168,7 @@ const searchInput = document.querySelector("#search__input");
 searchInput.addEventListener("keyup", (event) => {
   if (event.keyCode === 13) {
     event.preventDefault();
-    searchLocation();
+    $("#search__button").click();
   }
 });
 
@@ -200,54 +202,51 @@ $(".float-out").css({
   right: "0",
 });
 
-//for Post button to do input validation then POST into firebase server
 var images;
 $("#add-place__form").submit(async function (event) {
   event.preventDefault();
   let title = $("#add-place__form-title").val();
   let description = $("#add-place__form-description").val();
-  if (title.length < 5) {
-    $("#add-place__form-title").prop(
-      "placeholder",
-      "Title (Minimum 5-25 characters allowed)"
-    );
-  }
-  if (userIsSignedIn == false) {
-    console.log("Unable to post...user isn't signed in");
-    //do something to alert user in html here PLS
+  if (userIsSignedIn === false) {
+    alert("Please sign in before posting!");
     return;
   } else {
-    console.log("User IS signed in");
-    let user = auth.currentUser;
-    let uid = user.uid;
-    let userName = user.displayName;
-    let currentDate = new Date();
+    let user = auth.currentUser,
+      uid = user.uid,
+      userName = user.displayName,
+      currentDate = new Date();
     console.log(`UserName: ${userName} UserID: ${uid}`);
     let postDoc = doc(collection(db, "post"), `${uid}_${format(currentDate)}`);
-    let storageRef = ref(storage, `images/${images[0].name}`); //SOME ERROR HERE
-    await uploadBytes(storageRef, images[0])
-      .then((snapshot) => {
-        console.log("Uploaded a blob or file!");
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
-      .finally(() => {
-        setDoc(postDoc, {
-          uid: uid,
-          displayName: userName,
-          title: title,
-          description: description,
-          postTime: currentDate,
-          locationName: userCurrentLocationName.split(", ")[0],
-          locationAddress: userCurrentLocationName
-            .split(", ")
-            .slice(1)
-            .join(", "),
-          locationCoords: userCurrentLocationCoords,
-          photoArray: [`images/${images[0].name}`],
+    let storageRef = ref(storage, `images/${images[0].name}`);
+    try {
+      await uploadBytes(storageRef, images[0])
+        .then(async function () {
+          await setDoc(postDoc, {
+            uid: uid,
+            displayName: userName,
+            title: title,
+            description: description,
+            postTime: currentDate,
+            locationName: userCurrentLocationName.split(", ")[0],
+            locationAddress: userCurrentLocationName
+              .split(", ")
+              .slice(1)
+              .join(", "),
+            locationCoords: userCurrentLocationCoords,
+            photoArray: [`images/${images[0].name}`],
+          }).catch(function (error) {
+            throw error;
+          });
+        })
+        .catch(function (error) {
+          throw error;
         });
-      });
+    } catch (error) {
+      alert(
+        "Sorry, something went wrong when uploading your post. Error code: " +
+          error
+      );
+    }
   }
 });
 function format(inputDate) {
@@ -263,7 +262,8 @@ function format(inputDate) {
 
   return `${date}${month}${year}${inputDate.getHours()}${inputDate.getMinutes()}${inputDate.getSeconds()}`;
 }
-//function to highlight imagebox when dragged over
+
+// Highlights the image holder when the user drags an image over it
 $("#add-place__form-holder").on("dragover", function (event) {
   event.preventDefault();
   $("#add-place__form-holder").addClass("image-hovering");
@@ -274,7 +274,7 @@ $("#add-place__form-holder").on("dragleave", function (event) {
   $("#add-place__form-holder").removeClass("image-hovering");
 });
 
-//drop Handler for users to drop an image into image__holder
+// Handles the image upload when the user drops an image on the image holder
 var userFiles;
 function updateShowImage(image) {
   let thumbnailElement = $("#add-place__form-holder > .post-image");
@@ -290,7 +290,9 @@ function updateShowImage(image) {
   $("#add-place__form-holder").append(thumbnailElement);
   $("#add-place__form-holder").removeClass("image-hovering");
 }
-function checkAllImages(files) {
+
+// Checks if the user has uploaded an image
+function didUploadImageType(files) {
   let isAllImage = true;
   let imageTypes = ["image/png", "image/jpeg"];
   if (files.length < 1) {
@@ -303,12 +305,19 @@ function checkAllImages(files) {
     }
   }
   if (isAllImage == false) {
-    console.log("Unsupported file type detected: png and jpeg files only");
+    alert(
+      "You uploaded a file that is not an image (PNG or JPEG files). Please try again."
+    );
   } else if (isAllImage == "nothing") {
-    console.log("No Files Detected");
+    alert("You have not uploaded any photos. Please add one and try again.");
   }
 
   return isAllImage;
+}
+
+function resetPhoto() {
+  $("#add-place__form-holder > .post-image").remove();
+  $("#add-place__form-holder > #lottie-placeholder").css("display", "block");
 }
 
 $("#add-place__form-holder").on("drop", function (event) {
@@ -316,31 +325,24 @@ $("#add-place__form-holder").on("drop", function (event) {
   userFiles = null;
   images = null;
   userFiles = event.originalEvent.dataTransfer.files;
-  let isAllImage = checkAllImages(userFiles);
-  if (isAllImage != true) {
+  let isAllImage = didUploadImageType(userFiles);
+  if (isAllImage !== true) {
+    resetPhoto();
     return;
   }
   images = userFiles;
   updateShowImage(images[0]);
 });
 
-//onclick event and hover event for image__holder to activate file explorer
+// Handles the image upload when the user clicks on the image holder
 $("#add-place__form-holder").on("click", function () {
   var input = $("<input></input>");
   input.prop("type", "file");
   input.change(function (e) {
-    // getting a hold of the file reference
     var userFiles = e.target.files;
-    // // setting up the reader
-    // var reader = new FileReader();
-    // // here we tell the reader what to do when it's done reading...
-    // reader.onload = readerEvent => {
-    //    userFiles = readerEvent.target.result; // this is the content!
-    //    console.log( userFiles );
-    // }
-    let isAllImage = checkAllImages(userFiles);
-    if (isAllImage != true) {
-      console.log("Not all image");
+    let isAllImage = didUploadImageType(userFiles);
+    if (isAllImage !== true) {
+      resetPhoto();
       return;
     }
     images = userFiles;
@@ -350,6 +352,7 @@ $("#add-place__form-holder").on("click", function () {
   input.click();
 });
 
+// Displays a semi-transparent div over the image holder when the user hovers over it
 $("#add-place__form-holder").on("mouseenter", function (event) {
   event.stopPropagation();
   if (event != "dragover") {
@@ -362,4 +365,36 @@ $("#add-place__form-holder").on("mouseleave", function (event) {
     const seeThroughDiv = $(".see-through-div");
     seeThroughDiv.fadeOut(100);
   }
+});
+
+// Checks if the fields are valid
+function checkFields() {
+  let title = $("#add-place__form-title").val();
+  let description = $("#add-place__form-description").val();
+  let location = $("#add-place__form-location").val();
+  let isAllValid = true;
+  if (title.length < 1) {
+    isAllValid = false;
+  } else if (description.length < 1) {
+    isAllValid = false;
+  } else if (
+    location ===
+    "No location yet. Search for a place or use your current location."
+  ) {
+    isAllValid = false;
+  }
+
+  if (isAllValid) {
+    $("#add-place__form-submit").prop("disabled", false);
+  } else {
+    $("#add-place__form-submit").prop("disabled", true);
+  }
+}
+
+// Listens for input in the title and description fields
+$("#add-place__form-title").on("input", function () {
+  checkFields();
+});
+$("#add-place__form-description").on("input", function () {
+  checkFields();
 });
