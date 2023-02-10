@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
-import { getStorage} from "https://www.gstatic.com/firebasejs/9.17.1/firebase-storage.js";
+import { getStorage } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDOTQFVNf8Uryge39sxBAhmVjhOkzjYiik",
@@ -29,6 +29,10 @@ export {
   onSnapshot,
   setDoc,
   doc,
-  GeoPoint
-} from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js"
-export{ref,uploadBytes } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-storage.js";
+  GeoPoint,
+  runTransaction,
+} from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
+export {
+  ref,
+  uploadBytes,
+} from "https://www.gstatic.com/firebasejs/9.17.1/firebase-storage.js";
