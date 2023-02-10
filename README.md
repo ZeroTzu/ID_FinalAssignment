@@ -115,3 +115,4 @@ Throughout this assignment, we have referred to several different sources and ev
 - [Иван Шаршапин's Lottie map animation](https://lottiefiles.com/99546-loupe-on-map)
 - [Sonia Akhtar Hussain's Lottie travel animation](https://lottiefiles.com/82445-travelers-walking-using-travelrmap-application)
 - [Salvador Dali's implementation of the Haversine formula](https://stackoverflow.com/a/21623206)
+- [Lucas Nemo's Lottie trophy animation](https://lottiefiles.com/677-trophy)
