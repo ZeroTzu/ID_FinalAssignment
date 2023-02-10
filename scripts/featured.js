@@ -18,6 +18,7 @@ onAuthStateChanged(auth, function (u) {
   if (u) {
     user = u;
   } else {
+    document.getElementById("like-count").style.display = "none";
     document.getElementById("like-button").style.display = "none";
   }
 });
@@ -71,7 +72,11 @@ async function getPhoto(photoDocsList) {
     container.dataset.displayName = placePhoto[i].displayName;
     container.dataset.id = placePhoto[i].id;
     container.dataset.likes = placePhoto[i].likes;
-    container.dataset.hasliked = placePhoto[i].likesUserIDs.includes(user.uid);
+    if (user !== undefined) {
+      container.dataset.hasliked = placePhoto[i].likesUserIDs.includes(
+        user.uid
+      );
+    }
 
     // This shows the modal when a tile is clicked on
     container.addEventListener("click", function (element) {
