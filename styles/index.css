@@ -171,6 +171,10 @@ aside {
   color: white;
 }
 
+ul {
+  padding-left: 0rem;
+}
+
 /**TEST BUTTON**/
 .btn-one {
   color: #fff;
@@ -244,10 +248,6 @@ aside {
   h6 {
     font-size: 12px;
   }
-
-  ul {
-    padding-left: 0rem;
-}
 
   #add-place__form-submit {
     font-size: 12px;
