@@ -41,9 +41,22 @@ main {
   }
 
 }
+@media screen and (max-width: 420px) {
+  button, p{
+    font-size: 70%;
+    margin: 0 !important;
+  }
+  h1{
+    font-size: 110%;
+  }
+}
 
 @media screen and (max-width: 300px) {
-  body{
-    font-size: 80%;
+  button, p{
+    font-size: 70%;
+    margin: 0 !important;
+  }
+  h1{
+    font-size: 110%;
   }
 }
