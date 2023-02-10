@@ -1,5 +1,7 @@
 @import "./global.css";
-
+body{
+  font-size: 125%;
+}
 aside,
 main {
   width: 50vw;
@@ -12,9 +14,18 @@ aside,
 
 button{
   margin: 0;
-  font-size: 12px;
+  font-size: 15px;
   font-family: inherit;
   line-height: inherit;
+}
+
+@media screen and (max-width: 830px){
+  button{
+    margin: 0;
+    font-size: 12px;
+    font-family: inherit;
+    line-height: inherit;
+  }
 }
 
 @media screen and (max-width: 420px){
