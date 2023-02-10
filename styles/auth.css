@@ -10,20 +10,19 @@ aside,
   background-color: var(--accent-dark-gray);
 }
 
-button{
+button {
   margin: 0;
   font-size: 12px;
   font-family: inherit;
   line-height: inherit;
 }
 
-@media screen and (max-width: 420px){
-
-  body{
+@media screen and (max-width: 420px) {
+  body {
     font-size: 75%;
   }
 
-  button{
+  button {
     margin: 0;
     font-size: 10px;
     font-family: inherit;
@@ -31,15 +30,14 @@ button{
   }
 }
 
-
-@media screen and (max-width: 315px){
-body{
-  font-size: 60%;
-}
-button{
-  margin: 0;
-  font-size: 8px;
-  font-family: inherit;
-  line-height: inherit;
-}
+@media screen and (max-width: 315px) {
+  body {
+    font-size: 60%;
+  }
+  button {
+    margin: 0;
+    font-size: 8px;
+    font-family: inherit;
+    line-height: inherit;
+  }
 }

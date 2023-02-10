@@ -2,6 +2,7 @@ header {
   background-color: var(--bg-dark-gray);
   position: absolute;
   padding: 1em 2em;
+  z-index: 10;
 }
 
 header > div {
@@ -11,8 +12,9 @@ header > div {
 #header__nav {
   display: none;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
   background-color: var(--bg-dark-gray);
+  z-index: 15;
 }
 
 #header__nav.hamburger-open {
@@ -21,23 +23,28 @@ header > div {
   right: 0;
 }
 
-#header__nav > a {
+#header__nav > a,
+#header__nav > button {
   display: block;
   width: 100% !important;
   text-decoration: none;
   appearance: none;
+  background: none;
   padding: 0.5em 0.75em;
+  border: 0;
   text-align: center;
   color: white;
   cursor: pointer;
   transition: color 0.3s, background-color 0.3s;
 }
 
-#header__nav > a:not(:last-child) {
+#header__nav > a:not(:last-child),
+#header__nav > button:not(:last-child) {
   border-bottom: rgb(38, 37, 37) solid 0.5px;
 }
 
-#header__nav > a:hover {
+#header__nav > a:hover,
+#header__nav > button:hover {
   color: rgb(106, 105, 105);
   background-color: rgb(54, 54, 54);
 }
@@ -49,11 +56,12 @@ header > div {
 
   #header__nav {
     display: grid;
-    grid-template-columns: repeat(4, 0.7fr);
+    grid-template-columns: repeat(2, 1fr);
     grid-template-rows: 1fr;
   }
 
-  #header__nav > a:not(:last-child) {
+  #header__nav > a:not(:last-child),
+  #header__nav > button:not(:last-child) {
     border-bottom: 0;
     border-right: rgb(38, 37, 37) solid 0.5px;
   }
