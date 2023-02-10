@@ -180,16 +180,3 @@ signUpButton.on("click", function (event) {
   event.preventDefault();
   handleSubmit(event.target);
 });
-signOutButton.on("click", function (event) {
-  event.preventDefault();
-  signOut(auth).catch(function (error) {
-    createAlert(
-      "danger",
-      `
-      <h3>Uh oh!</h3>
-      <hr>
-      <p class='mb-0'>Sign out error: ${error.message}</p>
-      `
-    );
-  });
-});
