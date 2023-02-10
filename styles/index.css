@@ -15,7 +15,7 @@
   text-align: center;
 }
 
-#location{
+#location {
   margin-bottom: 15px;
 }
 
@@ -69,11 +69,11 @@ aside {
   margin-right: 5px;
 }
 
-#side__menu__buton:hover{
-
+#side__menu__buton:hover {
 }
 
-#add__place__button,#get__my__location__button {
+#add__place__button,
+#get__my__location__button {
   margin-left: 3px;
   background-color: var(--accent-dark-gray);
   border: 1px solid var(--accent-dark-gray);
@@ -98,16 +98,16 @@ aside {
   font-size: 1vw;
 }
 
-#box123{
+#box123 {
   display: flex;
   flex-direction: column;
   gap: 10px;
   max-height: 90vh;
-  top: 20px; 
+  top: 20px;
   left: 40px;
 }
 
-#animation{
+#animation {
   max-height: 50px;
 }
 
@@ -135,9 +135,8 @@ aside {
   font-size: 14px;
   background-color: var(--accent-dark-gray);
   margin-top: 5px;
-  color: #FFF;
+  color: #fff;
 }
-
 
 #side__menu {
   position: relative;
@@ -147,6 +146,11 @@ aside {
   padding: 5px;
   margin: 0;
 }
+
+#side__menu__content {
+  overflow-x: scroll;
+}
+
 #side__menu__content button {
   appearance: none;
   border: none;
@@ -173,21 +177,19 @@ aside {
   border: none;
 }
 
-#add__place__back__button:hover{
-background-color: grey;
+#add__place__back__button:hover {
+  background-color: grey;
 }
-
 
 #side__menu__button:hover {
   color: white;
 }
 
-.add__to__post{
+.add__to__post {
   background-color: var(--accent-dark-gray);
   border: none;
   color: white;
 }
-
 
 /**TEST BUTTON**/
 .btn-one {
@@ -238,26 +240,23 @@ background-color: grey;
   transform: scale(0.1, 1);
 }
 
-#title{
+#title {
   font-size: 15px;
 }
 
-#description{
+#description {
   font-family: inherit;
   font-size: 12px;
   max-height: 120px;
 }
 
-h6{
+h6 {
   font-size: 14px;
 }
 
-
-
 /**end of TEST BUTTON**/
 @media screen and (max-width: 420px) {
-
-  h6{
+  h6 {
     font-size: 12px;
   }
 
@@ -265,18 +264,18 @@ h6{
     font-size: 12px;
     background-color: var(--accent-dark-gray);
     margin-top: 5px;
-    color: #FFF;
+    color: #fff;
   }
   .search__result > * {
     font-size: 10px;
     margin: 0.25rem 0;
   }
 
-  #title{
+  #title {
     font-size: 12px;
   }
-  
-  #description{
+
+  #description {
     font-family: inherit;
     font-size: 10px;
     max-height: 120px;
@@ -319,13 +318,13 @@ h6{
     margin: 0.25rem 0;
   }
 
-  #box123{
+  #box123 {
     display: flex;
     flex-direction: column;
     gap: 10px;
     max-height: 90vh;
     max-width: 365px;
-    top: 20px; 
+    top: 20px;
     left: 12px;
   }
   aside {
@@ -337,7 +336,6 @@ h6{
   }
 }
 
-
 .image__hover {
   border: 2px groove white !important;
 }
@@ -348,8 +346,7 @@ h6{
 }
 
 @media screen and (max-width: 380px) {
-
-  h6{
+  h6 {
     font-size: 10px;
   }
 
@@ -357,24 +354,24 @@ h6{
     font-size: 10px;
     background-color: var(--accent-dark-gray);
     margin-top: 5px;
-    color: #FFF;
+    color: #fff;
   }
   .search__result > * {
     font-size: 8px;
     margin: 0.25rem 0;
   }
 
-  #title{
+  #title {
     font-size: 10px;
   }
-  
-  #description{
+
+  #description {
     font-family: inherit;
     font-size: 8px;
     max-height: 120px;
   }
 
-  #box123{
+  #box123 {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -393,10 +390,8 @@ h6{
   }
 }
 
-
 @media screen and (max-width: 300px) {
-
-  h6{
+  h6 {
     font-size: 8px;
   }
 
@@ -404,24 +399,24 @@ h6{
     font-size: 8px;
     background-color: var(--accent-dark-gray);
     margin-top: 5px;
-    color: #FFF;
+    color: #fff;
   }
   .search__result > * {
     font-size: 8px;
     margin: 0.25rem 0;
   }
 
-  #title{
+  #title {
     font-size: 8px;
   }
-  
-  #description{
+
+  #description {
     font-family: inherit;
     font-size: 6px;
     max-height: 120px;
   }
 
-  #box123{
+  #box123 {
     display: flex;
     flex-direction: column;
     gap: 10px;
