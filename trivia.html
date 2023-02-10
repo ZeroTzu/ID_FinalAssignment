@@ -19,13 +19,13 @@
   <body data-bs-theme="dark">
     <section
       id="intro"
-      class="min-vh-100 min-vw-100 d-flex flex-column align-items-center justify-content-center gap-4 position-fixed"
+      class="vh-100 vw-100 d-flex flex-column align-items-center justify-content-center gap-4 position-fixed p-4 overflow-scroll"
     >
       <lottie-player
         src="https://assets2.lottiefiles.com/private_files/lf30_noclpt6t.json"
         background="transparent"
         speed="0.5"
-        style="width: auto; height: 256px"
+        style="width: auto; max-height: 256px"
         loop
         autoplay
       ></lottie-player>
@@ -37,7 +37,7 @@
         </p>
       </div>
 
-      <div class="accordion w-50" id="intro__accordion">
+      <div class="accordion" id="intro__accordion">
         <div class="accordion-item">
           <h2 class="accordion-header" id="intro__accordion_about-header">
             <button
@@ -53,7 +53,7 @@
           </h2>
           <div
             id="intro__accordion__about-content"
-            class="accordion-collapse collapse show"
+            class="accordion-collapse collapse"
             aria-labelledby="intro__accordion_about-header"
             data-bs-parent="#intro__accordion"
           >
@@ -81,7 +81,7 @@
           </h2>
           <div
             id="intro__accordion_wins-content"
-            class="accordion-collapse collapse show"
+            class="accordion-collapse collapse"
             aria-labelledby="intro__accordion_wins-header"
             data-bs-parent="#intro__accordion"
           >
@@ -108,7 +108,7 @@
       >
         <div
           id="game__container-loader"
-          class="position-absolute h-100 w-100 d-flex flex-column justify-content-center align-items-center"
+          class="position-absolute h-100 w-100 d-flex flex-column justify-content-center align-items-center text-center p-2"
         >
           <lottie-player
             src="https://assets2.lottiefiles.com/private_files/lf30_noclpt6t.json"

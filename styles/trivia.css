@@ -6,6 +6,10 @@
   z-index: 100;
 }
 
+#intro__accordion {
+  width: 50%;
+}
+
 #game__container {
   border-color: var(--accent-dark-gray) !important;
   border-radius: var(--radius) !important;
@@ -19,15 +23,20 @@
   background-color: var(--bg-dark-gray);
 }
 
-img{
+img {
   flex-grow: 0;
-    max-width: 100%;
-    max-height: 100%;
-  }
+  max-width: 100%;
+  max-height: 100%;
+}
 
 @media screen and (max-width: 640px) {
   #guess__container {
     flex-direction: column !important;
     gap: 1em !important;
+    height: fit-content;
+  }
+
+  #intro__accordion {
+    width: 100%;
   }
 }
