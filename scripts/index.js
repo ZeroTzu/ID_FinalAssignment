@@ -258,6 +258,8 @@ $("#add__place__form").submit(async function (event) {
             .join(", "),
           locationCoords: userCurrentLocationCoords,
           photoArray: [`images/${images[0].name}`],
+          id:`${uid}_${format(currentDate)}`,
+          likes:0,
         });
       });
   }
