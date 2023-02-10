@@ -8,6 +8,7 @@ import {
   setDoc,
   storage,
   uploadBytes,
+  runTransaction,
 } from "./utils/firebase.js";
 
 var userIsSignedIn;
@@ -245,9 +246,41 @@ $("#add-place__form").submit(async function (event) {
             photoArray: [`images/${images[0].name}`],
             likes: 0,
             likesUserIDs: [],
-          }).catch(function (error) {
-            throw error;
-          });
+          })
+            .then(async function () {
+              await runTransaction(db, async function (transaction) {
+                const document = await transaction.get(
+                  doc(db, "users", user.uid)
+                );
+                if (!document.exists()) {
+                  const payload = {
+                    Username: user.displayName,
+                    Points: 5,
+                    TriviaHighScore: 0,
+                  };
+                  transaction.set(doc(db, "users", uid), payload);
+                } else {
+                  const newPoints = document.data().Points + 5;
+                  transaction.update(doc(db, "users", uid), {
+                    Points: newPoints,
+                    TriviaHighScore: 0,
+                  });
+                }
+              }).then(function () {
+                alert("Awesome! We've added 5 points to your account!");
+                // Clears all the fields
+                $("#add-place__form-title").val("");
+                $("#add-place__form-description").val("");
+                $("#add-place__form-location").text(
+                  "No location yet. Search for a place or use your current location."
+                );
+                resetPhoto();
+                $("#add-place__container").css("display", "none");
+              });
+            })
+            .catch(function (error) {
+              throw error;
+            });
         })
         .catch(function (error) {
           throw error;
