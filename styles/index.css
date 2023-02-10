@@ -15,11 +15,7 @@
   text-align: center;
 }
 
-#location {
-  margin-bottom: 15px;
-}
-
-aside {
+#topbar {
   z-index: 149;
   background-color: var(--bg-dark-gray);
   height: fit-content;
@@ -28,12 +24,13 @@ aside {
 }
 
 #search__results {
-  margin-top: 1em;
   display: flex;
   flex-direction: column;
+  padding: 0.5em;
   gap: 1em;
   overflow-y: scroll;
   max-height: 20vh;
+  background-color: var(--bg-dark-gray);
 }
 
 .search__result {
@@ -64,22 +61,12 @@ aside {
   color: white;
 }
 
-#side__menu__buton,
-#add__place_button {
-  margin-right: 5px;
+#add-place__button,
+#get-location {
+  border-radius: 0 !important;
 }
 
-#add__place__button,
-#get__my__location__button {
-  margin-left: 3px;
-  background-color: var(--accent-dark-gray);
-  border: 1px solid var(--accent-dark-gray);
-}
-
-#add__place__button:hover {
-  background-color: var(--bg-dark-gray);
-}
-#see__through__div {
+.see-through-div {
   opacity: 0;
   background-color: white;
   width: 100%;
@@ -93,9 +80,10 @@ aside {
   align-items: center;
   justify-content: center;
   font-size: 1vw;
+  cursor: pointer;
 }
 
-#box123 {
+aside {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -108,7 +96,7 @@ aside {
   max-height: 50px;
 }
 
-#add__place__interface {
+#add-place__container {
   flex: 1;
   overflow-y: scroll;
   display: none;
@@ -119,23 +107,21 @@ aside {
   border-radius: 5px;
   border: 1px solid var(--add-place-outline-purple);
 }
-#add__place__form {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 100%;
-}
-#add__place__form * {
+
+#add-place__form input,
+#add-place__form textarea,
+#add-place__form-holder {
   border: 1px solid var(--add-place-outline-purple);
-}
-#add__place__submit {
-  font-size: 14px;
-  background-color: var(--accent-dark-gray);
-  margin-top: 5px;
-  color: #fff;
+  transition: border 0.3s;
 }
 
-#side__menu {
+#add-place__form input:hover,
+#add-place__form textarea:hover,
+#add-place__form-holder:hover {
+  border: 1px solid var(--accent-dark-gray);
+}
+
+#side-menu__container {
   position: relative;
   display: none;
   background-color: var(--bg-dark-gray);
@@ -144,11 +130,17 @@ aside {
   margin: 0;
 }
 
-/*#side__menu__content {
-  overflow-x: scroll;
-}*/
+#side-menu__content > li {
+  list-style: none;
+}
 
-#side__menu__content button {
+#side-menu__content a {
+  text-decoration: none;
+  display: block;
+}
+
+#side-menu__content a,
+#side-menu__content button {
   appearance: none;
   border: none;
   background-color: transparent;
@@ -159,30 +151,19 @@ aside {
   border-bottom: rgb(38, 37, 37) solid 0.5px;
   color: white;
 }
-#side__menu__content button:hover {
+
+#side-menu__content a:hover,
+#side-menu__content button:hover {
   color: rgb(106, 105, 105);
   background-color: rgb(54, 54, 54);
 }
-#side__menu__content button * {
-  color: white;
-  position: relative;
-}
-#add__place__back__button {
-  width: 30px;
-  height: 30px;
-  background-color: transparent;
-  border: none;
+
+#side-menu__back {
+  border-bottom: none;
+  width: fit-content;
 }
 
-#add__place__back__button:hover {
-  background-color: grey;
-}
-
-#side__menu__button:hover {
-  color: white;
-}
-
-.add__to__post {
+.add-to-post {
   background-color: var(--accent-dark-gray);
   border: none;
   color: white;
@@ -237,27 +218,27 @@ aside {
   transform: scale(0.1, 1);
 }
 
-#title {
+#add-place__form-title {
   font-size: 15px;
 }
 
-#description {
+#add-place__form-description {
   font-family: inherit;
   font-size: 12px;
   max-height: 120px;
 }
 
-h6 {
+#add-place__form-location {
   font-size: 14px;
 }
 
 /**end of TEST BUTTON**/
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 640px) {
   h6 {
     font-size: 12px;
   }
 
-  #add__place__submit {
+  #add-place__form-submit {
     font-size: 12px;
     background-color: var(--accent-dark-gray);
     margin-top: 5px;
@@ -315,38 +296,23 @@ h6 {
     margin: 0.25rem 0;
   }
 
-  #box123 {
+  aside {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    max-height: 90vh;
-    max-width: 365px;
-    top: 20px;
-    left: 12px;
+    margin: 1em;
+    max-width: calc(100vw - 2em);
+    top: 0;
+    left: 0;
   }
-  aside {
+
+  #topbar {
     z-index: 149;
     background-color: var(--bg-dark-gray);
     height: fit-content;
     border-radius: var(--radius);
     font-size: 12px;
   }
-
-  #side__menu__content button {
-    appearance: none;
-    border: none;
-    background-color: transparent;
-    margin: 5px;
-    font-size: 14px;
-    width: 100% !important;
-    text-align: center;
-    border-bottom: rgb(38, 37, 37) solid 0.5px;
-    color: white;
-  }
-}
-
-.image__hover {
-  border: 2px groove white !important;
 }
 
 .post__image {
@@ -354,33 +320,38 @@ h6 {
   max-width: 800px;
 }
 
+.image-hovering {
+  border: 1.5px solid var(--accent-dark-gray);
+}
+
 @media screen and (max-width: 380px) {
   h6 {
     font-size: 10px;
   }
 
-  #add__place__submit {
+  #add-place__form-submit {
     font-size: 10px;
     background-color: var(--accent-dark-gray);
     margin-top: 5px;
     color: #fff;
   }
+
   .search__result > * {
     font-size: 8px;
     margin: 0.25rem 0;
   }
 
-  #title {
+  #add-place__form-title {
     font-size: 10px;
   }
 
-  #description {
+  #add-place__form-description {
     font-family: inherit;
     font-size: 8px;
     max-height: 120px;
   }
 
-  #box123 {
+  /* aside {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -388,9 +359,9 @@ h6 {
     max-width: 310px;
     top: 10px;
     left: 7px;
-  }
+  } */
 
-  aside {
+  #topbar {
     z-index: 149;
     background-color: var(--bg-dark-gray);
     height: fit-content;
@@ -398,7 +369,7 @@ h6 {
     font-size: 10px;
   }
 
-  #side__menu__content button {
+  #side-menu__content a {
     appearance: none;
     border: none;
     background-color: transparent;
@@ -416,38 +387,39 @@ h6 {
     font-size: 8px;
   }
 
-  #add__place__submit {
+  #add-place__form-submit {
     font-size: 8px;
     background-color: var(--accent-dark-gray);
     margin-top: 5px;
     color: #fff;
   }
+
   .search__result > * {
     font-size: 8px;
     margin: 0.25rem 0;
   }
 
-  #title {
+  #add-place__form-title {
     font-size: 8px;
   }
 
-  #description {
+  #add-place__form-description {
     font-family: inherit;
     font-size: 6px;
     max-height: 120px;
   }
 
-  #box123 {
+  /* aside {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    padding: 2em;
     max-height: 90vh;
     max-width: 265px;
     top: 10px;
     left: 6px;
-  }
+  } */
 
-  aside {
+  #topbar {
     z-index: 149;
     background-color: var(--bg-dark-gray);
     height: fit-content;
@@ -455,7 +427,11 @@ h6 {
     font-size: 8px;
   }
 
-  #side__menu__content button {
+  #side-menu__content {
+    overflow-x: scroll;
+  }
+
+  #side-menu__content a {
     appearance: none;
     border: none;
     background-color: transparent;

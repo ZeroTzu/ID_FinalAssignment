@@ -25,8 +25,16 @@
       crossorigin="anonymous"
     />
     <!--Font Awesome-->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
-    <script src="https://kit.fontawesome.com/1bb416726a.js" crossorigin="anonymous"></script>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
+      integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://kit.fontawesome.com/1bb416726a.js"
+      crossorigin="anonymous"
+    ></script>
 
     <!--JQuery-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -35,7 +43,7 @@
     <link rel="stylesheet" href="styles/index.css" />
   </head>
   <body data-bs-theme="dark">
-    <section id="map__container" class="vh-100 vw-100">
+    <main id="map__container" class="vh-100 vw-100">
       <div id="map__canvas" class="h-100 w-100"></div>
       <div
         id="map__loader"
@@ -55,24 +63,32 @@
           <p>Hang on tight. We're loading the map...</p>
         </div>
       </div>
-    </section>
+    </main>
 
-    <section id="box123" class="position-absolute">
-      <div>
-        <aside id="aside1" class="d-flex flex-column p-2">
-          <div id="aside__header" class="d-flex flex-row w-100 gap-1 justify-content-center">
-            <button id="side__menu__button" class="button-secondary"><i class="fa fa-bars"></i></button>
-            <input style="margin-right: 5px"
-              id="search__input"
-              class="flex-fill"
-              type="text"
-              placeholder="Search for a place..."
-            />
-            <button id="search__button" class="button-primary">Search</button>
-            <button id="add__place__button" class="button-secondary" ><i class="fa-solid fa-plus"></i></button>
-            <button id="get__my__location__button" class="button-secondary"><i class="fa-solid fa-location-crosshairs"></i></button>
-          </div>
-        </aside>
+    <aside class="position-absolute">
+      <div
+        id="topbar"
+        class="d-flex flex-row w-100 p-2 gap-2 justify-content-center"
+      >
+        <button id="side-menu__button" class="button-secondary">
+          <i class="fa fa-bars"></i>
+        </button>
+        <input
+          id="search__input"
+          class="flex-fill"
+          type="text"
+          placeholder="Search for a place..."
+        />
+        <button id="search__button" class="button-primary" disabled>
+          Search
+        </button>
+        <button id="add-place__button" class="button-primary">
+          <i class="fa-solid fa-plus"></i>
+        </button>
+        <button id="get-location" class="button-primary">
+          <i class="fa-solid fa-location-crosshairs"></i>
+        </button>
+      </div>
 
         <menu id="side__menu">
           <div id="side__menu__content" style="  position:relative;display:flex; flex-direction: row;">
@@ -85,32 +101,37 @@
         </menu>
       </div>
 
-      <div id="add__place__interface" style="height: fit-content;"> 
+      <div id="add__place__interface" style="height: fit-content;">
         <div class="d-flex flex-row"><h6 id="location">Location: <span id="location__span"> </span></h6></div>
 
         <form id="add__place__form" class="flex-column">
           <input type="text" id="title" placeholder="Title">
           <div id="image__holder" style="position:relative; width:100%;  border: 1.5px solid var(--add-place-outline-purple);">
-            <lottie-player 
+            <lottie-player
               id="placeholder__lottie"
-              src="https://assets9.lottiefiles.com/packages/lf20_jdh7d1du.json"  
-              background="transparent"  speed="1"  style="position:relative; width:100%; height: 100%;"  
+              src="https://assets9.lottiefiles.com/packages/lf20_jdh7d1du.json"
+              background="transparent"  speed="1"  style="position:relative; width:100%; height: 100%;"
               loop autoplay>
- 
-            </lottie-player>
-            <div id="see__through__div" >
-              Click To Upload Image
-            </div>
 
+            </lottie-player>
+            <div class="see-through-div">Click to upload an image</div>
           </div>
-          <textarea placeholder="Describe your experience here..." id="description" style="border-top-left-radius:0px; margin-top: 5px;" rows="10"></textarea>
-          <button id="add__place__submit" type="submit">Post!</button>
+          <textarea
+            placeholder="Describe your experience here..."
+            id="add-place__form-description"
+            rows="5"
+          ></textarea>
+          <button
+            id="add-place__form-submit"
+            class="button-primary"
+            type="submit"
+            disabled
+          >
+            Post!
+          </button>
         </form>
-        <div style="display:flex; justify-content: flex-end;">
-          <button id="add__place__back__button" style="margin-top:5px"><i class="fa-solid fa-arrow-left"></i></button>
-        </div>
-      </div>
-    </section>
+      </section>
+    </aside>
 
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
@@ -122,6 +143,7 @@
       integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
       crossorigin="anonymous"
     ></script>
+
     <script type="module" src="scripts/index.js"></script>
   </body>
 </html>
