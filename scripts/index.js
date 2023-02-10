@@ -234,6 +234,8 @@ $("#add-place__form").submit(async function (event) {
               .join(", "),
             locationCoords: userCurrentLocationCoords,
             photoArray: [`images/${images[0].name}`],
+            likes: 0,
+            likesUserIDs: [],
           }).catch(function (error) {
             throw error;
           });
