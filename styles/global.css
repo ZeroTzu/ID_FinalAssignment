@@ -1,4 +1,5 @@
 @import "header.css";
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap");
 
 :root {
   --bg-dark-gray: rgb(11, 11, 25);
@@ -11,6 +12,10 @@
   --add-place-outline-purple: rgb(42, 42, 83);
   --add-place-outline-purple2: rgb(35, 35, 66);
   --highlighted-purple: rgb(68, 68, 116);
+}
+
+* {
+  font-family: "Nunito", sans-serif;
 }
 
 body {

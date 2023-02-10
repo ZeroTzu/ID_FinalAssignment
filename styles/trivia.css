@@ -23,10 +23,10 @@
   background-color: var(--bg-dark-gray);
 }
 
-img {
-  flex-grow: 0;
-  max-width: 100%;
-  max-height: 100%;
+/* An arbitrary margin to give space to the header. Wish we had time to
+explore this in more depth! */
+main {
+  margin-top: 10vh;
 }
 
 @media screen and (max-width: 640px) {
@@ -38,5 +38,25 @@ img {
 
   #intro__accordion {
     width: 100%;
+  }
+
+}
+@media screen and (max-width: 420px) {
+  button, p{
+    font-size: 70%;
+    margin: 0 !important;
+  }
+  h1{
+    font-size: 110%;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  button, p{
+    font-size: 70%;
+    margin: 0 !important;
+  }
+  h1{
+    font-size: 110%;
   }
 }

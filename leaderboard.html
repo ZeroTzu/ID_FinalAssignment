@@ -36,22 +36,42 @@
       crossorigin="anonymous"
     ></script>
 
+    <link rel="shortcut icon" href="./images/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="styles/leaderboard.css" />
   </head>
 
   <body>
-    <main class="d-flex flex-column vh-100">
-      <section
-        class="d-flex flex-column justify-content-center align-items-center text-center p-4 gap-2"
-        id="head"
-      >
-        <a class="button-secondary align-self-start" href="./">
-          <i class="fa-solid fa-arrow-left"></i>
-        </a>
+    <header
+      class="position-absolute top-0 vw-100 d-flex align-items-center px-4"
+    >
+      <a href="./">
+        <img src="./images/logo.png" class="l-height"/>
+      </a>
+      <div></div>
+      <button id="hamburger" class="button-secondary" data-open="true">
+        <i class="fas fa-bars"></i>
+      </button>
+      <nav id="header__nav" class="row m-0">
+        <a class="col" href="./leaderboard.html"
+          ><i class="fas fa-trophy"></i> &nbsp;Leaderboard</a
+        >
+        <a class="col" href="./featured.html"
+          ><i class="fa-solid fa-star"></i>&nbsp;Featured</a
+        >
+      </nav>
+    </header>
 
+    <main class="d-flex flex-column vh-100">
+      <section class="d-flex flex-column justify-content-center align-items-center text-center p-4 gap-2" id="head">
         <span class="display-block">
+          <br>
+          <br>
+          <br>
+
+
+
           <h1>Leaderboard</h1>
-          <p>Where do you fare compared to other people?</p>
+          <p class="font-small">Where do you fare compared to other people?</p>
         </span>
       </section>
       <section id="leaderboard__container" class="position-relative flex-fill">
@@ -93,6 +113,7 @@
       </section>
     </main>
 
+    <script type="module" src="scripts/header.js"></script>
     <script type="module" src="scripts/leaderboard.js"></script>
   </body>
 </html>

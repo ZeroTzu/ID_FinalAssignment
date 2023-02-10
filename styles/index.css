@@ -144,9 +144,9 @@ aside {
   margin: 0;
 }
 
-#side__menu__content {
+/*#side__menu__content {
   overflow-x: scroll;
-}
+}*/
 
 #side__menu__content button {
   appearance: none;
@@ -331,6 +331,18 @@ h6 {
     border-radius: var(--radius);
     font-size: 12px;
   }
+
+  #side__menu__content button {
+    appearance: none;
+    border: none;
+    background-color: transparent;
+    margin: 5px;
+    font-size: 14px;
+    width: 100% !important;
+    text-align: center;
+    border-bottom: rgb(38, 37, 37) solid 0.5px;
+    color: white;
+  }
 }
 
 .image__hover {
@@ -385,6 +397,18 @@ h6 {
     border-radius: var(--radius);
     font-size: 10px;
   }
+
+  #side__menu__content button {
+    appearance: none;
+    border: none;
+    background-color: transparent;
+    margin: 5px;
+    font-size: 12px;
+    width: 100% !important;
+    text-align: center;
+    border-bottom: rgb(38, 37, 37) solid 0.5px;
+    color: white;
+  }
 }
 
 @media screen and (max-width: 300px) {
@@ -429,5 +453,17 @@ h6 {
     height: fit-content;
     border-radius: var(--radius);
     font-size: 8px;
+  }
+
+  #side__menu__content button {
+    appearance: none;
+    border: none;
+    background-color: transparent;
+    margin: 5px;
+    font-size: 10px;
+    width: 100% !important;
+    text-align: center;
+    border-bottom: rgb(38, 37, 37) solid 0.5px;
+    color: white;
   }
 }

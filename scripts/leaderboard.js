@@ -37,9 +37,9 @@ function AddToTop3(place, username, points, ths) {
       break;
   }
 
-  const rankElement = $(`<h2 class="w-100 text-center">${rank}</h2>`);
-  const usernameElement = $(`<p class="w-100 text-center">${username}</p>`);
-  const pointsElement = $(`<p class="w-100 text-center">${points} points</p>`);
+  const rankElement = $(`<h2 class="w-100 text-center" id="font-smaller">${rank}</h2>`);
+  const usernameElement = $(`<p class="w-100 text-center" id="font-small">${username}</p>`);
+  const pointsElement = $(`<p class="w-100 text-center" id="font-small">${points} points</p>`);
 
   container.append(rankElement);
   container.append(usernameElement);
