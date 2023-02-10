@@ -63,8 +63,8 @@ textarea::placeholder {
   font-weight: bold;
 }
 
-.button-secondary:hover {
-  background-color: var(--pale-black);
+.button-secondary:not([disabled]):hover {
+  background-color: var(--accent-dark-gray);
 }
 
 button[disabled] {

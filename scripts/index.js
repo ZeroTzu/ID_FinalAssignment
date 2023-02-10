@@ -1,19 +1,14 @@
 import {
   auth,
-  app,
-  onAuthStateChanged,
-  db,
-  storage,
-  getDocs,
   collection,
-  onSnapshot,
-  ref,
-  uploadBytes,
-  setDoc,
+  db,
   doc,
+  onAuthStateChanged,
+  ref,
+  setDoc,
+  storage,
+  uploadBytes,
 } from "./utils/firebase.js";
-
-// Loads the Mapbox GL JS library and creates a map
 
 var userIsSignedIn;
 onAuthStateChanged(auth, (user) => {
@@ -25,10 +20,9 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-
+// Loads the Mapbox GL JS library and creates a map
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYXJhc2hucmltIiwiYSI6ImNsZGU1MjgybzA1ZGczcG81aTRlYnNsc2wifQ.pl_hnGv5vMnM1Yi5QXDmYA"; // Add your Mapbox access token here
-
 var map = new mapboxgl.Map({
   container: "map__canvas",
   projection: "globe",
@@ -56,15 +50,14 @@ map.on("load", async () => {
 // Calls the Mapbox Geocoding API to search for a location then displays the results
 const markers = [];
 function showResults(data) {
-  const resultsList = data.features.map((feature) => {
-    const div = document.createElement("div");
-    const addToPostLink=document.createElement("p");
-    div.style.position="relative";
-    console.log(feature)
-    div.className = "search__result";
-    div.dataset.coords=[feature.geometry.longitude,feature.geometry.latitude]
-    div.dataset.name=[feature.place_name]
-    div.innerHTML = `
+  const resultsDiv = $(`<div id="search__results"></div>`);
+
+  data.features.map(function (feature) {
+    const div = $(`<div class="search__result"></div>`);
+    div.css("position", "relative");
+    div.data("coords", [feature.geometry.longitude, feature.geometry.latitude]);
+    div.data("name", [feature.place_name]);
+    div.html(`
       <h3>${feature.text}</h3>
       ${
         feature.properties.category !== undefined
@@ -72,26 +65,25 @@ function showResults(data) {
           : ""
       }
       <p>${feature.place_name.replace(feature.text + ", ", "")}</p>
-    `;
-    const addToPost=document.createElement('button')
-    addToPost.innerHTML="Add";
-    addToPost.style.position="absolute";
-    addToPost.style.top=0;
-    addToPost.style.right=0;
-    addToPost.classList.add("add__to__post")
-    div.appendChild(addToPost)
-    
-    addToPost.addEventListener("click",function(){
-      userCurrentLocationCoords=div.dataset.coords;
-      userCurrentLocationName=div.dataset.name;
-      $("#location__span").html(function(i,currentHTML){
-        return `${userCurrentLocationName}`
-      })
-      $("#add__place__interface").css("display","flex")
-      
-      
-    })
-    div.addEventListener("click", () => {
+    `);
+
+    const addToPost = $(`<button class="add-to-post">Add</button>`);
+    addToPost.css("position", "absolute");
+    addToPost.css("top", "0");
+    addToPost.css("right", "0");
+
+    div.append(addToPost);
+
+    addToPost.on("click", function () {
+      userCurrentLocationCoords = div.data("coords");
+      userCurrentLocationName = div.data("name");
+      $("#add-place__form-location").html(function () {
+        return `${userCurrentLocationName}`;
+      });
+      $("#add-place__container").css("display", "flex");
+    });
+
+    div.on("click", () => {
       markers.forEach((marker) => {
         marker.remove();
       });
@@ -103,38 +95,31 @@ function showResults(data) {
       const marker = new mapboxgl.Marker().setLngLat(feature.center).addTo(map);
       markers.push(marker);
     });
-    return div;
+
+    resultsDiv.append(div);
   });
 
-  const resultsDiv = document.createElement("div");
-  resultsDiv.id = "search__results";
-  resultsDiv.append(...resultsList);
-  const searchContainer = document.querySelector("#aside__header");
-  searchContainer.parentNode.insertBefore(
-    resultsDiv,
-    searchContainer.nextSibling
-  );
+  $("#aside__header").after(resultsDiv);
 }
 
 function searchLocation() {
-  const resultsDiv = document.querySelector("#search__results");
+  const resultsDiv = $("#search__results");
   if (resultsDiv) {
-    resultsDiv.parentNode.removeChild(resultsDiv);
+    resultsDiv.remove();
   }
 
-  const input = document.querySelector("#search__input").value;
+  const input = $("#search__input").val();
   const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${input}.json?access_token=${mapboxgl.accessToken}&limit=10`;
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
       showResults(data);
       return data;
-      
     });
 }
-//Gets the current coords of user,calls mapbox inputing the coords, gets name of the closest match,
-var userCurrentLocationCoords;
-var userCurrentLocationName;
+
+//Gets the current coords of user, calls Mapbox inputing the coords, then gets the name of the closest match.
+var userCurrentLocationCoords, userCurrentLocationName;
 function getCurrentLocation() {
   async function success(position) {
     userCurrentLocationCoords = [
@@ -145,9 +130,8 @@ function getCurrentLocation() {
       const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${position.coords.longitude},${position.coords.latitude}.json?access_token=${mapboxgl.accessToken}`;
       const response = await fetch(url);
       const results = await response.json();
-      console.log(results);
       userCurrentLocationName = results.features[0].place_name;
-      $("#location__span").html(function (i, currentHTML) {
+      $("#add-place__form-location").html(function () {
         return `${userCurrentLocationName}`;
       });
     } catch (error) {
@@ -160,12 +144,22 @@ function getCurrentLocation() {
       zoom: 15,
     });
   }
+
   navigator.geolocation.getCurrentPosition(success);
 }
-$("#search__button").on("click",function(){
-  searchLocation()
-})
+$("#search__button").on("click", function () {
+  searchLocation();
+});
 
+// Disables the search button if the input is empty
+$("#search__input").on("input", function () {
+  const input = $("#search__input").val();
+  if (input.length > 0) {
+    $("#search__button").prop("disabled", false);
+  } else {
+    $("#search__button").prop("disabled", true);
+  }
+});
 
 // Listens for an enter key press on the search input
 const searchInput = document.querySelector("#search__input");
@@ -176,53 +170,47 @@ searchInput.addEventListener("keyup", (event) => {
   }
 });
 
-//for side__menu__button to display the menu
-document
-  .getElementById("side__menu__button")
-  .addEventListener("click", function () {
-    document.getElementById("side__menu").style.display = "block";
-    document.getElementById("side__menu__button").style.display = "none";
-  });
-
-//for side__menu__back to hide the menu
-document
-  .getElementById("side__menu__back")
-  .addEventListener("click", function () {
-    document.getElementById("side__menu__button").style.display = "block";
-    document.getElementById("side__menu").style.display = "none";
-  });
-
-//For Add Place button to show the add__place__interface
-$("#add__place__button").on("click", async function () {
-  $("#add__place__interface").css("display", "flex");
-  console.log("HIHI");
+// Toggles the side menu when the menu button is clicked
+$("#side-menu__button").on("click", function () {
+  $("#side-menu__container").css("display", "block");
+  $("#side-menu__button").css("display", "none");
 });
-$("#get__my__location__button").on("click", function () {
+
+$("#side-menu__back").on("click", function () {
+  $("#side-menu__button").css("display", "block");
+  $("#side-menu__container").css("display", "none");
+});
+
+// Gets the current location when clicked
+$("#get-location").on("click", function () {
   getCurrentLocation();
 });
+
+// Displays the add place container when the add place button is clicked
+$("#add-place__button").on("click", function () {
+  $("#add-place__container").css("display", "flex");
+});
+
+// Hides the add place container when the back button is clicked
+$("#add-place__back").on("click", function () {
+  $("#add-place__container").css("display", "none");
+});
+
 $(".float-out").css({
   right: "0",
-});
-//for back button to hide add__place__interface
-$("#add__place__back__button").on("click", function () {
-  $("#add__place__interface").css("display", "none");
 });
 
 //for Post button to do input validation then POST into firebase server
 var images;
-$("#add__place__form").submit(async function (event) {
+$("#add-place__form").submit(async function (event) {
   event.preventDefault();
-  let title = document.getElementById("title").value;
-  let description = document.getElementById("description").value;
-  console.log(title, description, images[0]);
-  console.log(
-    description,
-    title,
-    document.getElementById("add__place__submit")
-  );
+  let title = $("#add-place__form-title").val();
+  let description = $("#add-place__form-description").val();
   if (title.length < 5) {
-    $("#add__place__form__title").placeholder =
-      "Title (Minimum 5-25 characters allowed)";
+    $("#add-place__form-title").prop(
+      "placeholder",
+      "Title (Minimum 5-25 characters allowed)"
+    );
   }
   if (userIsSignedIn == false) {
     console.log("Unable to post...user isn't signed in");
@@ -276,48 +264,31 @@ function format(inputDate) {
   return `${date}${month}${year}${inputDate.getHours()}${inputDate.getMinutes()}${inputDate.getSeconds()}`;
 }
 //function to highlight imagebox when dragged over
-document
-  .getElementById("image__holder")
-  .addEventListener("dragover", function (event) {
-    event.preventDefault();
-    console.log("drag over");
-    document.getElementById("image__holder").classList.add("image__hover");
-  });
-document
-  .getElementById("image__holder")
-  .addEventListener("dragleave", function (event) {
-    event.preventDefault();
-    document.getElementById("image__holder").classList.remove("image__hover");
-  });
+$("#add-place__form-holder").on("dragover", function (event) {
+  event.preventDefault();
+  $("#add-place__form-holder").addClass("image-hovering");
+});
+
+$("#add-place__form-holder").on("dragleave", function (event) {
+  event.preventDefault();
+  $("#add-place__form-holder").removeClass("image-hovering");
+});
 
 //drop Handler for users to drop an image into image__holder
 var userFiles;
 function updateShowImage(image) {
-  console.log("Running updateImage");
-  let thumbnailElement = document
-    .getElementById("image__holder")
-    .querySelector(".post__image");
-  if (!thumbnailElement) {
-    console.log(
-      document
-        .getElementById("image__holder")
-        .querySelector("#placeholder__lottie")
-    );
-    document
-      .getElementById("image__holder")
-      .querySelector("#placeholder__lottie").style.display = "none";
-    thumbnailElement = document.createElement("img");
-    thumbnailElement.style.maxWidth = "100%";
-    thumbnailElement.style.maxHeight = "100%";
-    thumbnailElement.classList.add("post__image");
-    thumbnailElement.src = URL.createObjectURL(image);
-    document.getElementById("image__holder").appendChild(thumbnailElement);
-    console.log("Image drop initiated", image);
-    document.getElementById("image__holder").classList.remove("image__hover");
+  let thumbnailElement = $("#add-place__form-holder > .post-image");
+  $("#add-place__form-holder > #lottie-placeholder").css("display", "none");
+  if (thumbnailElement.length == 0) {
+    thumbnailElement = $("<img class='post-image'>");
   } else {
-    console.log("Logged not");
-    document.getElementById("image__holder").classList.remove("image__hover");
+    thumbnailElement.prop("src", "");
   }
+  thumbnailElement.css("max-width", $("#add-place__form-holder").width());
+  thumbnailElement.prop("src", URL.createObjectURL(image));
+
+  $("#add-place__form-holder").append(thumbnailElement);
+  $("#add-place__form-holder").removeClass("image-hovering");
 }
 function checkAllImages(files) {
   let isAllImage = true;
@@ -340,31 +311,26 @@ function checkAllImages(files) {
   return isAllImage;
 }
 
-document
-  .getElementById("image__holder")
-  .addEventListener("drop", function (event) {
-    event.preventDefault();
-    console.log("Detected drop");
-    userFiles = null;
-    images = null;
-    userFiles = event.dataTransfer.files;
-    console.log("The files are: ", userFiles);
-    let isAllImage = checkAllImages(userFiles);
-    if (isAllImage != true) {
-      return;
-    }
-    images = userFiles;
-    updateShowImage(images[0]);
-  });
+$("#add-place__form-holder").on("drop", function (event) {
+  event.preventDefault();
+  userFiles = null;
+  images = null;
+  userFiles = event.originalEvent.dataTransfer.files;
+  let isAllImage = checkAllImages(userFiles);
+  if (isAllImage != true) {
+    return;
+  }
+  images = userFiles;
+  updateShowImage(images[0]);
+});
 
 //onclick event and hover event for image__holder to activate file explorer
-$("#image__holder").on("click", function () {
-  var input = document.createElement("input");
-  input.type = "file";
-  input.onchange = (e) => {
+$("#add-place__form-holder").on("click", function () {
+  var input = $("<input></input>");
+  input.prop("type", "file");
+  input.change(function (e) {
     // getting a hold of the file reference
     var userFiles = e.target.files;
-    console.log("The files are: ", userFiles);
     // // setting up the reader
     // var reader = new FileReader();
     // // here we tell the reader what to do when it's done reading...
@@ -379,24 +345,21 @@ $("#image__holder").on("click", function () {
     }
     images = userFiles;
     updateShowImage(images[0]);
-  };
+  });
+
   input.click();
 });
 
-$("#image__holder").mouseenter(function (event) {
+$("#add-place__form-holder").on("mouseenter", function (event) {
   event.stopPropagation();
-  console.log("mouse over event");
   if (event != "dragover") {
-    const see__through__div = $("#see__through__div");
-    see__through__div.fadeTo(100, 0.4);
+    const seeThroughDiv = $(".see-through-div");
+    seeThroughDiv.fadeTo(100, 0.4);
   }
 });
-document
-  .getElementById("image__holder")
-  .addEventListener("mouseleave", function (event) {
-    console.log("mouse out event");
-    if (event != "dragover" && event != "hover") {
-      const see__through__div = $("#see__through__div");
-      see__through__div.fadeOut(100);
-    }
-  });
+$("#add-place__form-holder").on("mouseleave", function (event) {
+  if (event != "dragover" && event != "hover") {
+    const seeThroughDiv = $(".see-through-div");
+    seeThroughDiv.fadeOut(100);
+  }
+});
