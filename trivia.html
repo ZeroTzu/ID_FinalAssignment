@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Where's Where</title>
 
-
     <!--Font Awesome-->
     <link
       rel="stylesheet"
@@ -30,13 +29,13 @@
     <link rel="shortcut icon" href="./images/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="styles/trivia.css" />
   </head>
-  
+
   <body data-bs-theme="dark">
     <header
       class="position-absolute top-0 vw-100 d-flex align-items-center px-4"
     >
       <a href="./">
-        <img src="./images/logo.png" height="52" />
+        <img src="./images/logo.png" height="52" alt="Travel buddy logo" />
       </a>
       <div></div>
       <button id="hamburger" class="button-secondary" data-open="true">
@@ -133,7 +132,9 @@
       <button class="button-primary" onclick="hideIntro()">Let's start!</button>
     </section>
 
-    <main class="vh-100 vw-100 d-flex justify-content-center p-5 flex-column gap-4">
+    <main
+      class="vh-100 vw-100 d-flex justify-content-center p-5 flex-column gap-4"
+    >
       <h1>Where's this?</h1>
       <section
         id="game__container"
@@ -165,21 +166,20 @@
         />
         <div id="f-row">
           <button
-          class="button-primary"
-          onclick="checkAnswer()"
-          id="guess__attempt"
-        >
-          Guess
-        </button>
-        <button
-          class="button-primary"
-          onclick="handleRestart()"
-          id="guess__skip"
-        >
-          Skip
-        </button>
+            class="button-primary"
+            onclick="checkAnswer()"
+            id="guess__attempt"
+          >
+            Guess
+          </button>
+          <button
+            class="button-primary"
+            onclick="handleRestart()"
+            id="guess__skip"
+          >
+            Skip
+          </button>
         </div>
-        
       </section>
     </main>
 

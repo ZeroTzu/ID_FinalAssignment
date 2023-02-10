@@ -22,6 +22,16 @@ The following is lifted from the assignment brief, stating what is expected of t
 
 This project is written with web languages (i.e., HTML, CSS, and vanilla JavaScript); [index.html](https://github.com/ZeroTzu/ID_FinalAssignment/blob/main/index.html) is the main entry point.
 
+The three of us wore different hats throughout the duration of the project, and no one person was static in the role taken. A rough overview of the roles we've done include:
+
+- the UI/UX;
+- the front-end;
+- styling;
+- the back-end (particularly, but not exclusively, using the Firebase SDK); and
+- bug-fixing and fire-fighting.
+
+We didn't assign each person to a particular page to work on, but rather had each person help out wherever help is needed. We therefore cannot attribute each page to be done by one person only.
+
 ## Features
 
 ### User stories
@@ -44,6 +54,18 @@ We explored each user statement to help guide and structure our thinking. Eventu
 - Mobile responsiveness. With this, users will be able to quickly create a post from wherever they are with ease.
 - A guessing/trivia mini-game. With this, users stand the chance to earn points while being able to view the photos that other users have taken.
 
+The following includes early rough wireframes that we have done. The wireframes were not extensive, and only had a few pages.
+
+- Home (now `index.html`)
+  | Mobile | Desktop |
+  |:-:|:-:|
+  | ![](./docs/prototypes/home-mobile.png) | ![](./docs/prototypes/home.png)
+
+- Trivia (now `trivia.html`)
+  | Mobile | Desktop |
+  |:-:|:-:|
+  | ![](./docs/prototypes/trivia-mobile.png) | ![](./docs/prototypes/trivia.png)
+
 ### Future features
 
 We had several features that we'd like to implement but couldn't because of time constraints. These features include:
@@ -56,7 +78,7 @@ We had several features that we'd like to implement but couldn't because of time
 
 For this project, we've spent some time using multiple libraries and APIs to either add new functionality to our project or to make it easier for us to perform certain things. Here's a list of libraries and APIs we've used throughout the assignment:
 
-|       Library/API        | Version number |          Link to homepage           | Description of use                                                                                                               |
+|     Library/Tool/API     | Version number |          Link to homepage           | Description of use                                                                                                               |
 | :----------------------: | :------------: | :---------------------------------: | :------------------------------------------------------------------------------------------------------------------------------- |
 |       Mapbox GL JS       |     2.12.0     |   [Link](https://www.mapbox.com)    | Maps (static and interactive), geographic place lookups                                                                          |
 | RestDB (no longer using) |                |      [Link](https://restdb.io)      | Back-end NoSQL database storage                                                                                                  |
@@ -70,7 +92,21 @@ For this project, we've spent some time using multiple libraries and APIs to eit
 
 ## Testing
 
-We would like to warn you that two images should not have the same name.
+The following includes the automated testing that we have conducted for our code:
+
+- Home page
+  ![](./docs/w3c/index.png)
+- Leaderboard page
+  ![](./docs/w3c/leaderboard.png)
+- Featured page
+  ![](./docs/w3c/featured.png)
+  - We are aware that there is one error regarding the `img` tag. This is intentional, as the `src` tag is dynamically set by JavaScript.
+- Auth page
+  ![](./docs/w3c/auth.png)
+- Trivia page
+  ![](./docs/w3c/trivia.png)
+
+We have tried our best to conduct manual testing as extensively as possible and have [documented our tests in this spreadsheet](https://docs.google.com/spreadsheets/d/1tUBUDz_d0fbRoxIV7urhVcZ5hViJZAGbVEW2O3sD1vY/view).
 
 ## Running locally
 
