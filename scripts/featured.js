@@ -33,7 +33,6 @@ async function getAllDataOnce() {
     placePhoto.forEach(function (obj, index) {
       const newObj = { ...obj, index: index };
       placePhoto[index] = newObj;
-      console.log(newObj);
     });
     getPhoto(placePhoto);
   });
@@ -61,6 +60,7 @@ async function getPhoto(photoDocsList) {
       "border-white",
       "p-0"
     );
+
     container.dataset.index = i;
     container.dataset.title = placePhoto[i].title;
     container.dataset.description = placePhoto[i].description;
@@ -71,22 +71,23 @@ async function getPhoto(photoDocsList) {
     container.dataset.displayName = placePhoto[i].displayName;
     container.dataset.id = placePhoto[i].id;
     container.dataset.likes = placePhoto[i].likes;
-    container.dataset.hasliked = false;
-    //This shows the modal when a tile is clicked on
+    container.dataset.hasliked = placePhoto[i].likesUserIDs.includes(user.uid);
 
+    // This shows the modal when a tile is clicked on
     container.addEventListener("click", function (element) {
       const mc = document.getElementById("modal__container");
-      const m1 = document.getElementById("modal-1");
+      const m1 = document.getElementById("modal__card");
       mc.style.display = "flex";
-      document.getElementById("modal-title").innerHTML =
+      document.getElementById("modal__title").innerHTML =
         container.dataset.title;
-      document.getElementById("modal-user").querySelector("span").innerHTML =
-        container.dataset.displayName;
+      document.getElementById("modal__user").innerText =
+        "By " + container.dataset.displayName;
       document
-        .getElementById("modal-image")
+        .getElementById("modal__image")
         .setAttribute("src", container.dataset.imageURL);
-      document.getElementById("modal-description").innerHTML =
+      document.getElementById("modal__description").innerHTML =
         container.dataset.description;
+      document.getElementById("like-count").innerHTML = container.dataset.likes;
 
       document
         .getElementById("like-button")
@@ -110,6 +111,7 @@ async function getPhoto(photoDocsList) {
                 newLikesUserIDs.push(user.uid);
               }
 
+              document.getElementById("like-count").innerHTML = newLikes;
               transaction.update(docRef, {
                 likes: newLikes,
                 likesUserIDs: newLikesUserIDs,
@@ -171,7 +173,7 @@ async function getPhoto(photoDocsList) {
       });
   }
 }
-console.log(document.getElementById("modal__button"));
+
 document.getElementById("modal__button").addEventListener("click", function () {
   document.getElementById("modal__container").style.display = "none";
 });
