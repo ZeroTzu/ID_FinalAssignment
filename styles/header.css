@@ -5,6 +5,10 @@ header {
   z-index: 10;
 }
 
+body{
+  font-size: 120%;
+}
+
 header > div {
   flex: 1;
 }
@@ -47,6 +51,23 @@ header > div {
 #header__nav > button:hover {
   color: rgb(106, 105, 105);
   background-color: rgb(54, 54, 54);
+}
+@media screen and (max-width: 980px) {
+  body{
+    font-size: 110%;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  body{
+    font-size: 100%;
+  }
+}
+
+@media screen and (max-width: 840px) {
+  body{
+    font-size: 90%;
+  }
 }
 
 @media screen and (min-width: 768px) {
