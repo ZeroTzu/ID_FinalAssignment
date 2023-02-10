@@ -102,7 +102,7 @@ function showResults(data) {
   });
 
   console.log(resultsDiv);
-  $("#aside1").after(resultsDiv);
+  $("#topbar").after(resultsDiv);
 }
 
 function searchLocation() {

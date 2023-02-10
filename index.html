@@ -43,7 +43,7 @@
     <link rel="stylesheet" href="styles/index.css" />
   </head>
   <body data-bs-theme="dark">
-    <section id="map__container" class="vh-100 vw-100">
+    <main id="map__container" class="vh-100 vw-100">
       <div id="map__canvas" class="h-100 w-100"></div>
       <div
         id="map__loader"
@@ -63,70 +63,71 @@
           <p>Hang on tight. We're loading the map...</p>
         </div>
       </div>
-    </section>
+    </main>
 
-    <section id="box123" class="position-absolute">
-      <div>
-        <aside
-          id="aside1"
-          class="d-flex flex-row w-100 gap-1 p-2 justify-content-center"
-        >
-          <button id="side-menu__button" class="button-secondary">
-            <i class="fa fa-bars"></i>
-          </button>
-          <input
-            id="search__input"
-            class="flex-fill"
-            type="text"
-            placeholder="Search for a place..."
-          />
-          <button id="search__button" class="button-primary" disabled>
-            Search
-          </button>
-          <button id="add-place__button" class="button-primary">
-            <i class="fa-solid fa-plus"></i>
-          </button>
-          <button id="get-location" class="button-primary">
-            <i class="fa-solid fa-location-crosshairs"></i>
-          </button>
-        </aside>
-
-        <menu id="side-menu__container">
-          <div id="side-menu__content" class="position-relative d-flex g-2">
-            <li>
-              <a class="btn-one" href="./leaderboard.html">
-                <span><i class="fas fa-trophy"></i> &nbsp;Leaderboard</span>
-              </a>
-            </li>
-            <li>
-              <a class="btn-one" href="./featured.html">
-                <span><i class="fas fa-star"></i> &nbsp;Featured</span>
-              </a>
-            </li>
-            <li>
-              <a class="btn-one">
-                <span><i class="fa-solid fa-user"></i> &nbsp;Profile</span>
-              </a>
-            </li>
-            <li>
-              <a class="btn-one">
-                <span><i class="fas fa-cog"></i> &nbsp;Settings</span>
-              </a>
-            </li>
-            <li>
-              <a class="btn-one" href="./trivia.html">
-                <span
-                  ><i class="fa-solid fa-clipboard-question"></i>
-                  &nbsp;Trivia!</span
-                >
-              </a>
-            </li>
-            <button id="side-menu__back" class="position-relative">
-              <span><i class="fa-solid fa-arrow-left-long"></i></span>
-            </button>
-          </div>
-        </menu>
+    <aside class="position-absolute">
+      <div
+        id="topbar"
+        class="d-flex flex-row w-100 p-2 gap-2 justify-content-center"
+      >
+        <button id="side-menu__button" class="button-secondary">
+          <i class="fa fa-bars"></i>
+        </button>
+        <input
+          id="search__input"
+          class="flex-fill"
+          type="text"
+          placeholder="Search for a place..."
+        />
+        <button id="search__button" class="button-primary" disabled>
+          Search
+        </button>
+        <button id="add-place__button" class="button-primary">
+          <i class="fa-solid fa-plus"></i>
+        </button>
+        <button id="get-location" class="button-primary">
+          <i class="fa-solid fa-location-crosshairs"></i>
+        </button>
       </div>
+
+      <menu id="side-menu__container">
+        <div
+          id="side-menu__content"
+          class="position-relative d-flex g-2 overflow-x-scroll"
+        >
+          <li>
+            <a class="btn-one" href="./leaderboard.html">
+              <span><i class="fas fa-trophy"></i> &nbsp;Leaderboard</span>
+            </a>
+          </li>
+          <li>
+            <a class="btn-one" href="./featured.html">
+              <span><i class="fas fa-star"></i> &nbsp;Featured</span>
+            </a>
+          </li>
+          <li>
+            <a class="btn-one">
+              <span><i class="fa-solid fa-user"></i> &nbsp;Profile</span>
+            </a>
+          </li>
+          <li>
+            <a class="btn-one">
+              <span><i class="fas fa-cog"></i> &nbsp;Settings</span>
+            </a>
+          </li>
+          <li>
+            <a class="btn-one" href="./trivia.html">
+              <span
+                ><i class="fa-solid fa-clipboard-question"></i>
+                &nbsp;Trivia!</span
+              >
+            </a>
+          </li>
+          <button id="side-menu__back" class="position-relative">
+            <span><i class="fa-solid fa-arrow-left-long"></i></span>
+          </button>
+        </div>
+      </menu>
 
       <section id="add-place__container" class="flex-column gap-3">
         <form id="add-place__form" class="d-flex flex-column gap-3">
@@ -173,7 +174,7 @@
           </button>
         </form>
       </section>
-    </section>
+    </aside>
 
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
