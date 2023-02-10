@@ -1,9 +1,0 @@
-#top__bar{
-    display: flex;
-    position:absolute;
-    justify-content: flex-end;
-    width:100%; 
-    height:fit-content;
-    min-height: 20px; 
-    top:0px
-  }
