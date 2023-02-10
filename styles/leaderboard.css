@@ -14,9 +14,6 @@ body {
   border: 1px solid var(--accent-dark-gray);
 }
 
-#head{
-  margin-top: 90px;
-}
 
 #head > span > *,
 #leaderboard__loader > *,
