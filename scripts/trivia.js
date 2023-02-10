@@ -193,7 +193,7 @@ window["checkAnswer"] = checkAnswer;
 
 async function displayImages(selectedPhoto) {
   // Creates the required elements and displays the images
-  const gameImageElement = $('<img class="object-fit-cover p-0" />');
+  const gameImageElement = $('<img class="object-fit-cover p-0" id="t-img"/>');
   const mapContainerElement = $(
     '<div class="position-absolute end-0 bottom-0 w-25"></div>'
   );
