@@ -6,6 +6,10 @@ Welcome to the repository for Travel Buddy, a short and interactive gamified exp
 
 Travel Buddy was created to explore front-end development further and tie in our concepts of [application programming interfaces](https://www.britannica.com/technology/API) that we've learnt in the module. We came up with the idea of a travel tracker as we felt that this idea encapsulated what we've learnt well.
 
+For more information, view [our introductory video](https://drive.google.com/drive/folders/1aZ1rRz4R-GgxYRdE6tWtTlvSV9jyaIht?usp=sharing) for the project.
+
+> No access? Try accessing using the right account (school-distributed account).
+
 The following is lifted from the assignment brief, stating what is expected of the project:
 
 > 1. Create an interactive web application for the proposed idea.
