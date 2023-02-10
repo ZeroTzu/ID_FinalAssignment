@@ -28,6 +28,25 @@ explore this in more depth! */
 main {
   margin-top: 10vh;
 }
+#t-img{
+  max-width: 100% !important;
+  height: auto !important;
+  max-height: 515px;
+}
+
+#f-row{
+  display:flex;
+  flex-direction: row-reverse;
+  gap: 14px;
+}
+
+@media screen and (max-height: 750px) {
+  #t-img{
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: 360px;
+  }
+  }
 
 @media screen and (max-width: 640px) {
   #guess__container {
@@ -60,3 +79,28 @@ main {
     font-size: 110%;
   }
 }
+
+
+.l-height{
+  height: 52px;
+}
+
+@media screen and (max-width: 450px) {
+  .l-height{
+    height: 38px;
+  }
+
+  #f-row{
+    display:flex;
+    flex-direction: row-reverse;
+    gap: 8px;
+  }
+  
+  }
+
+  
+@media screen and (max-width: 450px) {
+  .l-height{
+    height: 30px;
+  }
+  }
